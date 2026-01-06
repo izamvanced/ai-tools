@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Tools | AI Tools Library</title>
 
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #faf9f7;
+      color: #0f172a;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e7e5e4;
+      border-radius: 18px;
+    }
+    .accent {
+      color: #f97316;
+    }
+    .btn {
+      background: linear-gradient(135deg, #fb923c, #f97316);
+      color: white;
+      font-weight: 600;
+      border-radius: 14px;
+      padding: 10px 16px;
+      display: inline-block;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="max-w-6xl mx-auto px-5 py-10 space-y-10">
+
+  <!-- HEADER -->
+  <header class="flex justify-between items-center">
+    <h1 class="font-semibold text-lg">
+      <span class="accent">AI</span> Tools Library
+    </h1>
+    <a href="index.html" class="text-sm opacity-70">
+      ← Kembali ke Landing
+    </a>
+  </header>
+
+  <!-- TITLE -->
+  <section class="text-center space-y-2">
+    <h2 class="text-2xl sm:text-3xl font-bold">
+      Pilih <span class="accent">Tools</span>
+    </h2>
+    <p class="text-sm opacity-70 max-w-md mx-auto">
+      Setiap tools dirancang untuk satu fungsi spesifik agar hasil lebih konsisten dan terarah.
+    </p>
+  </section>
+
+  <!-- TOOLS GRID -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+    <!-- TOOL 1 -->
+    <div class="card p-5 space-y-3">
+      <h3 class="font-semibold">
+        EduPrompt Studio
+      </h3>
+      <p class="text-sm opacity-70">
+        Membantu menghasilkan prompt visual edukasi terstruktur untuk PAUD, SD, dan SMP.
+      </p>
+      <a href="tools/edukasi.html" class="btn">
+        Lihat Detail
+      </a>
+    </div>
+
+    <!-- TOOL 2 -->
+    <div class="card p-5 space-y-3">
+      <h3 class="font-semibold">
+        Thinking Flow
+      </h3>
+      <p class="text-sm opacity-70">
+        Tools untuk membantu berpikir runtut, reflektif, dan terarah.
+      </p>
+      <span class="text-xs opacity-50">
+        (Coming soon)
+      </span>
+    </div>
+
+    <!-- TOOL 3 -->
+    <div class="card p-5 space-y-3">
+      <h3 class="font-semibold">
+        Writing Assistant
+      </h3>
+      <p class="text-sm opacity-70">
+        Membantu menyusun konten edukasi dan instruksi dengan struktur jelas.
+      </p>
+      <span class="text-xs opacity-50">
+        (Coming soon)
+      </span>
+    </div>
+
+  </section>
+
+  <!-- CTA -->
+  <section class="card p-6 text-center space-y-3">
+    <h3 class="font-semibold">
+      Ingin langsung akses tools?
+    </h3>
+    <p class="text-sm opacity-70">
+      Beberapa tools tersedia melalui akses langsung.
+    </p>
+    <a href="https://lynk.id/muhjamilz" class="btn">
+      Buka Akses Tools
+    </a>
+  </section>
+
+  <footer class="text-center text-xs opacity-60">
+    © AI Tools Library
+  </footer>
+
+</main>
+
+</body>
+</html>

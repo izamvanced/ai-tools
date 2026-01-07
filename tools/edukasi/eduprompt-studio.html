@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EduPrompt Studio | AI Tools Library</title>
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Font -->
@@ -34,12 +34,19 @@
       display: inline-block;
       font-size: 14px;
     }
+    pre {
+      background: #f5f5f4;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
   </style>
 </head>
 
 <body>
 
-<main class="max-w-4xl mx-auto px-5 py-10 space-y-12">
+<main class="max-w-5xl mx-auto px-5 py-10 space-y-12">
 
   <!-- HEADER -->
   <header class="flex justify-between items-center">
@@ -53,139 +60,135 @@
 
   <!-- HERO -->
   <section class="space-y-4">
-    <h2 class="text-3xl sm:text-4xl font-bold leading-tight">
+    <h2 class="text-3xl sm:text-4xl font-bold">
       EduPrompt <span class="accent">Studio</span>
     </h2>
     <p class="text-base opacity-80 max-w-xl">
-      Tools edukasi untuk membantu guru, kreator pembelajaran, dan orang tua
-      menghasilkan prompt visual pembelajaran yang terstruktur, konsisten,
-      dan sesuai jenjang PAUD, SD, dan SMP.
+      Tool edukasi untuk membantu guru, kreator pembelajaran, dan orang tua
+      menghasilkan prompt visual pembelajaran yang terstruktur,
+      konsisten, dan sesuai jenjang.
     </p>
   </section>
 
   <!-- WHAT IT DOES -->
   <section class="card p-6 space-y-4">
     <h3 class="font-semibold text-lg">
-      Apa yang Bisa Dibantu Tools Ini?
+      Apa yang Bisa Dibantu EduPrompt Studio?
     </h3>
-
-    <ul class="space-y-2 text-sm opacity-80 list-disc list-inside">
+    <ul class="list-disc list-inside text-sm opacity-80 space-y-1">
       <li>Menyusun prompt visual untuk worksheet, workbook, infografis, dan LKPD</li>
       <li>Menyesuaikan visual dengan jenjang PAUD, SD, dan SMP</li>
-      <li>Membantu struktur konten sesuai Kurikulum Merdeka</li>
-      <li>Mengurangi trial-error saat membuat visual pembelajaran</li>
+      <li>Membantu guru fokus ke tujuan pembelajaran, bukan trial-error AI</li>
     </ul>
   </section>
 
-  <!-- USE CASES -->
-  <section class="card p-6 space-y-4">
-    <h3 class="font-semibold text-lg">
-      Digunakan Untuk Apa Saja?
-    </h3>
-
-    <ul class="space-y-3 text-sm opacity-80">
-      <li><strong>Worksheet:</strong> Visual aktivitas belajar seperti mencocokkan, memberi label, tracing, dan soal sederhana.</li>
-      <li><strong>Workbook:</strong> Materi bertahap dengan kombinasi penjelasan singkat dan latihan siswa.</li>
-      <li><strong>Infografis:</strong> Storytelling visual untuk menjelaskan konsep pembelajaran secara ringkas.</li>
-      <li><strong>LKPD:</strong> Lembar kerja siswa berbasis aktivitas dan refleksi.</li>
-    </ul>
-  </section>
-
-  <!-- VISUAL EXAMPLES -->
+  <!-- EXAMPLES -->
   <section class="card p-6 space-y-6">
     <h3 class="font-semibold text-lg">
-      Contoh Visual Pembelajaran
+      Contoh Visual & Contoh Perintah
     </h3>
 
     <p class="text-sm opacity-80 max-w-xl">
-      Contoh berikut menunjukkan fleksibilitas visual yang dapat digunakan
-      untuk berbagai mode pembelajaran dan jenjang.
+      Setiap contoh di bawah ini menunjukkan visual pembelajaran
+      beserta contoh perintah lengkap yang digunakan di dalam Gems.
     </p>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-      <!-- Example 1 -->
+      <!-- 1. Siklus Hidup -->
       <div class="border rounded-xl overflow-hidden">
-        <img src="https://izamvanced.github.io/ai-tools/assets/example/sistem-pencernaan.jpg"
-     class="w-full object-cover max-h-48 sm:max-h-56 lg:max-h-none"
-     loading="lazy">
-        <div class="p-3 space-y-1">
-          <p class="text-sm font-medium">
-            Sistem Pencernaan Manusia
-          </p>
-          <p class="text-xs opacity-70">
-            Visual konsep biologi untuk worksheet, workbook,
-            infografis, maupun LKPD.
-          </p>
+        <img src="/assets/example/siklus-hidup.jpg"
+             class="w-full object-cover max-h-48"
+             loading="lazy">
+        <div class="p-3 space-y-2">
+          <p class="font-medium text-sm">Siklus Hidup Makhluk Hidup</p>
+          <pre>Buat infografis pembelajaran tentang siklus hidup kupu-kupu
+untuk siswa kelas 3 SD.
+
+Tujuan pembelajaran:
+Siswa memahami tahapan siklus hidup makhluk hidup.
+
+Gaya visual:
+Flat Vector, warna cerah, ilustrasi ramah anak.</pre>
         </div>
       </div>
 
-      <!-- Example 2 -->
+      <!-- 2. Rantai Makanan -->
       <div class="border rounded-xl overflow-hidden">
-        <img src="./ai-tools/assets/example/siklus-hidup.jpg"
-     alt="Visual siklus hidup makhluk hidup"
-     class="w-full object-cover max-h-48 sm:max-h-56 lg:max-h-none"
-     loading="lazy">
-        <div class="p-3 space-y-1">
-          <p class="text-sm font-medium">
-            Siklus Hidup Makhluk Hidup
-          </p>
-          <p class="text-xs opacity-70">
-            Visual proses bertahap yang membantu siswa
-            memahami urutan dan perubahan.
-          </p>
+        <img src="/assets/example/rantai-makanan-hewan.jpg"
+             class="w-full object-cover max-h-48"
+             loading="lazy">
+        <div class="p-3 space-y-2">
+          <p class="font-medium text-sm">Rantai Makanan Hewan</p>
+          <pre>Buat worksheet visual tentang rantai makanan hewan
+untuk siswa kelas 4 SD.
+
+Tujuan pembelajaran:
+Siswa memahami hubungan antar hewan dalam ekosistem.
+
+Gaya visual:
+Doodle Style, ilustrasi sederhana dan jelas.</pre>
         </div>
       </div>
 
-      <!-- Example 3 -->
+      <!-- 3. Geometri -->
       <div class="border rounded-xl overflow-hidden">
-        <img src="./ai-tools/assets/example/infografis-struktur-pencernaan.jpg"
-     alt="Infografis struktur sistem pencernaan manusia"
-     class="w-full object-cover max-h-48 sm:max-h-56 lg:max-h-none"
-     loading="lazy">
-        <div class="p-3 space-y-1">
-          <p class="text-sm font-medium">
-            Infografis Struktur Sistem Pencernaan
-          </p>
-          <p class="text-xs opacity-70">
-            Infografis terstruktur untuk menjelaskan bagian
-            dan fungsi organ secara ringkas.
-          </p>
+        <img src="/assets/example/geometri-dasar.jpg"
+             class="w-full object-cover max-h-48"
+             loading="lazy">
+        <div class="p-3 space-y-2">
+          <p class="font-medium text-sm">Geometri Dasar</p>
+          <pre>Buat workbook pembelajaran tentang bentuk geometri dasar
+untuk siswa kelas 2 SD.
+
+Tujuan pembelajaran:
+Siswa mengenal dan membedakan lingkaran, segitiga, dan persegi.
+
+Gaya visual:
+Playful Colorful, bentuk sederhana dan kontras jelas.</pre>
+        </div>
+      </div>
+
+      <!-- 4. Fotosintesis -->
+      <div class="border rounded-xl overflow-hidden">
+        <img src="/assets/example/fotosintesis.jpg"
+             class="w-full object-cover max-h-48"
+             loading="lazy">
+        <div class="p-3 space-y-2">
+          <p class="font-medium text-sm">Proses Fotosintesis</p>
+          <pre>Buat infografis pembelajaran tentang proses fotosintesis
+untuk siswa kelas 5 SD.
+
+Tujuan pembelajaran:
+Siswa memahami bagaimana tumbuhan membuat makanan sendiri.
+
+Gaya visual:
+Flat Vector modern, informatif, dan rapi.</pre>
+        </div>
+      </div>
+
+      <!-- 5. PAUD -->
+      <div class="border rounded-xl overflow-hidden">
+        <img src="/assets/example/bentuk-dasar-paud.jpg"
+             class="w-full object-cover max-h-48"
+             loading="lazy">
+        <div class="p-3 space-y-2">
+          <p class="font-medium text-sm">Bentuk Dasar (PAUD)</p>
+          <pre>Buat worksheet visual mengenal bentuk dasar
+untuk anak PAUD.
+
+Tujuan pembelajaran:
+Anak mampu mengenali bentuk lingkaran dan persegi.
+
+Gaya visual:
+Kawaii Pastel, ilustrasi besar dan ceria.</pre>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- FLEXIBILITY -->
-  <section class="card p-6 space-y-4">
-    <h3 class="font-semibold text-lg">
-      Fleksibel untuk Berbagai Mode & Gaya Visual
-    </h3>
-
-    <ul class="text-sm opacity-80 list-disc list-inside space-y-1">
-      <li>Mode: Worksheet, Workbook, Infografis, dan LKPD</li>
-      <li>Jenjang: PAUD, SD, dan SMP</li>
-      <li>Gaya visual dapat disesuaikan dengan kebutuhan pembelajaran</li>
-    </ul>
-  </section>
-
-  <!-- GUIDE -->
-  <section class="card p-6 space-y-4">
-    <h3 class="font-semibold text-lg">
-      Panduan Menggunakan EduPrompt Studio
-    </h3>
-
-    <ol class="space-y-2 text-sm opacity-80 list-decimal list-inside">
-      <li>Tentukan jenis konten, topik, dan jenjang siswa</li>
-      <li>Gunakan EduPrompt Studio untuk menyusun prompt visual</li>
-      <li>Salin prompt yang dihasilkan</li>
-      <li>Tempelkan ke image generator seperti Nano Banana</li>
-      <li>Gunakan visual untuk materi pembelajaran</li>
-    </ol>
-  </section>
-
-  <!-- FINAL CTA -->
+  <!-- CTA -->
   <section class="card p-7 text-center space-y-4">
     <h3 class="text-xl font-semibold">
       Siap Membuat Visual Pembelajaran Lebih Terarah?

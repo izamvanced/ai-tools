@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EduPrompt Studio | AI Tools Library</title>
 
   <!-- Tailwind -->
@@ -36,9 +36,9 @@
     }
     pre {
       background: #f5f5f4;
-      padding: 14px;
+      padding: 12px;
       border-radius: 12px;
-      font-size: 12px;
+      font-size: 13px;
       white-space: pre-wrap;
     }
   </style>
@@ -63,124 +63,131 @@
     <h2 class="text-3xl sm:text-4xl font-bold">
       EduPrompt <span class="accent">Studio</span>
     </h2>
-    <p class="text-base opacity-80 max-w-xl">
-      Tool edukasi untuk membantu guru, kreator pembelajaran, dan orang tua
-      menghasilkan prompt visual pembelajaran yang terstruktur dan konsisten.
+    <p class="opacity-80 max-w-xl">
+      Contoh visual pembelajaran beserta contoh perintah (prompt)
+      yang siap digunakan di Gems.
     </p>
   </section>
 
-  <!-- PENJELASAN -->
-  <section class="card p-6 space-y-4">
-    <h3 class="font-semibold text-lg">
-      Apa yang Bisa Dilakukan EduPrompt Studio?
-    </h3>
-    <ul class="list-disc list-inside text-sm opacity-80 space-y-1">
-      <li>Membuat prompt visual untuk worksheet, workbook, infografis, dan LKPD</li>
-      <li>Menyesuaikan visual dengan jenjang PAUD, SD, dan SMP</li>
-      <li>Membantu guru fokus ke tujuan pembelajaran, bukan trial-error AI</li>
-    </ul>
-  </section>
-
-  <!-- CONTOH -->
-  <section class="card p-6 space-y-6">
-    <h3 class="font-semibold text-lg">
+  <!-- CONTOH VISUAL -->
+  <section class="space-y-6">
+    <h3 class="text-xl font-semibold">
       Contoh Visual & Contoh Perintah
     </h3>
 
-    <p class="text-sm opacity-80 max-w-xl">
-      Berikut contoh visual pembelajaran beserta perintah yang digunakan
-      untuk membuat gambar tersebut di dalam Gems.
-    </p>
-
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
+      <!-- CARD TEMPLATE -->
       <!-- 1 -->
-      <div class="border rounded-xl overflow-hidden">
-        <img src="assets/example/siklus-hidup.jpg"
-             class="w-full object-cover max-h-48"
-             loading="lazy">
-        <div class="p-3 space-y-2">
-          <p class="font-medium text-sm">Siklus Hidup Makhluk Hidup</p>
-          <pre>Buat infografis pembelajaran tentang siklus hidup kupu-kupu
+      <div class="card overflow-hidden">
+        <div class="bg-[#f5f5f4] flex justify-center items-center p-3">
+          <img src="../../assets/example/siklus-hidup.jpg"
+               class="w-auto max-h-40 sm:max-h-48 lg:max-h-56 object-contain"
+               alt="Siklus Hidup Makhluk Hidup"
+               loading="lazy">
+        </div>
+        <div class="p-4 space-y-3">
+          <p class="font-medium">Siklus Hidup Makhluk Hidup</p>
+          <pre>
+Buat infografis pembelajaran
+tentang siklus hidup kupu-kupu
 untuk siswa kelas 3 SD.
 
-Tujuan pembelajaran:
-Siswa memahami tahapan siklus hidup makhluk hidup.
-
 Gaya visual:
-Flat Vector, warna cerah, ramah anak.</pre>
+ilustrasi ramah anak,
+warna cerah, gaya pixar.
+          </pre>
         </div>
       </div>
 
       <!-- 2 -->
-      <div class="border rounded-xl overflow-hidden">
-        <img src="assets/example/rantai-makanan-hewan.jpg"
-             class="w-full object-cover max-h-48"
-             loading="lazy">
-        <div class="p-3 space-y-2">
-          <p class="font-medium text-sm">Rantai Makanan Hewan</p>
-          <pre>Buat worksheet visual tentang rantai makanan hewan
+      <div class="card overflow-hidden">
+        <div class="bg-[#f5f5f4] flex justify-center items-center p-3">
+          <img src="../../assets/example/rantai-makanan.jpg"
+               class="w-auto max-h-40 sm:max-h-48 lg:max-h-56 object-contain"
+               alt="Rantai Makanan Hewan"
+               loading="lazy">
+        </div>
+        <div class="p-4 space-y-3">
+          <p class="font-medium">Rantai Makanan Hewan</p>
+          <pre>
+Buat worksheet visual
+tentang rantai makanan
+di ekosistem hutan
 untuk siswa kelas 4 SD.
 
-Tujuan pembelajaran:
-Siswa memahami hubungan antar hewan dalam ekosistem.
-
 Gaya visual:
-Doodle Style, ilustrasi sederhana.</pre>
+ilustrasi edukatif,
+warna natural.
+          </pre>
         </div>
       </div>
 
       <!-- 3 -->
-      <div class="border rounded-xl overflow-hidden">
-        <img src="assets/example/geometri-dasar.jpg"
-             class="w-full object-cover max-h-48"
-             loading="lazy">
-        <div class="p-3 space-y-2">
-          <p class="font-medium text-sm">Geometri Dasar</p>
-          <pre>Buat workbook pembelajaran tentang bentuk geometri dasar
-untuk siswa kelas 2 SD.
-
-Tujuan pembelajaran:
-Siswa mengenal lingkaran, segitiga, dan persegi.
+      <div class="card overflow-hidden">
+        <div class="bg-[#f5f5f4] flex justify-center items-center p-3">
+          <img src="../../assets/example/geometri-3d.jpg"
+               class="w-auto max-h-40 sm:max-h-48 lg:max-h-56 object-contain"
+               alt="Bangun Ruang 3D"
+               loading="lazy">
+        </div>
+        <div class="p-4 space-y-3">
+          <p class="font-medium">Bangun Ruang 3D</p>
+          <pre>
+Buat visual pembelajaran
+tentang bangun ruang
+(kubus, balok, tabung)
+untuk kelas 5 SD.
 
 Gaya visual:
-Playful Colorful.</pre>
+3D sederhana,
+warna lembut.
+          </pre>
         </div>
       </div>
 
       <!-- 4 -->
-      <div class="border rounded-xl overflow-hidden">
-        <img src="assets/example/fotosintesis.jpg"
-             class="w-full object-cover max-h-48"
-             loading="lazy">
-        <div class="p-3 space-y-2">
-          <p class="font-medium text-sm">Proses Fotosintesis</p>
-          <pre>Buat infografis pembelajaran tentang fotosintesis
-untuk siswa kelas 5 SD.
-
-Tujuan pembelajaran:
-Siswa memahami proses fotosintesis pada tumbuhan.
+      <div class="card overflow-hidden">
+        <div class="bg-[#f5f5f4] flex justify-center items-center p-3">
+          <img src="../../assets/example/bangun-datar.jpg"
+               class="w-auto max-h-40 sm:max-h-48 lg:max-h-56 object-contain"
+               alt="Bangun Datar"
+               loading="lazy">
+        </div>
+        <div class="p-4 space-y-3">
+          <p class="font-medium">Bangun Datar</p>
+          <pre>
+Buat infografis
+tentang bangun datar
+(persegi, segitiga, lingkaran)
+untuk kelas 2 SD.
 
 Gaya visual:
-Flat Vector modern.</pre>
+flat design,
+warna cerah.
+          </pre>
         </div>
       </div>
 
       <!-- 5 -->
-      <div class="border rounded-xl overflow-hidden">
-        <img src="assets/example/bentuk-dasar-paud.jpg"
-             class="w-full object-cover max-h-48"
-             loading="lazy">
-        <div class="p-3 space-y-2">
-          <p class="font-medium text-sm">Bentuk Dasar (PAUD)</p>
-          <pre>Buat worksheet visual mengenal bentuk dasar
-untuk anak PAUD.
-
-Tujuan pembelajaran:
-Anak mengenali lingkaran dan persegi.
+      <div class="card overflow-hidden">
+        <div class="bg-[#f5f5f4] flex justify-center items-center p-3">
+          <img src="../../assets/example/pola-bilangan.jpg"
+               class="w-auto max-h-40 sm:max-h-48 lg:max-h-56 object-contain"
+               alt="Pola Bilangan"
+               loading="lazy">
+        </div>
+        <div class="p-4 space-y-3">
+          <p class="font-medium">Pola Bilangan</p>
+          <pre>
+Buat visual latihan
+tentang pola bilangan sederhana
+untuk siswa kelas 3 SD.
 
 Gaya visual:
-Kawaii Pastel.</pre>
+ikon sederhana,
+kontras jelas.
+          </pre>
         </div>
       </div>
 
@@ -193,8 +200,7 @@ Kawaii Pastel.</pre>
       Siap Membuat Visual Pembelajaran Lebih Terarah?
     </h3>
     <p class="text-sm opacity-80 max-w-md mx-auto">
-      Gunakan EduPrompt Studio untuk menyusun prompt visual
-      pembelajaran dengan lebih cepat dan terarah.
+      Gunakan EduPrompt Studio langsung dari platform resmi.
     </p>
     <a href="https://lynk.id/muhjamilz/92p11zwvjzzk" class="btn">
       Buka EduPrompt Studio

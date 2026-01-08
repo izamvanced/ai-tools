@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI Tools Library</title>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
@@ -17,126 +15,123 @@
       background: #faf9f7;
       color: #0f172a;
     }
-
     .card {
       background: #ffffff;
       border: 1px solid #e7e5e4;
-      border-radius: 20px;
+      border-radius: 18px;
     }
-
     .accent {
       color: #f97316;
     }
-
     .btn {
       background: linear-gradient(135deg, #fb923c, #f97316);
       color: white;
       font-weight: 600;
       border-radius: 14px;
       padding: 12px 18px;
+      display: inline-block;
       font-size: 14px;
-      display: inline-block;
-    }
-
-    .badge {
-      background: #f5f5f4;
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      display: inline-block;
     }
   </style>
 </head>
 
 <body>
 
-<main class="max-w-6xl mx-auto px-5 py-12 space-y-16">
+<main class="max-w-4xl mx-auto px-5 py-10 space-y-12">
 
-  <!-- BRAND / HERO -->
-  <section class="text-center space-y-4">
-    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+  <!-- TITLE -->
+  <section class="text-center space-y-2">
+    <h1 class="text-3xl sm:text-4xl font-extrabold">
       <span class="accent">AI</span> Tools Library
     </h1>
-    <p class="text-sm sm:text-base opacity-70 max-w-xl mx-auto">
-      Kumpulan tools AI dengan fungsi berbeda untuk membantu berpikir,
-      merancang, dan menghasilkan konten secara lebih terarah.
+    <p class="text-sm opacity-70 max-w-md mx-auto">
+      Pilih tools sesuai kebutuhan, dari berpikir sampai membuat visual pembelajaran.
     </p>
   </section>
 
-  <!-- INTRO -->
-  <section class="card p-6 sm:p-8 text-center space-y-4">
-    <span class="badge">Curated Tools</span>
-    <p class="text-sm sm:text-base opacity-80 max-w-2xl mx-auto">
-      Setiap tools di library ini dibuat untuk satu tujuan spesifik.
-      Digunakan secara berurutan atau terpisah sesuai kebutuhan.
-      Tidak serba bisa, tapi tepat guna.
-    </p>
-  </section>
-
-  <!-- TOOLS LIST -->
+  <!-- TOOLS -->
   <section class="space-y-6">
-    <h2 class="text-xl sm:text-2xl font-semibold text-center">
-      Pilih Tools Sesuai Kebutuhan
-    </h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- ALUR BELAJAR -->
+    <div class="card p-6 space-y-3">
+      <div class="flex items-center gap-3">
+        <!-- ICON IDE / FLOW -->
+        <svg class="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3a6 6 0 0 0-3 11.2V17a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2.8A6 6 0 0 0 12 3Z"
+            stroke="currentColor" stroke-width="1.5"/>
+          <path d="M10 21h4" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
 
-      <!-- TOOL 1: ALUR BELAJAR -->
-      <div class="card p-7 space-y-4">
-        <span class="badge">Thinking Flow</span>
-        <h3 class="text-xl font-semibold">
-          AlurBelajar
-        </h3>
-        <p class="text-sm opacity-80">
-          Membantu menata tujuan, konsep inti, dan aktivitas belajar
-          sebelum membuat materi atau visual pembelajaran.
-        </p>
-        <p class="text-xs opacity-60">
-          Cocok untuk: Guru PAUD–SMA, kreator edukasi, orang tua
-        </p>
-        <a href="tools/edukasi/alur-belajar.html" class="btn">
-          Lihat Detail
-        </a>
+        <div>
+          <span class="text-xs bg-stone-100 px-2 py-1 rounded-full font-medium">
+            Thinking Flow
+          </span>
+          <h3 class="text-lg font-semibold">
+            AlurBelajar
+          </h3>
+        </div>
       </div>
 
-      <!-- TOOL 2: EDUPROMPT STUDIO -->
-      <div class="card p-7 space-y-4">
-        <span class="badge">Prompt Builder</span>
-        <h3 class="text-xl font-semibold">
-          EduPrompt Studio
-        </h3>
-        <p class="text-sm opacity-80">
-          Tools untuk menyusun prompt visual pembelajaran yang terstruktur,
-          sesuai jenjang, dan siap digunakan di AI image generator.
-        </p>
-        <p class="text-xs opacity-60">
-          Cocok untuk: Guru, kreator edukasi, orang tua
-        </p>
-        <a href="tools/edukasi/eduprompt-studio.html" class="btn">
-          Lihat Detail
-        </a>
-      </div>
+      <p class="text-sm opacity-80">
+        Membantu menata tujuan, konsep inti, dan aktivitas belajar sebelum membuat materi atau visual pembelajaran.
+      </p>
 
+      <p class="text-xs opacity-60">
+        Cocok untuk: Guru PAUD–SMA, kreator edukasi, orang tua
+      </p>
+
+      <a href="tools/alurbelajar.html" class="btn">
+        Lihat Detail
+      </a>
     </div>
+
+    <!-- EDUPROMPT STUDIO -->
+    <div class="card p-6 space-y-3">
+      <div class="flex items-center gap-3">
+        <!-- ICON PROMPT / VISUAL -->
+        <svg class="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="14" rx="3"
+            stroke="currentColor" stroke-width="1.5"/>
+          <path d="M7 8h10M7 12h6"
+            stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+
+        <div>
+          <span class="text-xs bg-stone-100 px-2 py-1 rounded-full font-medium">
+            Prompt Builder
+          </span>
+          <h3 class="text-lg font-semibold">
+            EduPrompt Studio
+          </h3>
+        </div>
+      </div>
+
+      <p class="text-sm opacity-80">
+        Tools untuk menyusun prompt visual pembelajaran yang terstruktur, sesuai jenjang, dan siap digunakan di AI image generator.
+      </p>
+
+      <p class="text-xs opacity-60">
+        Cocok untuk: Guru, kreator edukasi, orang tua
+      </p>
+
+      <a href="tools/edukasi/eduprompt-studio.html" class="btn">
+        Lihat Detail
+      </a>
+    </div>
+
   </section>
 
-  <!-- HOW TO USE (RINGKAS) -->
-  <section class="card p-7 space-y-4">
-    <h3 class="text-lg font-semibold">
+  <!-- FLOW -->
+  <section class="card p-6 space-y-3">
+    <h3 class="font-semibold text-lg">
       Alur Penggunaan yang Disarankan
     </h3>
-    <ol class="list-decimal list-inside text-sm opacity-80 space-y-2">
+    <ol class="text-sm opacity-80 list-decimal list-inside space-y-1">
       <li>Gunakan <strong>AlurBelajar</strong> untuk menjernihkan tujuan dan aktivitas.</li>
       <li>Lanjutkan ke <strong>EduPrompt Studio</strong> untuk menyusun prompt visual.</li>
       <li>Gunakan prompt tersebut di AI image generator pilihan Anda.</li>
     </ol>
   </section>
-
-  <!-- FOOTER -->
-  <footer class="text-center text-xs opacity-60 pt-6">
-    © AI Tools Library
-  </footer>
 
 </main>
 

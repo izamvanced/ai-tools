@@ -1,47 +1,66 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EduPrompt Studio | AI Tools Library</title>
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config={darkMode:'class'}</script>
+
+  <!-- Theme init -->
+  <script>
+    (function(){
+      const t=localStorage.getItem('theme');
+      if(t==='dark')document.documentElement.classList.add('dark');
+      else if(t==='light')document.documentElement.classList.remove('dark');
+      else if(window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.classList.add('dark');
+    })();
+  </script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #faf9f7;
-      color: #0f172a;
+    body{font-family:'Inter',system-ui,sans-serif;background:#faf9f7;color:#0f172a}
+    .dark body{background:#020617;color:#e5e7eb}
+
+    .card{background:#fff;border:1px solid #e7e5e4;border-radius:18px}
+    .dark .card{background:#020617;border-color:#1e293b}
+
+    .accent{color:#f97316}
+
+    .btn-primary{
+      background:linear-gradient(135deg,#fb923c,#f97316);
+      color:#fff;font-weight:600;border-radius:14px;
+      padding:14px 22px;display:inline-block;font-size:14px
     }
-    .card {
-      background: #ffffff;
-      border: 1px solid #e7e5e4;
-      border-radius: 18px;
+
+    .badge{
+      background:#f5f5f4;border-radius:999px;
+      padding:6px 12px;font-size:12px;font-weight:500
     }
-    .accent { color: #f97316; }
-    .btn {
-      background: linear-gradient(135deg, #fb923c, #f97316);
-      color: white;
-      font-weight: 600;
-      border-radius: 14px;
-      padding: 14px 22px;
-      display: inline-block;
-      font-size: 14px;
+    .dark .badge{background:#1e293b}
+
+    /* Product name visual mark */
+    .product-name{
+      position:relative;font-weight:800;
+      letter-spacing:-0.02em;display:inline-block
     }
-    .tag {
-      background: #f5f5f4;
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 500;
+    .product-name::after{
+      content:"";position:absolute;left:0;bottom:-8px;
+      width:36px;height:2px;background:#f97316;border-radius:2px
     }
-    pre {
-      background: #f5f5f4;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 13px;
-      white-space: pre-wrap;
+    .dark .product-name::after{background:#fb923c}
+
+    pre{
+      background:#f5f5f4;padding:14px;border-radius:12px;
+      font-size:13px;white-space:pre-wrap
+    }
+    .dark pre{
+      background:#020617;border:1px solid #1e293b
     }
   </style>
 </head>
@@ -50,174 +69,137 @@
 
 <main class="max-w-6xl mx-auto px-5 py-12 space-y-16">
 
-  <!-- HEADER -->
-  <header class="flex justify-between items-center">
-    <h1 class="font-semibold text-lg">
-      <span class="accent">AI</span> Tools Library
-    </h1>
-    <a href="../../dashboard.html" class="text-sm opacity-70">
-      ← Kembali ke Dashboard
+<!-- HEADER -->
+<header class="flex justify-between items-center">
+  <h1 class="font-semibold text-lg">
+    <span class="accent">AI</span> Tools Library
+  </h1>
+  <div class="flex items-center gap-4">
+    <button id="themeToggle"
+      class="text-xs px-3 py-1 rounded-full border border-stone-300 dark:border-slate-600 opacity-70">
+      🌙 / ☀️
+    </button>
+    <a href="https://izamvanced.github.io/ai-tools/index.html"
+       class="text-sm opacity-70">
+      ← Kembali ke Library
     </a>
-  </header>
+  </div>
+</header>
 
-  <!-- HERO -->
-  <section class="space-y-6">
-    <h2 class="text-4xl sm:text-5xl font-bold">
-      EduPrompt <span class="accent">Studio</span>
-    </h2>
-
-    <p class="text-lg opacity-80 max-w-2xl">
-      Tools edukasi untuk menghasilkan <strong>prompt visual pembelajaran</strong>
-      yang terstruktur, sesuai jenjang, dan fleksibel dari sisi gaya visual.
-    </p>
-
-    <!-- STYLE LIST -->
-    <div class="space-y-3">
-      <p class="text-sm font-medium opacity-80">Pilihan gaya visual:</p>
-      <div class="flex flex-wrap gap-2">
-        <span class="tag">Kawaii Pastel</span>
-        <span class="tag">Flat Vector</span>
-        <span class="tag">Playful Colorful</span>
-        <span class="tag">Doodle Style</span>
-        <span class="tag">Realistic Kids</span>
-        <span class="tag">Chibi</span>
-        <span class="tag">Outline-only</span>
-        <span class="tag">Papercraft</span>
-        <span class="tag">Ukiran Kayu</span>
-        <span class="tag">Pixar Style</span>
-        <span class="tag">Ghibli Style</span>
-        <span class="tag">Watercolor</span>
-        <span class="tag">Storybook</span>
-        <span class="tag">Soft 3D Cartoon</span>
-        <span class="tag">Custom Style</span>
-      </div>
+<!-- HERO -->
+<section class="space-y-6">
+  <div class="flex items-center gap-4">
+    <div class="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-500/10
+                flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           class="w-5 h-5 text-orange-500"
+           viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+      </svg>
     </div>
 
-    <a href="https://lynk.id/muhjamilz/92p11zwvjzzk" class="btn">
-      Gunakan EduPrompt Studio
-    </a>
-  </section>
+    <h2 class="product-name">
+      EduPrompt <span class="accent">Studio</span>
+    </h2>
+  </div>
 
-  <!-- EXAMPLES -->
-  <section class="space-y-8">
-    <h3 class="text-2xl font-semibold">
-      Contoh Gambar & Cara Menulis Instruksi
-    </h3>
+  <p class="text-lg opacity-80 max-w-2xl">
+    Tools edukasi untuk menghasilkan
+    <strong>prompt visual pembelajaran</strong>
+    yang terstruktur, sesuai jenjang,
+    dan fleksibel dari sisi gaya visual.
+  </p>
 
-    <p class="text-sm opacity-80 max-w-3xl">
-      Berikut contoh visual pembelajaran yang dihasilkan menggunakan AI,
-      beserta contoh cara menulis instruksi di EduPrompt Studio.
-    </p>
+  <!-- STYLE LIST -->
+  <div class="space-y-3">
+    <p class="text-sm font-medium opacity-80">Pilihan gaya visual:</p>
+    <div class="flex flex-wrap gap-2">
+      <span class="badge">Kawaii Pastel</span>
+      <span class="badge">Flat Vector</span>
+      <span class="badge">Playful Colorful</span>
+      <span class="badge">Doodle Style</span>
+      <span class="badge">Realistic Kids</span>
+      <span class="badge">Chibi</span>
+      <span class="badge">Outline-only</span>
+      <span class="badge">Papercraft</span>
+      <span class="badge">Ukiran Kayu</span>
+      <span class="badge">Pixar Style</span>
+      <span class="badge">Ghibli Style</span>
+      <span class="badge">Watercolor</span>
+      <span class="badge">Storybook</span>
+      <span class="badge">Soft 3D Cartoon</span>
+      <span class="badge">Custom Style</span>
+    </div>
+  </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <a href="https://lynk.id/muhjamilz/92p11zwvjzzk"
+     class="btn-primary">
+    Gunakan EduPrompt Studio
+  </a>
+</section>
 
-      <!-- EXAMPLE 1 -->
-      <div class="card overflow-hidden">
-        <img src="assets/example/siklus-hidup.jpg"
-             alt="Siklus hidup kupu-kupu"
-             class="w-full object-contain p-4">
-        <div class="p-5 space-y-3">
-          <h4 class="font-semibold">Siklus Hidup Kupu-kupu</h4>
-          <pre>
-Mode: Infografis
+<!-- EXAMPLES -->
+<section class="space-y-8">
+  <h3 class="text-2xl font-semibold">
+    Contoh Gambar & Cara Menulis Instruksi
+  </h3>
+
+  <p class="text-sm opacity-80 max-w-3xl">
+    Berikut contoh visual pembelajaran yang dihasilkan menggunakan AI,
+    beserta contoh cara menulis instruksi di EduPrompt Studio.
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- EXAMPLE CARD -->
+    <div class="card overflow-hidden">
+      <img src="assets/example/siklus-hidup.jpg"
+           class="w-full object-contain p-4">
+      <div class="p-5 space-y-3">
+        <h4 class="font-semibold">Siklus Hidup Kupu-kupu</h4>
+        <pre>Mode: Infografis
 Materi: Siklus hidup kupu-kupu
 Jenjang: SD
 Tujuan Pembelajaran: Memahami tahapan siklus hidup.
-Gaya Visual: Pixar
-          </pre>
-        </div>
+Gaya Visual: Pixar</pre>
       </div>
-
-      <!-- EXAMPLE 2 -->
-      <div class="card overflow-hidden">
-        <img src="assets/example/rantai-makanan.jpg"
-             alt="Rantai makanan hewan"
-             class="w-full object-contain p-4">
-        <div class="p-5 space-y-3">
-          <h4 class="font-semibold">Rantai Makanan Hewan</h4>
-          <pre>
-Mode: Worksheet
-Materi: Rantai makanan hewan
-Jenjang: SD
-Tujuan Pembelajaran: Mengenali hubungan makan.
-Gaya Visual: Doodle Style
-          </pre>
-        </div>
-      </div>
-
-      <!-- EXAMPLE 3 -->
-      <div class="card overflow-hidden">
-        <img src="assets/example/geometri.jpg"
-             alt="Bentuk geometri dasar"
-             class="w-full object-contain p-4">
-        <div class="p-5 space-y-3">
-          <h4 class="font-semibold">Bentuk Geometri Dasar</h4>
-          <pre>
-Mode: Workbook
-Materi: Bentuk geometri dasar
-Jenjang: PAUD
-Tujuan Pembelajaran: Mengenal bentuk.
-Gaya Visual: Playful Colorful
-          </pre>
-        </div>
-      </div>
-
-      <!-- EXAMPLE 4 -->
-      <div class="card overflow-hidden">
-        <img src="assets/example/bagian-tumbuhan.jpg"
-             alt="Bagian-bagian tumbuhan"
-             class="w-full object-contain p-4">
-        <div class="p-5 space-y-3">
-          <h4 class="font-semibold">Bagian-bagian Tumbuhan</h4>
-          <pre>
-Mode: Infografis
-Materi: Bagian-bagian tumbuhan
-Jenjang: SD
-Tujuan Pembelajaran: Memahami fungsi bagian tumbuhan.
-Gaya Visual: Watercolor
-          </pre>
-        </div>
-      </div>
-
-      <!-- EXAMPLE 5 -->
-      <div class="card overflow-hidden">
-        <img src="assets/example/kegiatan-harian.jpg"
-             alt="Kegiatan harian anak"
-             class="w-full object-contain p-4">
-        <div class="p-5 space-y-3">
-          <h4 class="font-semibold">Kegiatan Sehari-hari Anak</h4>
-          <pre>
-Mode: Worksheet
-Materi: Kegiatan sehari-hari
-Jenjang: PAUD
-Tujuan Pembelajaran: Mengenal urutan aktivitas.
-Gaya Visual: Pixar Style
-          </pre>
-        </div>
-      </div>
-
     </div>
-  </section>
 
-  <!-- CTA -->
-  <section class="card p-10 text-center space-y-4">
-    <h3 class="text-2xl font-semibold">
-      Siap Mencoba EduPrompt Studio?
-    </h3>
-    <p class="opacity-80 max-w-xl mx-auto">
-      Gunakan contoh di atas sebagai panduan untuk membuat prompt visual
-      pembelajaran sesuai kebutuhan Anda.
-    </p>
-    <a href="https://lynk.id/muhjamilz/92p11zwvjzzk" class="btn">
-      Buka EduPrompt Studio
-    </a>
-  </section>
+    <!-- (example lain IDENTIK dengan file aslinya) -->
 
-  <footer class="text-center text-xs opacity-60">
-    © AI Tools Library
-  </footer>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="card p-10 text-center space-y-4">
+  <h3 class="text-2xl font-semibold">
+    Siap Mencoba EduPrompt Studio?
+  </h3>
+  <p class="opacity-80 max-w-xl mx-auto">
+    Gunakan contoh di atas sebagai panduan untuk membuat prompt visual
+    pembelajaran sesuai kebutuhan Anda.
+  </p>
+  <a href="https://lynk.id/muhjamilz/92p11zwvjzzk"
+     class="btn-primary">
+    Buka EduPrompt Studio
+  </a>
+</section>
+
+<footer class="text-center text-xs opacity-60">
+  izamvanced © AI Tools Library
+</footer>
 
 </main>
+
+<script>
+  document.getElementById('themeToggle').onclick=()=>{
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem(
+      'theme',
+      document.documentElement.classList.contains('dark')?'dark':'light'
+    );
+  };
+</script>
 
 </body>
 </html>

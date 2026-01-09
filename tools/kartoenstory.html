@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KartoenStory Builder | AI Tools Library</title>
 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class'}</script>
+  <script>
+    (function(){
+      const t=localStorage.getItem('theme');
+      if(t==='dark')document.documentElement.classList.add('dark');
+      else if(t==='light')document.documentElement.classList.remove('dark');
+      else if(window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.classList.add('dark');
+    })();
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body{font-family:'Inter',system-ui,sans-serif;background:#faf9f7;color:#0f172a}
+    .dark body{background:#020617;color:#e5e7eb}
+    .card{background:#fff;border:1px solid #e7e5e4;border-radius:18px}
+    .dark .card{background:#020617;border-color:#1e293b}
+    .accent{color:#f97316}
+    .badge{background:#f5f5f4;font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px}
+    .dark .badge{background:#1e293b}
+    .product-name{position:relative;font-weight:800;letter-spacing:-0.02em;display:inline-block}
+    .product-name::after{content:"";position:absolute;left:0;bottom:-8px;width:36px;height:2px;background:#f97316;border-radius:2px}
+    .dark .product-name::after{background:#fb923c}
+  </style>
+</head>
+
+<body>
+<main class="max-w-6xl mx-auto px-5 py-12 space-y-16">
+
+<header class="flex justify-between items-center">
+  <h1 class="font-semibold text-lg"><span class="accent">AI</span> Tools Library</h1>
+  <div class="flex items-center gap-4">
+    <button id="themeToggle" class="text-xs px-3 py-1 rounded-full border border-stone-300 dark:border-slate-600 opacity-70">🌙 / ☀️</button>
+    <a href="https://izamvanced.github.io/ai-tools" class="text-sm opacity-70">← Kembali ke Library</a>
+  </div>
+</header>
+
+<section class="space-y-4">
+  <span class="badge">Story Planning</span>
+  <h2 class="product-name">KartoenStory <span class="accent">Builder</span></h2>
+  <p class="opacity-80 max-w-2xl">
+    Menyusun narasi cerita terstruktur sebagai acuan final produksi visual.
+  </p>
+</section>
+
+<section class="card p-8 space-y-3">
+  <h3 class="font-semibold">Langkah Singkat</h3>
+  <ol class="list-decimal list-inside text-sm opacity-80 space-y-1">
+    <li>Isi judul cerita</li>
+    <li>Tentukan jumlah gambar</li>
+    <li>Generate narasi final</li>
+  </ol>
+</section>
+
+<footer class="text-center text-xs opacity-60">
+  <a href="https://izamvanced.github.io/ai-tools" class="hover:opacity-100 transition">
+    izamvanced © AI Tools Library
+  </a>
+</footer>
+
+</main>
+
+<script>
+  document.getElementById('themeToggle').onclick=()=>{
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme',document.documentElement.classList.contains('dark')?'dark':'light');
+  };
+</script>
+</body>
+</html>

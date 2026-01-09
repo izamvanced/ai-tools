@@ -1,68 +1,240 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KartoenStory Builder | AI Tools Library</title>
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={darkMode:'class'}</script>
-  <script>
-    (function(){
-      const t=localStorage.getItem('theme');
-      if(t==='dark')document.documentElement.classList.add('dark');
-      else if(t==='light')document.documentElement.classList.remove('dark');
-      else if(window.matchMedia('(prefers-color-scheme: dark)').matches)
-        document.documentElement.classList.add('dark');
-    })();
-  </script>
 
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    body{font-family:'Inter',system-ui,sans-serif;background:#faf9f7;color:#0f172a}
-    .dark body{background:#020617;color:#e5e7eb}
-    .card{background:#fff;border:1px solid #e7e5e4;border-radius:18px}
-    .dark .card{background:#020617;border-color:#1e293b}
-    .accent{color:#f97316}
-    .badge{background:#f5f5f4;font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px}
-    .dark .badge{background:#1e293b}
-    .product-name{position:relative;font-weight:800;letter-spacing:-0.02em;display:inline-block}
-    .product-name::after{content:"";position:absolute;left:0;bottom:-8px;width:36px;height:2px;background:#f97316;border-radius:2px}
-    .dark .product-name::after{background:#fb923c}
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #faf9f7;
+      color: #0f172a;
+    }
+    .dark body {
+      background: #020617;
+      color: #e5e7eb;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e7e5e4;
+      border-radius: 18px;
+    }
+    .dark .card {
+      background: #020617;
+      border-color: #1e293b;
+    }
+
+    .accent { color: #f97316; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #fb923c, #f97316);
+      color: white;
+      font-weight: 600;
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-size: 14px;
+      display: inline-block;
+    }
+
+    .badge {
+      background: #f5f5f4;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .dark .badge {
+      background: #1e293b;
+    }
+
+    /* Product name visual (micro underline) */
+    .product-name {
+      position: relative;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: inline-block;
+    }
+    .product-name::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 36px;
+      height: 2px;
+      background: #f97316;
+      border-radius: 2px;
+    }
+
+    /* === FIX OVERFLOW PRE (FINAL) === */
+    pre {
+      background: #f5f5f4;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 13px;
+
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    .dark pre {
+      background: #020617;
+      border: 1px solid #1e293b;
+    }
+
+    @media (max-width: 640px) {
+      pre { font-size: 12px; }
+    }
+
+    input, select {
+      background: transparent;
+    }
   </style>
+
+  <!-- Dark mode init -->
+  <script>
+    (function () {
+      const t = localStorage.getItem('theme');
+      if (t === 'dark') document.documentElement.classList.add('dark');
+      else if (t === 'light') document.documentElement.classList.remove('dark');
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.classList.add('dark');
+    })();
+  </script>
 </head>
 
 <body>
+
 <main class="max-w-6xl mx-auto px-5 py-12 space-y-16">
 
+<!-- HEADER -->
 <header class="flex justify-between items-center">
-  <h1 class="font-semibold text-lg"><span class="accent">AI</span> Tools Library</h1>
+  <h1 class="font-semibold text-lg">
+    <span class="accent">AI</span> Tools Library
+  </h1>
   <div class="flex items-center gap-4">
-    <button id="themeToggle" class="text-xs px-3 py-1 rounded-full border border-stone-300 dark:border-slate-600 opacity-70">🌙 / ☀️</button>
-    <a href="https://izamvanced.github.io/ai-tools" class="text-sm opacity-70">← Kembali ke Library</a>
+    <button id="themeToggle"
+      class="text-xs px-3 py-1 rounded-full border border-stone-300 dark:border-slate-600 opacity-70">
+      🌙 / ☀️
+    </button>
+    <a href="https://izamvanced.github.io/ai-tools"
+       class="text-sm opacity-70">
+      ← Kembali ke Library
+    </a>
   </div>
 </header>
 
-<section class="space-y-4">
+<!-- HERO -->
+<section class="space-y-4 max-w-3xl">
   <span class="badge">Story Planning</span>
-  <h2 class="product-name">KartoenStory <span class="accent">Builder</span></h2>
-  <p class="opacity-80 max-w-2xl">
-    Menyusun narasi cerita terstruktur sebagai acuan final produksi visual.
+  <h2 class="product-name">
+    KartoenStory <span class="accent">Builder</span>
+  </h2>
+  <p class="opacity-80">
+    Gunakan halaman ini untuk <strong>menyusun cerita kartun secara FINAL</strong>.
+    Output dari KartoenStory akan menjadi satu-satunya acuan
+    untuk produksi visual di <strong>KartoenMaker</strong>.
   </p>
 </section>
 
-<section class="card p-8 space-y-3">
-  <h3 class="font-semibold">Langkah Singkat</h3>
-  <ol class="list-decimal list-inside text-sm opacity-80 space-y-1">
-    <li>Isi judul cerita</li>
-    <li>Tentukan jumlah gambar</li>
-    <li>Generate narasi final</li>
-  </ol>
+<!-- FORM -->
+<section class="card p-8 max-w-2xl space-y-6">
+  <h3 class="text-xl font-semibold">
+    Form Penyusunan Cerita
+  </h3>
+
+  <form class="space-y-4">
+    <div>
+      <label class="text-sm font-medium">Judul Cerita</label>
+      <input type="text"
+        placeholder="Contoh: Kebaikan yang Terlupakan"
+        class="w-full mt-1 px-4 py-2 rounded-lg border border-stone-300 dark:border-slate-600">
+    </div>
+
+    <div>
+      <label class="text-sm font-medium">Tema Utama</label>
+      <input type="text"
+        placeholder="Contoh: Empati, Moral, Keberanian"
+        class="w-full mt-1 px-4 py-2 rounded-lg border border-stone-300 dark:border-slate-600">
+    </div>
+
+    <div>
+      <label class="text-sm font-medium">Jumlah Gambar</label>
+      <select
+        class="w-full mt-1 px-4 py-2 rounded-lg border border-stone-300 dark:border-slate-600">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+
+    <button type="button" class="btn-primary">
+      Generate Struktur Cerita
+    </button>
+  </form>
 </section>
 
+<!-- PANDUAN -->
+<section class="card p-8 space-y-4 max-w-3xl">
+  <h3 class="text-lg font-semibold">Panduan Penggunaan</h3>
+
+  <ol class="list-decimal list-inside space-y-2 text-sm opacity-80">
+    <li>Isi judul dan tema cerita secara jelas.</li>
+    <li>Tentukan jumlah gambar (1 gambar = 1 adegan).</li>
+    <li>Susun deskripsi cerita per gambar.</li>
+    <li>Pastikan cerita sudah FINAL sebelum ke KartoenMaker.</li>
+  </ol>
+
+  <p class="text-sm opacity-70">
+    ⚠️ Setelah cerita digunakan di KartoenMaker,
+    struktur cerita <strong>tidak disarankan diubah</strong>
+    untuk menjaga konsistensi visual.
+  </p>
+</section>
+
+<!-- CONTOH -->
+<section class="card p-8 space-y-4 max-w-3xl">
+  <h3 class="text-lg font-semibold">Contoh Output Cerita (Final)</h3>
+
+  <pre>
+Judul: Kebaikan yang Terlupakan
+Tema: Empati
+
+Gambar 1:
+Seorang pria tua membantu anak kecil menyeberang jalan
+di tengah hujan gerimis. Ekspresi wajah tenang dan tulus.
+
+Gambar 2:
+Beberapa orang dewasa menatap dengan acuh,
+sementara anak kecil tersenyum penuh rasa aman.
+
+Gambar 3:
+Pria tua berjalan pergi sendirian,
+namun suasana terasa hangat dan penuh harapan.
+  </pre>
+
+  <p class="text-sm opacity-70">
+    Output seperti ini bisa langsung dipakai
+    sebagai input cerita di <strong>KartoenMaker</strong>.
+  </p>
+</section>
+
+<!-- FOOTER -->
 <footer class="text-center text-xs opacity-60">
-  <a href="https://izamvanced.github.io/ai-tools" class="hover:opacity-100 transition">
+  <a href="https://izamvanced.github.io/ai-tools"
+     class="hover:opacity-100 transition">
     izamvanced © AI Tools Library
   </a>
 </footer>
@@ -70,10 +242,14 @@
 </main>
 
 <script>
-  document.getElementById('themeToggle').onclick=()=>{
+  document.getElementById('themeToggle').onclick = () => {
     document.documentElement.classList.toggle('dark');
-    localStorage.setItem('theme',document.documentElement.classList.contains('dark')?'dark':'light');
+    localStorage.setItem(
+      'theme',
+      document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+    );
   };
 </script>
+
 </body>
 </html>

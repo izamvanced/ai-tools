@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,6 +7,25 @@
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Dark mode config -->
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+
+  <!-- Theme init -->
+  <script>
+    (function () {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,11 +36,19 @@
       background: #faf9f7;
       color: #0f172a;
     }
+    .dark body {
+      background: #020617;
+      color: #e5e7eb;
+    }
 
     .card {
       background: #ffffff;
       border: 1px solid #e7e5e4;
       border-radius: 18px;
+    }
+    .dark .card {
+      background: #020617;
+      border-color: #1e293b;
     }
 
     .headline {
@@ -30,9 +57,7 @@
       line-height: 1.1;
     }
 
-    .accent {
-      color: #f97316;
-    }
+    .accent { color: #f97316; }
 
     .btn-primary {
       background: linear-gradient(135deg, #fb923c, #f97316);
@@ -49,6 +74,7 @@
       border-radius: 999px;
       display: inline-block;
     }
+    .dark .badge { background: #1e293b; }
   </style>
 </head>
 
@@ -56,48 +82,71 @@
 
 <main class="max-w-6xl mx-auto px-5 py-12 space-y-16">
 
-  <!-- BRAND -->
-  <section class="text-center space-y-3">
-    <h1 class="headline text-4xl sm:text-5xl lg:text-6xl">
+  <!-- HEADER -->
+  <header class="flex justify-between items-center">
+    <h1 class="font-semibold text-lg">
       <span class="accent">AI</span> Tools Library
     </h1>
+
+    <div class="flex items-center gap-4">
+      <button id="themeToggle"
+        class="text-xs px-3 py-1 rounded-full border border-stone-300
+               dark:border-slate-600 opacity-70 hover:opacity-100 transition">
+        🌙 / ☀️
+      </button>
+
+      <a href="https://izamvanced.github.io/ai-tools/index.html"
+         class="text-sm opacity-70">
+        Home
+      </a>
+    </div>
+  </header>
+
+  <!-- BRAND -->
+  <section class="text-center space-y-3">
+    <h2 class="headline text-4xl sm:text-5xl lg:text-6xl">
+      <span class="accent">AI</span> Tools Library
+    </h2>
     <p class="text-sm sm:text-base opacity-70 max-w-xl mx-auto">
-      Kumpulan produk AI dengan fungsi spesifik dan workflow terkunci.
+      Produk AI dengan fungsi spesifik dan workflow terkunci.
       Bukan AI serba bisa, tapi AI yang bekerja dengan arah jelas.
     </p>
   </section>
 
   <!-- HERO -->
   <section class="card p-7 sm:p-10 text-center space-y-4">
-    <span class="badge">
-      Curated AI Products
-    </span>
-
+    <span class="badge">Curated AI Products</span>
     <p class="text-sm sm:text-base opacity-80 max-w-2xl mx-auto">
-      Setiap tools di AI Tools Library dibuat untuk satu tujuan utama.
-      Tidak bercampur, tidak saling tumpang tindih,
-      dan dirancang agar hasil tetap konsisten serta dapat dikontrol.
+      Setiap tools dibuat untuk satu tujuan utama.
+      Tidak bercampur, tidak tumpang tindih,
+      dan dirancang agar hasil konsisten serta dapat dikontrol.
     </p>
   </section>
 
   <!-- PRODUCTS -->
   <section class="space-y-8">
-    <h2 class="text-xl font-semibold text-center">
+    <h3 class="text-xl font-semibold text-center">
       Produk Tersedia
-    </h2>
+    </h3>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
       <!-- EduPrompt Studio -->
       <div class="card p-6 space-y-3">
-        <h3 class="text-lg font-semibold">
+        <h4 class="text-lg font-semibold flex items-center gap-2">
+          <!-- icon document + spark -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+               fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8 16h8M8 12h8M8 8h5M6 4h9l3 3v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
+          </svg>
           EduPrompt <span class="accent">Studio</span>
-        </h3>
+        </h4>
         <p class="text-sm opacity-80">
-          Tools untuk membantu menghasilkan prompt visual edukasi
+          Tools untuk menghasilkan prompt visual edukasi
           yang terstruktur, sesuai jenjang, dan konsisten.
         </p>
-        <a href="/ai-tools/tools/eduprompt-studio.html"
+        <a href="https://izamvanced.github.io/ai-tools/tools/edukasi/eduprompt-studio.html"
            class="btn-primary inline-block px-5 py-3 text-sm">
           Lihat Produk
         </a>
@@ -105,14 +154,22 @@
 
       <!-- KartoenMaker -->
       <div class="card p-6 space-y-3">
-        <h3 class="text-lg font-semibold">
+        <h4 class="text-lg font-semibold flex items-center gap-2">
+          <!-- icon panels -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+               fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
           Kartoen<span class="accent">Maker</span>
-        </h3>
+        </h4>
         <p class="text-sm opacity-80">
-          Mesin produksi kartun visual yang bekerja satu gambar per langkah,
+          Mesin produksi kartun visual satu gambar per langkah,
           sepenuhnya tunduk pada cerita pengguna.
         </p>
-        <a href="/ai-tools/tools/kartoenmaker.html"
+        <a href="https://izamvanced.github.io/ai-tools/tools/kartoenmaker.html"
            class="btn-primary inline-block px-5 py-3 text-sm">
           Lihat Produk
         </a>
@@ -121,69 +178,57 @@
     </div>
   </section>
 
-  <!-- KARTOENSTORY BUILDER (FASILITAS) -->
+  <!-- FASILITAS -->
   <section class="card p-7 sm:p-10 space-y-4">
-    <span class="badge">
-      Fasilitas Pendukung
-    </span>
+    <span class="badge">Fasilitas Pendukung</span>
 
-    <h2 class="text-lg font-semibold">
+    <h3 class="text-lg font-semibold flex items-center gap-2">
+      <!-- icon text structure -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M4 6h16M4 12h10M4 18h14"/>
+      </svg>
       <span class="accent">KartoenStory</span> Builder
-    </h2>
+    </h3>
 
     <p class="text-sm opacity-80 max-w-3xl">
-      KartoenStory Builder adalah alat bantu untuk menyusun
-      <strong>narasi cerita terstruktur</strong> sebelum diproduksi
-      menjadi kartun visual menggunakan KartoenMaker.
-      Fasilitas ini tidak berdiri sebagai produk terpisah,
-      melainkan bagian dari workflow storytelling.
+      Alat bantu untuk menyusun narasi cerita terstruktur
+      sebelum diproduksi menjadi kartun visual dengan KartoenMaker.
+      Bukan produk terpisah, melainkan bagian dari workflow.
     </p>
 
     <ul class="list-disc list-inside text-sm opacity-75 space-y-1">
       <li>Input judul cerita</li>
       <li>Tentukan jumlah gambar</li>
-      <li>Hasilkan narasi cerita terstruktur</li>
+      <li>Hasilkan narasi terstruktur</li>
       <li>Siap dipakai sebagai acuan visual</li>
     </ul>
 
     <div>
-      <a href="/ai-tools/tools/kartoenstory.html"
+      <a href="https://izamvanced.github.io/ai-tools/tools/kartoenstory.html"
          class="btn-primary inline-block px-5 py-3 text-sm">
         Buka KartoenStory Builder
       </a>
     </div>
   </section>
 
-  <!-- PRINCIPLES -->
-  <section class="card p-7 sm:p-10 space-y-6">
-    <h2 class="text-lg font-semibold text-center">
-      Prinsip AI Tools Library
-    </h2>
-
-    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm opacity-80">
-      <li>• Satu tools untuk satu fungsi utama</li>
-      <li>• Workflow jelas dan terkunci</li>
-      <li>• Kontrol tetap di tangan pengguna</li>
-      <li>• Dirancang untuk penggunaan serius</li>
-    </ul>
-  </section>
-
-  <!-- CTA -->
-  <section class="card p-8 text-center space-y-4">
-    <h3 class="text-xl font-semibold">
-      Gunakan AI dengan Lebih Terarah
-    </h3>
-    <p class="text-sm opacity-70 max-w-md mx-auto">
-      Pilih tools sesuai kebutuhan Anda.
-      Tidak semua masalah perlu satu AI yang sama.
-    </p>
-  </section>
-
+  <!-- FOOTER -->
   <footer class="text-center text-xs opacity-60">
-    © AI Tools Library
+    izamvanced © AI Tools Library
   </footer>
 
 </main>
+
+<!-- Toggle script -->
+<script>
+  const toggleBtn = document.getElementById('themeToggle');
+  toggleBtn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
 
 </body>
 </html>

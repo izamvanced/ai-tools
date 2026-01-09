@@ -1,149 +1,79 @@
-
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>KartoenMaker | AI Tools Library</title>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class'}</script>
+  <script>
+    (function(){
+      const t=localStorage.getItem('theme');
+      if(t==='dark')document.documentElement.classList.add('dark');
+      else if(t==='light')document.documentElement.classList.remove('dark');
+      else if(window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.classList.add('dark');
+    })();
+  </script>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #faf9f7;
-      color: #0f172a;
-    }
-    .card {
-      background: #ffffff;
-      border: 1px solid #e7e5e4;
-      border-radius: 18px;
-    }
-    .accent {
-      color: #f97316;
-    }
-    .btn {
-      background: linear-gradient(135deg, #fb923c, #f97316);
-      color: white;
-      font-weight: 600;
-      border-radius: 14px;
-      padding: 12px 18px;
-      display: inline-block;
-      font-size: 14px;
-    }
+    body{font-family:'Inter',system-ui,sans-serif;background:#faf9f7;color:#0f172a}
+    .dark body{background:#020617;color:#e5e7eb}
+    .card{background:#fff;border:1px solid #e7e5e4;border-radius:18px}
+    .dark .card{background:#020617;border-color:#1e293b}
+    .accent{color:#f97316}
+    .badge{background:#f5f5f4;font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px}
+    .dark .badge{background:#1e293b}
+    .product-name{position:relative;font-weight:800;letter-spacing:-0.02em;display:inline-block}
+    .product-name::after{content:"";position:absolute;left:0;bottom:-8px;width:36px;height:2px;background:#f97316;border-radius:2px}
+    .dark .product-name::after{background:#fb923c}
   </style>
 </head>
 
 <body>
+<main class="max-w-6xl mx-auto px-5 py-12 space-y-16">
 
-<main class="max-w-xl mx-auto px-4 py-10 space-y-10">
+<header class="flex justify-between items-center">
+  <h1 class="font-semibold text-lg"><span class="accent">AI</span> Tools Library</h1>
+  <div class="flex items-center gap-4">
+    <button id="themeToggle" class="text-xs px-3 py-1 rounded-full border border-stone-300 dark:border-slate-600 opacity-70">🌙 / ☀️</button>
+    <a href="https://izamvanced.github.io/ai-tools" class="text-sm opacity-70">← Kembali ke Library</a>
+  </div>
+</header>
 
-  <!-- HEADER -->
-  <header class="flex justify-between items-center">
-    <h1 class="font-semibold text-lg">
-      <span class="accent">AI</span> Tools Library
-    </h1>
-    <a href="/" class="text-sm opacity-70">
-      ← Kembali
-    </a>
-  </header>
+<section class="space-y-4">
+  <span class="badge">Visual Story Production</span>
+  <h2 class="product-name">Kartoen<span class="accent">Maker</span></h2>
+  <p class="opacity-80 max-w-2xl">
+    Produksi kartun visual satu gambar per langkah berdasarkan cerita final pengguna.
+  </p>
+</section>
 
-  <!-- HERO -->
-  <section class="space-y-3">
-    <h2 class="text-3xl font-bold leading-tight">
-      Kartoen<span class="accent">Maker</span>
-    </h2>
-    <p class="text-base opacity-80">
-      Mesin produksi kartun visual yang bekerja satu gambar per langkah,
-      sepenuhnya tunduk pada cerita Anda.
-    </p>
+<section class="card p-8 space-y-3">
+  <h3 class="font-semibold">Workflow</h3>
+  <ol class="list-decimal list-inside text-sm opacity-80 space-y-1">
+    <li>Susun cerita (KartoenStory Builder)</li>
+    <li>Generate visual satu per satu</li>
+    <li>Finalisasi tiap gambar</li>
+  </ol>
+</section>
 
-    <a href="https://lynk.id/muhjamilz"
-       class="btn mt-2">
-      Akses KartoenMaker
-    </a>
-  </section>
-
-  <!-- APA ITU -->
-  <section class="card p-5 space-y-3">
-    <h3 class="font-semibold text-lg">
-      Apa itu KartoenMaker?
-    </h3>
-    <p class="text-sm opacity-80">
-      KartoenMaker adalah <strong>Gems berbasis Gemini</strong> yang mengubah
-      narasi cerita menjadi kartun visual secara bertahap dan terkendali.
-    </p>
-    <p class="text-sm opacity-80">
-      AI tidak menulis cerita. AI tidak menambah konflik.
-      AI hanya menerjemahkan cerita Anda menjadi visual.
-    </p>
-  </section>
-
-  <!-- KENAPA BERBEDA -->
-  <section class="card p-5 space-y-3">
-    <h3 class="font-semibold text-lg">
-      Kenapa KartoenMaker Berbeda?
-    </h3>
-    <ul class="text-sm opacity-80 list-disc list-inside space-y-1">
-      <li>Satu gambar diproduksi dalam satu langkah</li>
-      <li>Alur cerita tidak bisa diubah AI</li>
-      <li>Kontrol penuh di tangan pengguna</li>
-      <li>Tidak ada auto-generate atau batch</li>
-      <li>Aman dari prompt leak</li>
-    </ul>
-  </section>
-
-  <!-- CARA KERJA -->
-  <section class="card p-5 space-y-4">
-    <h3 class="font-semibold text-lg">
-      Cara Kerja Singkat
-    </h3>
-
-    <ol class="text-sm opacity-80 list-decimal list-inside space-y-1">
-      <li>Siapkan narasi cerita Anda (bebas, dari mana pun)</li>
-      <li>Paste narasi ke KartoenMaker sebagai acuan</li>
-      <li>Perintahkan: <em>Generate gambar 1</em></li>
-      <li>Tinjau hasil, lalu ketik <em>next</em> atau <em>revisi</em></li>
-      <li>Ulangi sampai cerita selesai</li>
-    </ol>
-  </section>
-
-  <!-- ATURAN PRODUK -->
-  <section class="card p-5 space-y-3">
-    <h3 class="font-semibold text-lg">
-      Aturan Produksi (Dikunci)
-    </h3>
-    <ul class="text-sm opacity-80 list-disc list-inside space-y-1">
-      <li>1 perintah menghasilkan 1 gambar</li>
-      <li>Urutan cerita tidak dapat diubah</li>
-      <li>Revisi hanya untuk visual, bukan cerita</li>
-      <li>Produksi berhenti jika Anda mengetik <em>stop</em></li>
-    </ul>
-  </section>
-
-  <!-- CTA FINAL -->
-  <section class="card p-6 text-center space-y-3">
-    <h3 class="font-semibold text-base">
-      Siap Mengubah Cerita Menjadi Kartun?
-    </h3>
-    <p class="text-sm opacity-70">
-      Gunakan KartoenMaker langsung di Gemini.
-    </p>
-    <a href="https://lynk.id/muhjamilz"
-       class="btn">
-      Buka KartoenMaker
-    </a>
-  </section>
-
-  <footer class="text-center text-xs opacity-60">
-    © AI Tools Library
-  </footer>
+<footer class="text-center text-xs opacity-60">
+  <a href="https://izamvanced.github.io/ai-tools" class="hover:opacity-100 transition">
+    izamvanced © AI Tools Library
+  </a>
+</footer>
 
 </main>
 
+<script>
+  document.getElementById('themeToggle').onclick=()=>{
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme',document.documentElement.classList.contains('dark')?'dark':'light');
+  };
+</script>
 </body>
 </html>

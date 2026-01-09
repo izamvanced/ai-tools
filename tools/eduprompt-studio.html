@@ -1,1 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduPrompt Studio | AI Tools Library</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #faf9f7;
+      color: #0f172a;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e7e5e4;
+      border-radius: 18px;
+    }
+    .accent { color: #f97316; }
+    .btn {
+      background: linear-gradient(135deg, #fb923c, #f97316);
+      color: white;
+      font-weight: 600;
+      border-radius: 14px;
+      padding: 14px 22px;
+      display: inline-block;
+      font-size: 14px;
+    }
+    .tag {
+      background: #f5f5f4;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    pre {
+      background: #f5f5f4;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="max-w-6xl mx-auto px-5 py-12 space-y-16">
+
+  <!-- HEADER -->
+  <header class="flex justify-between items-center">
+    <h1 class="font-semibold text-lg">
+      <span class="accent">AI</span> Tools Library
+    </h1>
+    <a href="../../dashboard.html" class="text-sm opacity-70">
+      ← Kembali ke Dashboard
+    </a>
+  </header>
+
+  <!-- HERO -->
+  <section class="space-y-6">
+    <h2 class="text-4xl sm:text-5xl font-bold">
+      EduPrompt <span class="accent">Studio</span>
+    </h2>
+
+    <p class="text-lg opacity-80 max-w-2xl">
+      Tools edukasi untuk menghasilkan <strong>prompt visual pembelajaran</strong>
+      yang terstruktur, sesuai jenjang, dan fleksibel dari sisi gaya visual.
+    </p>
+
+    <!-- STYLE LIST -->
+    <div class="space-y-3">
+      <p class="text-sm font-medium opacity-80">Pilihan gaya visual:</p>
+      <div class="flex flex-wrap gap-2">
+        <span class="tag">Kawaii Pastel</span>
+        <span class="tag">Flat Vector</span>
+        <span class="tag">Playful Colorful</span>
+        <span class="tag">Doodle Style</span>
+        <span class="tag">Realistic Kids</span>
+        <span class="tag">Chibi</span>
+        <span class="tag">Outline-only</span>
+        <span class="tag">Papercraft</span>
+        <span class="tag">Ukiran Kayu</span>
+        <span class="tag">Pixar Style</span>
+        <span class="tag">Ghibli Style</span>
+        <span class="tag">Watercolor</span>
+        <span class="tag">Storybook</span>
+        <span class="tag">Soft 3D Cartoon</span>
+        <span class="tag">Custom Style</span>
+      </div>
+    </div>
+
+    <a href="https://lynk.id/muhjamilz/92p11zwvjzzk" class="btn">
+      Gunakan EduPrompt Studio
+    </a>
+  </section>
+
+  <!-- EXAMPLES -->
+  <section class="space-y-8">
+    <h3 class="text-2xl font-semibold">
+      Contoh Gambar & Cara Menulis Instruksi
+    </h3>
+
+    <p class="text-sm opacity-80 max-w-3xl">
+      Berikut contoh visual pembelajaran yang dihasilkan menggunakan AI,
+      beserta contoh cara menulis instruksi di EduPrompt Studio.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- EXAMPLE 1 -->
+      <div class="card overflow-hidden">
+        <img src="assets/example/siklus-hidup.jpg"
+             alt="Siklus hidup kupu-kupu"
+             class="w-full object-contain p-4">
+        <div class="p-5 space-y-3">
+          <h4 class="font-semibold">Siklus Hidup Kupu-kupu</h4>
+          <pre>
+Mode: Infografis
+Materi: Siklus hidup kupu-kupu
+Jenjang: SD
+Tujuan Pembelajaran: Memahami tahapan siklus hidup.
+Gaya Visual: Pixar
+          </pre>
+        </div>
+      </div>
+
+      <!-- EXAMPLE 2 -->
+      <div class="card overflow-hidden">
+        <img src="assets/example/rantai-makanan.jpg"
+             alt="Rantai makanan hewan"
+             class="w-full object-contain p-4">
+        <div class="p-5 space-y-3">
+          <h4 class="font-semibold">Rantai Makanan Hewan</h4>
+          <pre>
+Mode: Worksheet
+Materi: Rantai makanan hewan
+Jenjang: SD
+Tujuan Pembelajaran: Mengenali hubungan makan.
+Gaya Visual: Doodle Style
+          </pre>
+        </div>
+      </div>
+
+      <!-- EXAMPLE 3 -->
+      <div class="card overflow-hidden">
+        <img src="assets/example/geometri.jpg"
+             alt="Bentuk geometri dasar"
+             class="w-full object-contain p-4">
+        <div class="p-5 space-y-3">
+          <h4 class="font-semibold">Bentuk Geometri Dasar</h4>
+          <pre>
+Mode: Workbook
+Materi: Bentuk geometri dasar
+Jenjang: PAUD
+Tujuan Pembelajaran: Mengenal bentuk.
+Gaya Visual: Playful Colorful
+          </pre>
+        </div>
+      </div>
+
+      <!-- EXAMPLE 4 -->
+      <div class="card overflow-hidden">
+        <img src="assets/example/bagian-tumbuhan.jpg"
+             alt="Bagian-bagian tumbuhan"
+             class="w-full object-contain p-4">
+        <div class="p-5 space-y-3">
+          <h4 class="font-semibold">Bagian-bagian Tumbuhan</h4>
+          <pre>
+Mode: Infografis
+Materi: Bagian-bagian tumbuhan
+Jenjang: SD
+Tujuan Pembelajaran: Memahami fungsi bagian tumbuhan.
+Gaya Visual: Watercolor
+          </pre>
+        </div>
+      </div>
+
+      <!-- EXAMPLE 5 -->
+      <div class="card overflow-hidden">
+        <img src="assets/example/kegiatan-harian.jpg"
+             alt="Kegiatan harian anak"
+             class="w-full object-contain p-4">
+        <div class="p-5 space-y-3">
+          <h4 class="font-semibold">Kegiatan Sehari-hari Anak</h4>
+          <pre>
+Mode: Worksheet
+Materi: Kegiatan sehari-hari
+Jenjang: PAUD
+Tujuan Pembelajaran: Mengenal urutan aktivitas.
+Gaya Visual: Pixar Style
+          </pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="card p-10 text-center space-y-4">
+    <h3 class="text-2xl font-semibold">
+      Siap Mencoba EduPrompt Studio?
+    </h3>
+    <p class="opacity-80 max-w-xl mx-auto">
+      Gunakan contoh di atas sebagai panduan untuk membuat prompt visual
+      pembelajaran sesuai kebutuhan Anda.
+    </p>
+    <a href="https://lynk.id/muhjamilz/92p11zwvjzzk" class="btn">
+      Buka EduPrompt Studio
+    </a>
+  </section>
+
+  <footer class="text-center text-xs opacity-60">
+    © AI Tools Library
+  </footer>
+
+</main>
+
+</body>
+</html>
 

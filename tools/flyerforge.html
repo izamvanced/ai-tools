@@ -1,1 +1,51 @@
-
+<!DOCTYPE html><html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FlyerForge</title>
+<style>
+:root{--bg:#f7f5f2;--fg:#1f2937;--card:#ffffff;--accent:#ff8a1f;}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:var(--bg);color:var(--fg);} 
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;} 
+.logo{font-weight:700;font-size:18px;color:var(--accent);} 
+.hero{text-align:center;padding:24px 20px 10px;} 
+.hero h1{font-size:32px;margin:10px 0;} 
+.hero span{color:var(--accent);} 
+.hero p{color:#555;max-width:520px;margin:0 auto;} 
+.section{padding:20px;max-width:720px;margin:auto;} 
+.badge{display:inline-block;background:#fff;border-radius:999px;padding:6px 14px;margin:12px auto;box-shadow:0 4px 10px rgba(0,0,0,.05);} 
+.grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:16px;} 
+.card{background:var(--card);border-radius:16px;padding:20px;box-shadow:0 10px 25px rgba(0,0,0,.06);} 
+.product-name{font-size:18px;font-weight:700;position:relative;display:inline-block;margin-bottom:6px;} 
+.product-name::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--accent);} 
+.desc{color:#555;margin:12px 0 16px 0;} 
+.btn{display:block;width:100%;text-align:center;background:var(--accent);color:#fff;padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:700;} 
+footer{text-align:center;padding:24px;color:#777;} 
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">FlyerForge</div>
+  <a href="index.html" style="text-decoration:none;color:#555;">Home</a>
+</header><section class="hero">
+  <h1><span>Flyer</span>Forge</h1>
+  <p>Pilih mode sesuai jenis acara Anda untuk mulai membuat poster.</p>
+  <div class="badge">Mode Selector</div>
+</section><section class="section">
+  <div class="grid">
+    <div class="card">
+      <div class="product-name">🟦 Acara Resmi</div>
+      <div class="desc">Untuk seminar, kajian, sekolah, yayasan, instansi, dan webinar. Tampilan rapi dan profesional.</div>
+      <a class="btn" href="#">Mulai Acara Resmi</a>
+    </div>
+    <div class="card">
+      <div class="product-name">🟨 Event & Komunitas</div>
+      <div class="desc">Untuk konser, komunitas, gathering, open trip, festival, dan lomba. Lebih bebas dan ekspresif.</div>
+      <a class="btn" href="#">Mulai Event</a>
+    </div>
+  </div>
+</section><footer>
+  FlyerForge © AI Tools Library
+</footer>
+</body>
+</html>

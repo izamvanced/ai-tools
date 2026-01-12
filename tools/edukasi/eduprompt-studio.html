@@ -1,205 +1,211 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduPrompt Studio | AI Tools Library</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EduPrompt Studio | AI Tools Library</title>
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={darkMode:'class'}</script>
-
-  <!-- Theme init -->
-  <script>
-    (function(){
-      const t=localStorage.getItem('theme');
-      if(t==='dark')document.documentElement.classList.add('dark');
-      else if(t==='light')document.documentElement.classList.remove('dark');
-      else if(window.matchMedia('(prefers-color-scheme: dark)').matches)
-        document.documentElement.classList.add('dark');
-    })();
-  </script>
-
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    body{font-family:'Inter',system-ui,sans-serif;background:#faf9f7;color:#0f172a}
-    .dark body{background:#020617;color:#e5e7eb}
-
-    .card{background:#fff;border:1px solid #e7e5e4;border-radius:18px}
-    .dark .card{background:#020617;border-color:#1e293b}
-
-    .accent{color:#f97316}
-
-    .btn-primary{
-      background:linear-gradient(135deg,#fb923c,#f97316);
-      color:#fff;font-weight:600;border-radius:14px;
-      padding:14px 22px;display:inline-block;font-size:14px
-    }
-
-    .badge{
-      background:#f5f5f4;border-radius:999px;
-      padding:6px 12px;font-size:12px;font-weight:500
-    }
-    .dark .badge{background:#1e293b}
-
-    /* Product name visual mark */
-    .product-name{
-      position:relative;font-weight:800;
-      letter-spacing:-0.02em;display:inline-block
-    }
-    .product-name::after{
-      content:"";position:absolute;left:0;bottom:-8px;
-      width:36px;height:2px;background:#f97316;border-radius:2px
-    }
-    .dark .product-name::after{background:#fb923c}
-
-    pre{
-      background:#f5f5f4;padding:14px;border-radius:12px;
-      font-size:13px;white-space:pre-wrap
-    }
-    .dark pre{
-      background:#020617;border:1px solid #1e293b
-    }
-  </style>
+<style>
+:root{
+  --bg:#f7f5f2;
+  --fg:#1f2937;
+  --card:#ffffff;
+  --accent:#ff8a1f;
+}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:var(--bg);
+  color:var(--fg);
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 28px;
+}
+.logo{
+  font-weight:700;
+  font-size:18px;
+  color:var(--accent);
+}
+.hero{
+  padding:40px 20px;
+  max-width:1000px;
+  margin:auto;
+}
+.hero h1{
+  font-size:40px;
+  margin:0 0 10px 0;
+}
+.hero span{color:var(--accent);}
+.hero p{
+  max-width:700px;
+  color:#555;
+}
+.section{
+  padding:40px 20px;
+  max-width:1100px;
+  margin:auto;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:24px;
+  box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+.product-name{
+  font-size:24px;
+  font-weight:700;
+  position:relative;
+  display:inline-block;
+  margin-bottom:12px;
+}
+.product-name::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-8px;
+  height:2px;
+  background:var(--accent);
+}
+.desc{
+  color:#555;
+  margin:12px 0 18px 0;
+}
+ul{
+  padding-left:18px;
+  margin:0;
+  color:#555;
+}
+li{margin-bottom:6px;}
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  padding:12px 20px;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:700;
+}
+pre{
+  background:#f3f4f6;
+  padding:14px;
+  border-radius:12px;
+  font-size:13px;
+  white-space:pre-wrap;
+}
+.example-img{
+  width:60%;
+  display:block;
+  margin:0 auto 12px auto;
+  border-radius:12px;
+}
+footer{
+  text-align:center;
+  padding:30px;
+  color:#777;
+}
+footer a{
+  color:#777;
+  text-decoration:none;
+}
+</style>
 </head>
 
 <body>
 
-<main class="max-w-6xl mx-auto px-5 py-12 space-y-16">
-
-<!-- HEADER -->
-<header class="flex justify-between items-center">
-  <h1 class="font-semibold text-lg">
-    <span class="accent">AI</span> Tools Library
-  </h1>
-  <div class="flex items-center gap-4">
-    <button id="themeToggle"
-      class="text-xs px-3 py-1 rounded-full border border-stone-300 dark:border-slate-600 opacity-70">
-      🌙 / ☀️
-    </button>
-    <a href="https://izamvanced.github.io/ai-tools/index.html"
-       class="text-sm opacity-70">
-      ← Kembali ke Library
-    </a>
-  </div>
+<header>
+  <div class="logo">AI Tools Library</div>
+  <a href="../edukasi.html" style="text-decoration:none;color:#555;">← Kembali</a>
 </header>
 
-<!-- HERO -->
-<section class="space-y-6">
-  <div class="flex items-center gap-4">
-    <div class="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-500/10
-                flex items-center justify-center">
-      <svg xmlns="http://www.w3.org/2000/svg"
-           class="w-5 h-5 text-orange-500"
-           viewBox="0 0 24 24" fill="currentColor">
-        <path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
-      </svg>
-    </div>
-
-    <h2 class="product-name">
-      EduPrompt <span class="accent">Studio</span>
-    </h2>
-  </div>
-
-  <p class="text-lg opacity-80 max-w-2xl">
-    Tools edukasi untuk menghasilkan
-    <strong>prompt visual pembelajaran</strong>
-    yang terstruktur, sesuai jenjang,
-    dan fleksibel dari sisi gaya visual.
+<section class="hero">
+  <h1><span>EduPrompt</span> Studio</h1>
+  <p>
+    Tools edukasi untuk menghasilkan <strong>prompt visual pembelajaran</strong>
+    yang terstruktur, sesuai jenjang, dan fleksibel dari sisi gaya visual.
   </p>
-
-  <!-- STYLE LIST -->
-  <div class="space-y-3">
-    <p class="text-sm font-medium opacity-80">Pilihan gaya visual:</p>
-    <div class="flex flex-wrap gap-2">
-      <span class="badge">Kawaii Pastel</span>
-      <span class="badge">Flat Vector</span>
-      <span class="badge">Playful Colorful</span>
-      <span class="badge">Doodle Style</span>
-      <span class="badge">Realistic Kids</span>
-      <span class="badge">Chibi</span>
-      <span class="badge">Outline-only</span>
-      <span class="badge">Papercraft</span>
-      <span class="badge">Ukiran Kayu</span>
-      <span class="badge">Pixar Style</span>
-      <span class="badge">Ghibli Style</span>
-      <span class="badge">Watercolor</span>
-      <span class="badge">Storybook</span>
-      <span class="badge">Soft 3D Cartoon</span>
-      <span class="badge">Custom Style</span>
-    </div>
-  </div>
-
-  <a href="https://lynk.id/muhjamilz/92p11zwvjzzk"
-     class="btn-primary">
-    Gunakan EduPrompt Studio
-  </a>
 </section>
 
-<!-- EXAMPLES -->
-<section class="space-y-8">
-  <h3 class="text-2xl font-semibold">
-    Contoh Gambar & Cara Menulis Instruksi
-  </h3>
+<section class="section">
+  <div class="card">
+    <div class="product-name">Gaya Visual Tersedia</div>
+    <ul>
+      <li>Kawaii Pastel</li>
+      <li>Flat Vector</li>
+      <li>Playful Colorful</li>
+      <li>Doodle Style</li>
+      <li>Realistic Kids</li>
+      <li>Chibi</li>
+      <li>Watercolor</li>
+      <li>Storybook</li>
+      <li>Soft 3D Cartoon</li>
+      <li>Custom Style</li>
+    </ul>
+  </div>
+</section>
 
-  <p class="text-sm opacity-80 max-w-3xl">
-    Berikut contoh visual pembelajaran yang dihasilkan menggunakan AI,
-    beserta contoh cara menulis instruksi di EduPrompt Studio.
-  </p>
+<section class="section">
+  <h2 style="text-align:center;margin-bottom:30px;">Contoh Hasil</h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid">
 
-    <!-- EXAMPLE CARD -->
-    <div class="card overflow-hidden">
-      <img src="assets/example/siklus-hidup.jpg"
-           class="w-full object-contain p-4">
-      <div class="p-5 space-y-3">
-        <h4 class="font-semibold">Siklus Hidup Kupu-kupu</h4>
-        <pre>Mode: Infografis
+    <div class="card">
+      <img src="assets/example/siklus-hidup.jpg" class="example-img">
+      <h3>Siklus Hidup Kupu-kupu</h3>
+      <pre>Mode: Infografis
 Materi: Siklus hidup kupu-kupu
 Jenjang: SD
-Tujuan Pembelajaran: Memahami tahapan siklus hidup.
+Tujuan: Memahami tahapan siklus hidup
 Gaya Visual: Pixar</pre>
-      </div>
     </div>
 
-    <!-- (example lain IDENTIK dengan file aslinya) -->
+    <div class="card">
+      <img src="assets/example/pecahan.jpg" class="example-img">
+      <h3>Pecahan</h3>
+      <pre>Mode: Worksheet
+Materi: Pecahan
+Jenjang: SD
+Tujuan: Mengenal pembagian
+Gaya Visual: Flat Vector</pre>
+    </div>
+
+    <div class="card">
+      <img src="assets/example/planet.jpg" class="example-img">
+      <h3>Tata Surya</h3>
+      <pre>Mode: Infografis
+Materi: Tata Surya
+Jenjang: SMP
+Tujuan: Mengenal planet
+Gaya Visual: Watercolor</pre>
+    </div>
 
   </div>
 </section>
 
-<!-- CTA -->
-<section class="card p-10 text-center space-y-4">
-  <h3 class="text-2xl font-semibold">
-    Siap Mencoba EduPrompt Studio?
-  </h3>
-  <p class="opacity-80 max-w-xl mx-auto">
-    Gunakan contoh di atas sebagai panduan untuk membuat prompt visual
-    pembelajaran sesuai kebutuhan Anda.
-  </p>
-  <a href="https://lynk.id/muhjamilz/92p11zwvjzzk"
-     class="btn-primary">
-    Buka EduPrompt Studio
-  </a>
+<section class="section">
+  <div class="card" style="text-align:center;">
+    <h3>Siap Menggunakan EduPrompt Studio?</h3>
+    <p class="desc" style="max-width:500px;margin-left:auto;margin-right:auto;">
+      Gunakan contoh di atas sebagai panduan untuk membuat prompt visual pembelajaran
+      sesuai kebutuhan Anda.
+    </p>
+    <a class="btn" href="https://lynk.id/muhjamilz/92p11zwvjzzk">Buka EduPrompt Studio</a>
+  </div>
 </section>
 
-<footer class="text-center text-xs opacity-60">
-  izamvanced © AI Tools Library
+<footer>
+  <a href="https://izamvanced.github.io/ai-tools/">
+    izamvanced © AI Tools Library
+  </a>
 </footer>
-
-</main>
-
-<script>
-  document.getElementById('themeToggle').onclick=()=>{
-    document.documentElement.classList.toggle('dark');
-    localStorage.setItem(
-      'theme',
-      document.documentElement.classList.contains('dark')?'dark':'light'
-    );
-  };
-</script>
 
 </body>
 </html>

@@ -1,132 +1,174 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Katalog Tools Edukasi | AI Tools Library</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tools Edukasi | AI Tools Library</title>
 
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #faf9f7;
-      color: #0f172a;
-    }
-    .card {
-      background: #ffffff;
-      border: 1px solid #e7e5e4;
-      border-radius: 18px;
-    }
-    .accent {
-      color: #f97316;
-    }
-    .btn {
-      background: linear-gradient(135deg, #fb923c, #f97316);
-      color: white;
-      font-weight: 600;
-      border-radius: 14px;
-      padding: 10px 16px;
-      display: inline-block;
-      font-size: 14px;
-    }
-  </style>
+<style>
+:root{
+  --bg:#f7f5f2;
+  --fg:#1f2937;
+  --card:#ffffff;
+  --accent:#ff8a1f;
+}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:var(--bg);
+  color:var(--fg);
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 28px;
+}
+.logo{
+  font-weight:700;
+  font-size:18px;
+  color:var(--accent);
+}
+.hero{
+  text-align:center;
+  padding:40px 20px;
+}
+.hero h1{
+  font-size:40px;
+  margin:0 0 10px 0;
+}
+.hero span{color:var(--accent);}
+.hero p{
+  max-width:700px;
+  margin:0 auto;
+  color:#555;
+}
+.section{
+  padding:40px 20px;
+  max-width:1100px;
+  margin:auto;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:24px;
+  box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+.product-name{
+  font-size:20px;
+  font-weight:700;
+  position:relative;
+  display:inline-block;
+  margin-bottom:6px;
+}
+.product-name::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-6px;
+  height:2px;
+  background:var(--accent);
+}
+.desc{
+  color:#555;
+  margin:12px 0 18px 0;
+}
+ul{
+  padding-left:18px;
+  margin:0 0 18px 0;
+  color:#555;
+}
+li{margin-bottom:6px;}
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  padding:10px 18px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:600;
+}
+footer{
+  text-align:center;
+  padding:30px;
+  color:#777;
+}
+footer a{
+  color:#777;
+  text-decoration:none;
+}
+</style>
 </head>
-
 <body>
 
-<main class="max-w-5xl mx-auto px-5 py-10 space-y-12">
+<header>
+  <div class="logo">AI Tools Library</div>
+  <a href="../index.html" style="text-decoration:none;color:#555;">← Kembali</a>
+</header>
 
-  <!-- HEADER -->
-  <header class="flex justify-between items-center">
-    <h1 class="font-semibold text-lg">
-      <span class="accent">AI</span> Tools Library
-    </h1>
-    <a href="../dashboard.html" class="text-sm opacity-70">
-      ← Kembali ke Dashboard
-    </a>
-  </header>
+<section class="hero">
+  <h1>Tools <span>Edukasi</span></h1>
+  <p>
+    Kumpulan AI tools yang dirancang khusus untuk kebutuhan pembelajaran.
+    Setiap tools memiliki fungsi spesifik untuk membantu guru, kreator edukasi,
+    dan orang tua menghasilkan materi belajar yang lebih terarah.
+  </p>
+</section>
 
-  <!-- HERO -->
-  <section class="space-y-3">
-    <h2 class="text-3xl sm:text-4xl font-bold">
-      Tools <span class="accent">Edukasi</span>
-    </h2>
-    <p class="text-base opacity-80 max-w-2xl">
-      Kumpulan AI tools yang dirancang khusus untuk kebutuhan pembelajaran.
-      Setiap tools memiliki fungsi spesifik untuk membantu guru, kreator edukasi,
-      dan orang tua menghasilkan materi belajar yang lebih terarah.
-    </p>
-  </section>
+<section class="section">
+  <div class="grid">
 
-  <!-- TOOLS GRID -->
-  <section class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-    <!-- TOOL CARD -->
-    <div class="card p-6 space-y-4">
-      <div class="space-y-1">
-        <h3 class="text-lg font-semibold">
-          EduPrompt Studio
-        </h3>
-        <p class="text-sm opacity-80">
-          Generator prompt visual edukasi untuk worksheet, workbook,
-          infografis, dan LKPD sesuai jenjang PAUD, SD, dan SMP.
-        </p>
+    <!-- EduPrompt Studio -->
+    <div class="card">
+      <div class="product-name">📘 EduPrompt Studio</div>
+      <div class="desc">
+        Generator prompt visual edukasi untuk worksheet, workbook, infografis,
+        dan LKPD sesuai jenjang PAUD, SD, dan SMP.
       </div>
-
-      <ul class="text-sm opacity-80 list-disc list-inside space-y-1">
+      <ul>
         <li>Fokus Kurikulum Merdeka</li>
         <li>Struktur prompt konsisten</li>
         <li>Bisa pilih berbagai gaya visual</li>
         <li>Siap dipakai di Gemini & DALL·E</li>
       </ul>
-
-      <div class="pt-2">
-        <a href="./edukasi/eduprompt-studio.html" class="btn">
-          Lihat Detail Tool
-        </a>
-      </div>
+      <a class="btn" href="./edukasi/eduprompt-studio.html">Lihat Detail Tool</a>
     </div>
 
-    <!-- PLACEHOLDER TOOL (NANTI) -->
-    <div class="card p-6 space-y-4 opacity-60">
-      <h3 class="text-lg font-semibold">
-        Tool Edukasi Berikutnya
-      </h3>
-      <p class="text-sm">
+    <!-- Placeholder -->
+    <div class="card" style="opacity:.6;">
+      <div class="product-name">Tool Edukasi Berikutnya</div>
+      <div class="desc">
         Tools baru sedang disiapkan untuk kebutuhan pembelajaran
         dan konten edukasi yang lebih spesifik.
-      </p>
-      <span class="text-xs italic">
-        Segera hadir
-      </span>
+      </div>
+      <em style="color:#777;">Segera hadir</em>
     </div>
 
-  </section>
+  </div>
+</section>
 
-  <!-- CTA -->
-  <section class="card p-7 text-center space-y-4">
-    <h3 class="text-xl font-semibold">
-      Gunakan Tools Sesuai Kebutuhan Pembelajaran
-    </h3>
-    <p class="text-sm opacity-80 max-w-md mx-auto">
+<section class="section">
+  <div class="card" style="text-align:center;">
+    <h3 style="margin-top:0;">Gunakan Tools Sesuai Kebutuhan Pembelajaran</h3>
+    <p class="desc" style="max-width:500px;margin-left:auto;margin-right:auto;">
       Setiap tools dibuat untuk satu tujuan jelas agar hasil lebih konsisten,
       terarah, dan mudah digunakan.
     </p>
-    <a href="https://lynk.id/muhjamilz" class="btn">
-      Akses Semua Tools
-    </a>
-  </section>
+    <a class="btn" href="https://lynk.id/muhjamilz">Akses Semua Tools</a>
+  </div>
+</section>
 
-  <footer class="text-center text-xs opacity-60">
-    © AI Tools Library
-  </footer>
-
-</main>
+<footer>
+  <a href="https://izamvanced.github.io/ai-tools/">
+    izamvanced © AI Tools Library
+  </a>
+</footer>
 
 </body>
 </html>

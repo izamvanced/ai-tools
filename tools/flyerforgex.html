@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FlyerForge X</title>
+<style>
+:root{
+  --bg:#f7f5f2;
+  --fg:#1f2937;
+  --card:#ffffff;
+  --accent:#ff8a1f;
+}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:var(--bg);color:var(--fg);}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;}
+.logo{font-weight:700;font-size:18px;color:var(--accent);}
+.hero{text-align:center;padding:40px 20px;}
+.hero h1{font-size:40px;margin:0;}
+.hero span{color:var(--accent);}
+.hero p{max-width:640px;margin:10px auto;color:#555;}
+.section{padding:40px 20px;max-width:1000px;margin:auto;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;}
+.card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 10px 25px rgba(0,0,0,.06);}
+.samples img{width:60%;border-radius:14px;box-shadow:0 10px 20px rgba(0,0,0,.15);}
+label{display:block;font-weight:600;margin-top:14px;}
+input{width:100%;padding:10px;margin-top:6px;border-radius:10px;border:1px solid #ddd;}
+.btn{margin-top:20px;background:var(--accent);color:#fff;padding:12px 20px;border:none;border-radius:12px;font-weight:700;cursor:pointer;}
+textarea{width:100%;aspect-ratio:4/5;padding:16px;margin-top:20px;border-radius:16px;border:1px solid #ddd;font-family:monospace;font-size:14px;}
+footer{text-align:center;padding:30px;color:#777;}
+footer a{color:#777;text-decoration:none;}
+</style>
+</head>
+<body>
 
+<header>
+  <div class="logo">AI Tools Library</div>
+  <a href="../index.html" style="text-decoration:none;color:#555;">← Kembali</a>
+</header>
+
+<section class="hero">
+  <h1><span>Flyer</span>Forge X</h1>
+  <p>Mesin prompt visual premium untuk flyer & undangan full-screen tanpa frame.</p>
+</section>
+
+<section class="section">
+  <div class="card">
+    <h2>Contoh Hasil</h2>
+    <div class="grid samples">
+      <img src="../assets/flyer-sample-1.jpg">
+      <img src="../assets/flyer-sample-2.jpg">
+      <img src="../assets/flyer-sample-3.jpg">
+    </div>
+  </div>
+</section>
+
+<section class="section">
+<div class="card">
+<h2>Buat Prompt</h2>
+
+<label>Nama / Judul</label>
+<input id="judul" value="Resepsi Pernikahan Ahmad & Siti">
+
+<label>Tema</label>
+<input id="tema" value="Walimatul Ursy">
+
+<label>Tanggal & Waktu</label>
+<input id="tanggal" value="Minggu, 21 September 2026 · 10.00 – 14.00">
+
+<label>Lokasi</label>
+<input id="lokasi" value="Aula Masjid Al-Ikhlas, Bogor">
+
+<button class="btn" onclick="generate()">Generate Prompt</button>
+
+<textarea id="output">
+Full-screen vertical wedding poster artwork for Ahmad & Siti, Walimatul Ursy theme, dark gold and deep charcoal color harmony with subtle cream highlights, layered floral and islamic geometric accents, premium editorial wedding layout, background fills the entire canvas, no card, no frame, no border, 4:5 vertical, high resolution
+</textarea>
+
+<p style="text-align:center;margin-top:24px;">
+  <a href="flyerforgex2.html" style="color:#ff8a1f;font-weight:700;text-decoration:none;">
+    Klik di sini untuk lebih banyak fitur FlyerForge X →
+  </a>
+</p>
+
+</div>
+</section>
+
+<footer>
+  <a href="https://izamvanced.github.io/ai-tools/">
+    izamvanced © AI Tools Library
+  </a>
+</footer>
+
+<script>
+function generate(){
+  const j = judul.value;
+  const t = tema.value;
+  const d = tanggal.value;
+  const l = lokasi.value;
+
+  output.value =
+    `Full-screen vertical wedding poster artwork for ${j}, ${t}, rich cream, gold, emerald, dusty blue and soft blush color harmony, layered floral and islamic geometric accents, premium editorial layout, showing ${d} at ${l}, background fills the entire canvas, no card, no frame, no border, 4:5 vertical, high resolution`;
+}
+</script>
+
+</body>
+</html>

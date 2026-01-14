@@ -2,87 +2,85 @@ import { db } from "./firebase.js";
 import {
   collection,
   addDoc,
-  getDocs,
-  updateDoc,
-  doc,
-  serverTimestamp,
-  query,
-  orderBy
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const saveBtn = document.getElementById("savePost");
-  const postList = document.getElementById("postList");
+/* ========= IMAGE PATH HELPER ========= */
+const folderInput = document.getElementById("imageFolder");
+const fileInput = document.getElementById("imageFile");
+const copyBtn = document.getElementById("copyImagePath");
+const result = document.getElementById("pathResult");
 
-  async function loadPosts() {
-    postList.innerHTML = "Loading...";
-    const q = query(
-      collection(db, "posts"),
-      orderBy("createdAt", "desc")
-    );
+copyBtn.addEventListener("click", async () => {
+  const folder = folderInput.value.trim().replace(/^\/|\/$/g, "");
+  const file = fileInput.value.trim();
 
-    const snapshot = await getDocs(q);
-    postList.innerHTML = "";
-
-    snapshot.forEach((docSnap) => {
-      const data = docSnap.data();
-      const div = document.createElement("div");
-      div.className = "post";
-
-      const color =
-        data.status === "published" ? "#16a34a" : "#eab308";
-
-      div.innerHTML = `
-        <strong>${data.title}</strong><br>
-        <small>Status:
-          <span style="color:${color}">
-            ${data.status}
-          </span>
-        </small><br><br>
-        <button data-id="${docSnap.id}" data-status="${data.status}">
-          ${data.status === "published" ? "Set Draft" : "Publish"}
-        </button>
-      `;
-
-      div.querySelector("button").addEventListener("click", async (e) => {
-        const id = e.target.dataset.id;
-        const current = e.target.dataset.status;
-        const next = current === "published" ? "draft" : "published";
-
-        await updateDoc(doc(db, "posts", id), {
-          status: next,
-          updatedAt: serverTimestamp()
-        });
-
-        loadPosts();
-      });
-
-      postList.appendChild(div);
-    });
+  if (!folder || !file) {
+    alert("Folder dan nama file wajib diisi");
+    return;
   }
 
-  saveBtn.addEventListener("click", async () => {
-    const title = document.getElementById("title").value.trim();
-    const content = document.getElementById("content").value.trim();
+  const path = `/assets/${folder}/${file}`;
 
-    if (!title || !content) {
-      alert("Judul & konten wajib diisi");
-      return;
-    }
+  try {
+    await navigator.clipboard.writeText(path);
+    result.textContent = `Copied: ${path}`;
+  } catch {
+    alert("Gagal copy ke clipboard");
+  }
+});
 
-    await addDoc(collection(db, "posts"), {
-      title,
-      content,
-      status: "draft",
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
-    });
+/* ========= IMAGE PREVIEW ========= */
+const imagesInput = document.getElementById("images");
+const preview = document.getElementById("imagePreview");
 
-    document.getElementById("title").value = "";
-    document.getElementById("content").value = "";
+imagesInput.addEventListener("input", () => {
+  preview.innerHTML = "";
 
-    loadPosts();
+  const paths = imagesInput.value
+    .split("\n")
+    .map(p => p.trim())
+    .filter(Boolean);
+
+  paths.forEach(src => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "preview";
+    img.loading = "lazy";
+    img.onerror = () => img.style.opacity = "0.3";
+    preview.appendChild(img);
+  });
+});
+
+/* ========= SAVE POST ========= */
+document.getElementById("savePost").addEventListener("click", async () => {
+  const title = document.getElementById("title").value.trim();
+  const content = document.getElementById("content").value.trim();
+
+  const images = imagesInput.value
+    .split("\n")
+    .map(p => p.trim())
+    .filter(Boolean);
+
+  if (!title || !content) {
+    alert("Judul & konten wajib diisi");
+    return;
+  }
+
+  await addDoc(collection(db, "posts"), {
+    title,
+    content,
+    images,
+    status: "draft",
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
   });
 
-  loadPosts();
+  document.getElementById("title").value = "";
+  document.getElementById("content").value = "";
+  imagesInput.value = "";
+  preview.innerHTML = "";
+  result.textContent = "";
+
+  alert("Post tersimpan (draft)");
 });

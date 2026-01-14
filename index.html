@@ -126,10 +126,31 @@ footer{
 .post-item small{
   color:#888;
 }
+
+/* ===== ADMIN FLOATING ===== */
+#adminBadge{
+  position:fixed;
+  top:16px;
+  right:16px;
+  background:#1f2937;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,.2);
+  display:none;
+  z-index:9999;
+}
+#adminBadge:hover{opacity:.9;}
 </style>
 </head>
 
 <body>
+
+<!-- ADMIN FLOAT -->
+<div id="adminBadge">Hi Admin</div>
 
 <header>
   <div class="logo">AI Tools Library</div>
@@ -163,7 +184,6 @@ footer{
 
   <div class="grid">
 
-    <!-- EduPrompt Studio -->
     <div class="card">
       <div class="product-name">📘 EduPrompt Studio</div>
       <div class="desc">
@@ -176,7 +196,6 @@ footer{
       </a>
     </div>
 
-    <!-- FlyerForge X -->
     <div class="card">
       <div class="product-name">📣 FlyerForge X</div>
       <div class="desc">
@@ -220,6 +239,7 @@ footer{
 <script type="module" src="./firebase-public.js"></script>
 <script type="module" src="./posts.js"></script>
 <script type="module" src="./products.js"></script>
+<script type="module" src="./admin-float.js"></script>
 
 </body>
 </html>

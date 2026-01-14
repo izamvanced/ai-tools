@@ -23,21 +23,23 @@
       border: 1px solid #1e293b;
     }
 
-    h2, h3 {
+    h2 {
       margin-top: 0;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       text-align: center;
     }
 
     label {
       font-size: 13px;
       opacity: .8;
+      display: block;
+      margin-top: 14px;
     }
 
     input, textarea, select, button {
       width: 100%;
       margin-top: 8px;
-      padding: 10px 12px;
+      padding: 12px;
       border-radius: 8px;
       border: 1px solid #1e293b;
       background: #020617;
@@ -45,170 +47,61 @@
       font-size: 14px;
     }
 
-    textarea { resize: vertical; }
-
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: #2563eb;
-    }
-
     button {
       background: #2563eb;
       border: none;
       cursor: pointer;
-      margin-top: 14px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 10;
+      pointer-events: auto;
     }
 
-    button:hover { background: #3b82f6; }
-
-    .secondary {
-      background: #1e293b;
+    button:hover {
+      background: #3b82f6;
     }
 
-    .secondary:hover {
-      background: #334155;
-    }
-
-    .logout {
-      background: #7c2d12;
-    }
-
-    .logout:hover {
-      background: #9a3412;
-    }
-
-    .hidden { display: none; }
-
-    hr {
-      margin: 28px 0;
-      border: 1px solid #1e293b;
-    }
-
-    .helper {
-      background: #020617;
-      border: 1px dashed #1e293b;
-      padding: 14px;
-      border-radius: 10px;
+    a.preview-link {
+      display: block;
       margin-top: 12px;
-    }
-
-    .small {
-      font-size: 12px;
-      opacity: .7;
-      margin-top: 6px;
-    }
-
-    .preview img {
-      max-width: 100%;
-      margin-top: 8px;
+      text-align: center;
+      padding: 14px;
       border-radius: 8px;
-      border: 1px solid #1e293b;
+      background: #1e293b;
+      color: #e5e7eb;
+      text-decoration: none;
     }
 
-    .item {
-      border: 1px solid #1e293b;
-      border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 8px;
-      cursor: pointer;
-    }
-
-    .item:hover {
-      background: #020617;
-    }
-
-    .item small {
-      opacity: .6;
-    }
-
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
+    a.preview-link:hover {
+      background: #334155;
     }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN -->
-  <div id="loginArea" class="box hidden">
-    <h2>Admin Login</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button id="loginBtn">Login</button>
-  </div>
-
-  <!-- ADMIN -->
-  <div id="adminArea" class="box hidden">
-
+  <div class="box">
     <h2>Product Editor</h2>
 
-    <p id="editIndicator" class="small hidden">
-      Editing existing product
-    </p>
-
     <label>Nama Produk</label>
-    <input type="text" id="name" placeholder="EduPrompt" />
+    <input type="text" id="name" placeholder="EduPrompt Studio" />
 
-    <label>Slug (URL)</label>
-    <input type="text" id="slug" placeholder="eduprompt" />
+    <label>Slug</label>
+    <input type="text" id="slug" placeholder="eduprompt-studio" />
 
-    <label>Kategori</label>
-    <input type="text" id="category" placeholder="education / creative / tools" />
+    <label>Ringkasan</label>
+    <textarea id="summary" rows="4"></textarea>
 
-    <label>Ringkasan (teks saja)</label>
-    <textarea id="summary" rows="4"
-      placeholder="Ringkasan singkat produk"></textarea>
+    <!-- BUTTON DIPISAH TOTAL -->
+    <button id="saveProduct" type="button">
+      Save Product
+    </button>
 
-    <!-- IMAGE HELPER -->
-    <div class="helper">
-      <h3>Image Path Helper</h3>
-
-      <input id="imageFolder" placeholder="products/eduprompt" />
-      <input id="imageFile" placeholder="cover.png" />
-
-      <button id="copyImagePath">Copy Path</button>
-      <p id="pathResult" class="small"></p>
-    </div>
-
-    <label>Images (1 path per baris)</label>
-    <textarea id="images" rows="4"
-      placeholder="/assets/products/eduprompt/cover.png"></textarea>
-
-    <div id="imagePreview" class="preview"></div>
-
-    <label>
-      <input type="checkbox" id="featured" />
-      Tampilkan di Index (Featured)
-    </label>
-
-    <label>Status</label>
-    <select id="status">
-      <option value="active">Active</option>
-      <option value="inactive">Inactive</option>
-    </select>
-
-    <div class="actions">
-      <button id="saveProduct">Save Product</button>
-      <a href="/ai-tools/" target="_blank" class="secondary button-like"
-         style="text-align:center;padding:14px;border-radius:8px;text-decoration:none;color:#e5e7eb;">
-        Preview Website
-      </a>
-    </div>
-
-    <hr>
-
-    <h3>Recent Products</h3>
-    <div id="productList"></div>
-
-    <button id="logoutBtn" class="logout">Logout</button>
-
+    <a href="/ai-tools/" target="_blank" class="preview-link">
+      Preview Website
+    </a>
   </div>
 
-  <!-- SCRIPTS -->
-  <script type="module" src="./firebase.js"></script>
-  <script type="module" src="./auth.js"></script>
+  <!-- SCRIPT PALING BAWAH -->
   <script type="module" src="./admin-products.js"></script>
 
 </body>

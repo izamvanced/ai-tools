@@ -27,8 +27,29 @@ header{display:flex;justify-content:space-between;align-items:center;padding:20p
 .desc{color:#555;margin:12px 0 18px 0;} 
 .btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:600;} 
 footer{text-align:center;padding:30px;color:#777;}
+
+/* === TAMBAHAN UNTUK POST === */
+.post-item{
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:0 8px 18px rgba(0,0,0,.05);
+}
+.post-item h3{
+  margin:0 0 6px 0;
+  font-size:18px;
+}
+.post-item p{
+  margin:0 0 6px 0;
+  color:#555;
+}
+.post-item small{
+  color:#888;
+}
 </style>
 </head>
+
 <body>
 <header>
   <div class="logo">AI Tools Library</div>
@@ -66,8 +87,21 @@ footer{text-align:center;padding:30px;color:#777;}
   </div>
 </section>
 
+<!-- ============================= -->
+<!-- UPDATE & INSIGHT (POST) -->
+<!-- ============================= -->
+<section class="section">
+  <h2 style="text-align:center;margin-bottom:24px;">Update & Insight</h2>
+  <div id="postList"></div>
+</section>
+
 <footer>
   izamvanced © AI Tools Library
 </footer>
+
+<!-- SCRIPT PUBLIC -->
+<script type="module" src="./firebase-public.js"></script>
+<script type="module" src="./posts.js"></script>
+
 </body>
 </html>

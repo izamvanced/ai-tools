@@ -13,7 +13,7 @@
       padding: 40px;
     }
     .box {
-      max-width: 420px;
+      max-width: 500px;
       margin: auto;
       background: #020617;
       padding: 24px;
@@ -39,8 +39,18 @@
     button.logout {
       background: #7c2d12;
     }
+    hr {
+      margin: 24px 0;
+      border: 1px solid #1e293b;
+    }
     .hidden {
       display: none;
+    }
+    .post {
+      border: 1px solid #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
     }
   </style>
 </head>
@@ -60,6 +70,12 @@
     <input type="text" id="title" placeholder="Judul" />
     <textarea id="content" rows="6" placeholder="Konten"></textarea>
     <button id="savePost">Simpan (Draft)</button>
+
+    <hr>
+
+    <h2>Post List</h2>
+    <div id="postList"></div>
+
     <button class="logout" id="logoutBtn">Logout</button>
   </div>
 

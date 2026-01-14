@@ -16,7 +16,7 @@ loginBtn.addEventListener("click", async () => {
   const password = document.getElementById("password").value;
 
   if (!email || !password) {
-    alert("Email & password wajib diisi");
+    alert("Email dan password wajib diisi");
     return;
   }
 

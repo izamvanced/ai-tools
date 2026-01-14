@@ -1,3 +1,4 @@
+
 import { initializeApp } from
   "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 
@@ -10,6 +11,7 @@ import {
   addDoc,
   getDocs,
   updateDoc,
+  deleteDoc,
   doc,
   serverTimestamp
 } from
@@ -18,7 +20,7 @@ import {
 const firebaseConfig = {
   apiKey: "AIzaSyDIts39eYziTvJUVAvun91dIZRNjRO8Qes",
   authDomain: "ai-tools-library-ac10c.firebaseapp.com",
-  projectId: "ai-tools-library-ac10c",
+  projectId: "ai-tools-library-ac10c"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -26,12 +28,12 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// EXPORT ULANG FIRESTORE API
 export {
   collection,
   addDoc,
   getDocs,
   updateDoc,
+  deleteDoc,
   doc,
   serverTimestamp
 };

@@ -3,7 +3,7 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_PUBLIC_API_KEY",
+  apiKey: "AIzaSyDIts39eYziTvJUVAvun91dIZRNjRO8Qes",
   authDomain: "ai-tools-library-ac10c.firebaseapp.com",
   projectId: "ai-tools-library-ac10c",
 };

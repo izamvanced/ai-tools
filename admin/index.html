@@ -4,64 +4,119 @@
   <meta charset="UTF-8" />
   <title>Admin – AI Tools Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
     body {
-      font-family: system-ui, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background: #0f172a;
       color: #e5e7eb;
       margin: 0;
-      padding: 40px;
+      padding: 40px 16px;
     }
+
     .box {
-      max-width: 560px;
+      max-width: 640px;
       margin: auto;
       background: #020617;
       padding: 24px;
-      border-radius: 10px;
+      border-radius: 12px;
+      border: 1px solid #1e293b;
     }
+
     h2, h3 {
       margin-top: 0;
+      margin-bottom: 12px;
       text-align: center;
     }
+
+    label {
+      font-size: 13px;
+      opacity: .8;
+    }
+
     input, textarea, button {
       width: 100%;
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #1e293b;
+      background: #020617;
+      color: #e5e7eb;
       font-size: 14px;
     }
+
     textarea {
       resize: vertical;
     }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+    }
+
     button {
       background: #2563eb;
-      color: white;
+      border: none;
       cursor: pointer;
+      margin-top: 12px;
     }
+
+    button:hover {
+      background: #3b82f6;
+    }
+
     button.logout {
       background: #7c2d12;
     }
+
+    button.logout:hover {
+      background: #9a3412;
+    }
+
     .hidden {
       display: none;
     }
+
+    hr {
+      margin: 28px 0;
+      border: 1px solid #1e293b;
+    }
+
     .helper {
       background: #020617;
-      border: 1px solid #1e293b;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 16px;
+      border: 1px dashed #1e293b;
+      padding: 14px;
+      border-radius: 10px;
+      margin-top: 12px;
     }
-    .preview img {
-      max-width: 100%;
-      border-radius: 6px;
-      margin-top: 8px;
-      border: 1px solid #1e293b;
-    }
+
     .small {
       font-size: 12px;
       opacity: .7;
       margin-top: 6px;
+    }
+
+    .preview img {
+      max-width: 100%;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #1e293b;
+    }
+
+    .post-item {
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .post-item:hover {
+      background: #020617;
+    }
+
+    .post-item small {
+      opacity: .6;
     }
   </style>
 </head>
@@ -78,10 +133,18 @@
   <!-- ADMIN -->
   <div id="adminArea" class="box hidden">
 
-    <h2>New Post</h2>
+    <h2>Post Editor</h2>
 
-    <input type="text" id="title" placeholder="Judul" />
-    <textarea id="content" rows="5" placeholder="Konten (teks saja)"></textarea>
+    <p id="editIndicator" class="small hidden">
+      Editing existing post
+    </p>
+
+    <label>Judul</label>
+    <input type="text" id="title" placeholder="Judul post / produk" />
+
+    <label>Konten (teks saja)</label>
+    <textarea id="content" rows="5"
+      placeholder="Tulis konten di sini (tanpa HTML)"></textarea>
 
     <!-- IMAGE HELPER -->
     <div class="helper">
@@ -94,20 +157,27 @@
       <p id="pathResult" class="small"></p>
     </div>
 
-    <!-- IMAGES FIELD -->
     <label>Images (1 path per baris)</label>
     <textarea id="images" rows="4"
       placeholder="/assets/posts/update-eduprompt/hero.png"></textarea>
 
     <div id="imagePreview" class="preview"></div>
 
-    <button id="savePost">Simpan (Draft)</button>
+    <button id="savePost">Save</button>
+
+    <hr>
+
+    <h3>Recent Posts</h3>
+    <div id="postList"></div>
+
     <button id="logoutBtn" class="logout">Logout</button>
 
   </div>
 
+  <!-- SCRIPTS -->
   <script type="module" src="./firebase.js"></script>
   <script type="module" src="./auth.js"></script>
   <script type="module" src="./admin.js"></script>
+
 </body>
 </html>

@@ -3,14 +3,12 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDIts39eYziTvJUVAvun91dIZRNjRO8Qes",
+  apiKey: "YOUR_PUBLIC_API_KEY",
   authDomain: "ai-tools-library-ac10c.firebaseapp.com",
   projectId: "ai-tools-library-ac10c",
-  storageBucket: "ai-tools-library-ac10c.firebasestorage.app",
-  messagingSenderId: "924409375408",
-  appId: "1:924409375408:web:bb6374e0444725fdbb2975"
 };
 
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
 export const auth = getAuth(app);
 export const db = getFirestore(app);

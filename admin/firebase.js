@@ -16,7 +16,7 @@ import {
   "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "API_KEY_KAMU",
+  apiKey: "AIzaSyDIts39eYziTvJUVAvun91dIZRNjRO8Qes",
   authDomain: "ai-tools-library-ac10c.firebaseapp.com",
   projectId: "ai-tools-library-ac10c",
 };

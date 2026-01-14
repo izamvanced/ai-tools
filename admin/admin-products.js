@@ -5,9 +5,7 @@ import {
   getDocs,
   updateDoc,
   doc,
-  serverTimestamp,
-  query,
-  orderBy
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 /* =====================
@@ -84,9 +82,8 @@ imagesInput.addEventListener("input", () => {
 ===================== */
 async function loadProducts() {
   productList.innerHTML = "Loading...";
-  const q = query(collection(db, "products"), orderBy("updatedAt", "desc"));
-  const snapshot = await getDocs(q);
 
+  const snapshot = await getDocs(collection(db, "products"));
   productList.innerHTML = "";
 
   snapshot.forEach(docSnap => {
@@ -96,15 +93,18 @@ async function loadProducts() {
     div.className = "item";
 
     div.innerHTML = `
-      <strong>${data.name}</strong><br>
+      <strong>${data.name || "(no name)"}</strong><br>
       <small>
         ${data.category || "no category"} •
-        ${data.status} •
+        ${data.status || "inactive"} •
         ${data.featured ? "featured" : "normal"}
       </small>
     `;
 
-    div.addEventListener("click", () => loadProductToForm(docSnap.id, data));
+    div.addEventListener("click", () =>
+      loadProductToForm(docSnap.id, data)
+    );
+
     productList.appendChild(div);
   });
 }
@@ -162,12 +162,13 @@ saveBtn.addEventListener("click", async () => {
   };
 
   if (editingProductId) {
-    // UPDATE
-    await updateDoc(doc(db, "products", editingProductId), payload);
+    await updateDoc(
+      doc(db, "products", editingProductId),
+      payload
+    );
     editingProductId = null;
     editIndicator.classList.add("hidden");
   } else {
-    // ADD NEW
     await addDoc(collection(db, "products"), {
       ...payload,
       createdAt: serverTimestamp()

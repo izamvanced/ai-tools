@@ -22,9 +22,9 @@
 /* ============================= */
 :root{
   --bg:#f7f5f2;
-  --fg:#111111;          /* HITAM TEGAS */
+  --fg:#111111;
   --card:#ffffff;
-  --accent:#ff8a1f;      /* ORANYE BRAND */
+  --accent:#ff8a1f;
 }
 
 /* ============================= */
@@ -47,20 +47,16 @@ header{
   padding:20px 28px;
 }
 
-/* LOGO — OPSI 1 + 2 */
+/* LOGO */
 .logo{
   position:relative;
   font-weight:700;
   font-size:18px;
-  letter-spacing:.2px;
   line-height:1.1;
   color:#000;
 }
 .logo-main{margin-right:4px;}
-.logo-sub{
-  font-weight:500;
-  opacity:.6;
-}
+.logo-sub{font-weight:500;opacity:.6;}
 .logo::after{
   content:"";
   position:absolute;
@@ -69,14 +65,6 @@ header{
   width:36px;
   height:2px;
   background:var(--accent);
-}
-
-/* ADMIN LINK + TOGGLE */
-.toggle{
-  background:#fff;
-  border-radius:999px;
-  padding:6px 12px;
-  font-size:14px;
 }
 
 /* ============================= */
@@ -96,9 +84,7 @@ header{
   color:#000;
 }
 
-.hero-title span{
-  color:var(--accent);
-}
+.hero-title span{ color:var(--accent); }
 
 .hero p{
   max-width:640px;
@@ -139,7 +125,6 @@ header{
   box-shadow:0 10px 25px rgba(0,0,0,.06);
 }
 
-/* PRODUCT NAME */
 .product-name{
   font-size:20px;
   font-weight:700;
@@ -171,12 +156,10 @@ header{
   text-decoration:none;
   font-weight:600;
 }
-.btn:hover{
-  background:var(--accent);
-}
+.btn:hover{ background:var(--accent); }
 
 /* ============================= */
-/* POST ITEM */
+/* POSTS */
 /* ============================= */
 .post-item{
   background:#fff;
@@ -184,17 +167,6 @@ header{
   padding:20px;
   margin-bottom:16px;
   box-shadow:0 8px 18px rgba(0,0,0,.05);
-}
-.post-item h3{
-  margin:0 0 6px 0;
-  font-size:18px;
-}
-.post-item p{
-  margin:0 0 6px 0;
-  color:#444;
-}
-.post-item small{
-  color:#777;
 }
 
 /* ============================= */
@@ -207,38 +179,10 @@ footer{
 }
 
 /* ============================= */
-/* MOBILE OPTIMIZATION */
+/* MOBILE */
 /* ============================= */
 @media(max-width:768px){
-  header{
-    padding:16px 20px;
-  }
-
-  .hero{
-    padding:44px 16px 36px;
-  }
-
-  .hero-title{
-    font-size:44px;
-    line-height:1;
-    letter-spacing:0.6px;
-  }
-
-  .hero p{
-    font-size:15px;
-  }
-
-  .section{
-    padding:32px 16px;
-  }
-
-  .grid{
-    gap:18px;
-  }
-
-  .card{
-    padding:20px;
-  }
+  .hero-title{ font-size:44px; }
 }
 </style>
 </head>
@@ -251,18 +195,13 @@ footer{
     <span class="logo-sub">Library</span>
   </div>
 
-  <div style="display:flex;gap:14px;align-items:center;">
-    <a href="/ai-tools/admin/index.html"
-       style="font-size:13px;opacity:.45;text-decoration:none;color:inherit;">
-      admin
-    </a>
-    <div class="toggle">🌙 / ☀️</div>
-  </div>
+  <a href="/ai-tools/admin/index.html"
+     style="font-size:13px;opacity:.45;text-decoration:none;color:inherit;">
+    admin
+  </a>
 </header>
 
-<!-- ============================= -->
 <!-- HERO -->
-<!-- ============================= -->
 <section class="hero">
   <h1 class="hero-title">
     <span>Ai</span> tools librarY
@@ -282,16 +221,13 @@ footer{
   </p>
 </section>
 
-<!-- ========================= -->
-<!-- PRODUK LAMA (HARDCODED) -->
-<!-- ========================= -->
+<!-- PRODUK LEGACY (AMAN, TETAP ADA) -->
 <section class="section">
   <h2 style="text-align:center;margin-bottom:30px;">
-    Produk Tersedia
+    Produk Utama
   </h2>
 
   <div class="grid">
-
     <div class="card">
       <div class="product-name">📘 EduPrompt Studio</div>
       <div class="desc">
@@ -315,23 +251,20 @@ footer{
         Buka FlyerForge X
       </a>
     </div>
-
   </div>
 </section>
 
-<!-- ========================= -->
-<!-- PRODUK TERBARU (CMS) -->
-<!-- ========================= -->
+<!-- PRODUK DARI CMS -->
 <section class="section">
   <h2 style="text-align:center;margin-bottom:30px;">
     Produk Terbaru
   </h2>
-  <div id="cmsProductGrid" class="grid"></div>
+  <div id="productGrid" class="grid">
+    <p>Loading products...</p>
+  </div>
 </section>
 
-<!-- ========================= -->
-<!-- UPDATE & INSIGHT (POST) -->
-<!-- ========================= -->
+<!-- POST / BLOG -->
 <section class="section">
   <h2 style="text-align:center;margin-bottom:24px;">
     Update & Insight
@@ -344,11 +277,10 @@ footer{
 </footer>
 
 <!-- ============================= -->
-<!-- PUBLIC SCRIPTS -->
+<!-- PUBLIC MODULE SCRIPTS -->
 <!-- ============================= -->
-<script type="module" src="./firebase-public.js"></script>
-<script type="module" src="./posts.js"></script>
 <script type="module" src="./products.js"></script>
+<script type="module" src="./posts.js"></script>
 
 </body>
 </html>

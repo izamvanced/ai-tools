@@ -1,31 +1,50 @@
+import { db } from "./firebase-public.js";
 import {
-  db,
   collection,
-  getDocs
-} from "./firebase-public.js";
+  getDocs,
+  query,
+  where,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const list = document.getElementById("postList");
+console.log("POSTS JS LOADED");
 
-if (!list) {
-  console.error("postList NOT FOUND");
-} else {
-  loadPosts();
-}
+document.addEventListener("DOMContentLoaded", async () => {
+  const list = document.getElementById("postList");
+  if (!list) return;
 
-async function loadPosts() {
-  const snap = await getDocs(collection(db, "posts"));
-  list.innerHTML = "";
+  try {
+    const q = query(
+      collection(db, "posts"),
+      where("status", "==", "published"),
+      orderBy("title")
+    );
 
-  snap.forEach(doc => {
-    const p = doc.data();
-    if (p.status !== "published") return;
+    const snapshot = await getDocs(q);
 
-    const div = document.createElement("div");
-    div.className = "post-item";
-    div.innerHTML = `
-      <h3>${p.title}</h3>
-      <p>${p.content}</p>
-    `;
-    list.appendChild(div);
-  });
-}
+    if (snapshot.empty) {
+      list.innerHTML = "<p>Belum ada post.</p>";
+      return;
+    }
+
+    list.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const p = doc.data();
+
+      const item = document.createElement("div");
+      item.className = "post-item";
+
+      item.innerHTML = `
+        <h3>${p.title}</h3>
+        <p>${p.content}</p>
+      `;
+
+      list.appendChild(item);
+    });
+
+  } catch (err) {
+    console.error(err);
+    list.innerHTML = "<p>Gagal memuat post.</p>";
+  }
+});

@@ -1,54 +1,51 @@
+import { db } from "./firebase-public.js";
 import {
-  db,
   collection,
   getDocs,
   query,
   where,
   orderBy
-} from "./firebase-public.js";
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const grid = document.getElementById("productGrid");
-
-if (!grid) {
-  console.error("productGrid NOT FOUND");
-} else {
-  loadProducts();
-}
 
 async function loadProducts() {
   try {
     const q = query(
       collection(db, "products"),
-      where("status", "==", "active"),
-      orderBy("updatedAt", "desc")
+      where("status", "==", "active")
     );
 
-    const snap = await getDocs(q);
+    const snapshot = await getDocs(q);
 
-    grid.innerHTML = "";
-
-    if (snap.empty) {
+    if (snapshot.empty) {
       grid.innerHTML = "<p>Tidak ada produk.</p>";
       return;
     }
 
-    snap.forEach(doc => {
+    grid.innerHTML = "";
+
+    snapshot.forEach(doc => {
       const p = doc.data();
 
       const card = document.createElement("div");
       card.className = "card";
+
       card.innerHTML = `
         <div class="product-name">${p.name}</div>
         <div class="desc">${p.summary || ""}</div>
-        <a class="btn" href="./product.html?slug=${p.slug}">
+        <a class="btn" href="product.html?slug=${p.slug}">
           Lihat Produk
         </a>
       `;
 
       grid.appendChild(card);
     });
+
   } catch (err) {
-    console.error(err);
+    console.error("LOAD PRODUCTS ERROR:", err);
     grid.innerHTML = "<p>Gagal memuat produk.</p>";
   }
 }
+
+document.addEventListener("DOMContentLoaded", loadProducts);

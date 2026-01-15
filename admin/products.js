@@ -1,72 +1,50 @@
 import { db } from "./firebase.js";
 import {
-  collection, addDoc, getDocs,
-  updateDoc, deleteDoc, doc,
-  serverTimestamp
+  collection, addDoc, getDocs, updateDoc, deleteDoc, doc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-/* ELEMENTS */
-const nameEl = name;
-const slugEl = slug;
-const summaryEl = summary;
-const imagesEl = images;
-const statusEl = status;
-const saveBtn = saveBtn;
-const cancelBtn = cancelBtn;
-const listEl = productList;
-const searchEl = search;
-const modeTitle = modeTitle;
-const toastEl = toast;
-const genPath = document.getElementById("genPath");
-const imgFile = document.getElementById("imgFile");
+const nameEl=name, slugEl=slug, summaryEl=summary, imagesEl=images, statusEl=status;
+const saveBtnEl=saveBtn, cancelBtnEl=cancelBtn, listEl=productList, searchEl=search;
+const modeTitleEl=modeTitle, toastEl=toast, genPathEl=genPath, imgFileEl=imgFile;
+const previewBtnEl=previewBtn;
 
-let editingId = null;
-let cache = [];
+let editingId=null, cache=[];
 
-/* TOAST */
-function toast(msg,type="success"){
-  toastEl.textContent = msg;
-  toastEl.className = `toast show ${type}`;
+const toast=(m,t="success")=>{
+  toastEl.textContent=m; toastEl.className=`toast show ${t}`;
   setTimeout(()=>toastEl.className="toast",2200);
-}
-
-/* IMAGE HELPER */
-genPath.onclick = ()=>{
-  if(!slugEl.value||!imgFile.value) return;
-  imagesEl.value = `/assets/products/${slugEl.value}/${imgFile.value}`;
 };
 
-/* CANCEL */
-cancelBtn.onclick = ()=>{
-  editingId=null;
-  modeTitle.textContent="➕ Create New Product";
+genPathEl.onclick=()=>{
+  if(!slugEl.value||!imgFileEl.value) return;
+  imagesEl.value=`/assets/products/${slugEl.value}/${imgFileEl.value}`;
+};
+
+cancelBtnEl.onclick=()=>{
+  editingId=null; modeTitleEl.textContent="➕ Create New Product";
   nameEl.value=slugEl.value=summaryEl.value=imagesEl.value="";
   statusEl.value="draft";
 };
 
-/* SAVE */
-saveBtn.onclick = async ()=>{
-  if(!nameEl.value||!slugEl.value||!summaryEl.value){
-    toast("Field wajib belum lengkap","error");
-    return;
-  }
+previewBtnEl.onclick=()=>{
+  if(!slugEl.value){ toast("Slug belum diisi","error"); return; }
+  window.open(`../product.html?slug=${slugEl.value}`,"_blank");
+};
 
+saveBtnEl.onclick=async()=>{
+  if(!nameEl.value||!slugEl.value||!summaryEl.value){
+    toast("Field wajib belum lengkap","error"); return;
+  }
   if(statusEl.value==="active" && !imagesEl.value){
     if(!confirm("Produk belum punya gambar. Tetap aktifkan?")) return;
   }
-
-  saveBtn.disabled=true;
-  saveBtn.textContent="Saving…";
-
+  saveBtnEl.disabled=true; saveBtnEl.textContent="Saving…";
   const payload={
-    name:nameEl.value.trim(),
-    slug:slugEl.value.trim(),
+    name:nameEl.value.trim(), slug:slugEl.value.trim(),
     summary:summaryEl.value.trim(),
     images:imagesEl.value.split("\n").filter(Boolean),
-    status:statusEl.value,
-    updatedAt:serverTimestamp()
+    status:statusEl.value, updatedAt:serverTimestamp()
   };
-
   try{
     if(editingId){
       await updateDoc(doc(db,"products",editingId),payload);
@@ -76,39 +54,31 @@ saveBtn.onclick = async ()=>{
       await addDoc(collection(db,"products"),payload);
       toast("Produk disimpan");
     }
-    cancelBtn.onclick();
-    load();
-  }catch(e){
-    console.error(e);
-    toast("Gagal menyimpan","error");
-  }
-
-  saveBtn.disabled=false;
-  saveBtn.textContent="Save Product";
+    cancelBtnEl.onclick(); await load();
+  }catch(e){ console.error(e); toast("Gagal menyimpan","error"); }
+  saveBtnEl.disabled=false; saveBtnEl.textContent="Save Product";
 };
 
-/* DELETE */
-window.del = async id=>{
+window.del=async(id)=>{
   if(!confirm("Yakin hapus produk ini?")) return;
-  await deleteDoc(doc(db,"products",id));
-  toast("Produk dihapus");
-  load();
+  await deleteDoc(doc(db,"products",id)); toast("Produk dihapus"); load();
 };
 
-/* LOAD */
+window.edit=(p,id)=>{
+  editingId=id; modeTitleEl.textContent=`✏️ Editing: ${p.name}`;
+  nameEl.value=p.name; slugEl.value=p.slug; summaryEl.value=p.summary;
+  imagesEl.value=(p.images||[]).join("\n"); statusEl.value=p.status;
+};
+
 async function load(){
   const snap=await getDocs(collection(db,"products"));
-  cache=snap.docs.map(d=>({id:d.id,...d.data()}));
-  render(cache);
+  cache=snap.docs.map(d=>({id:d.id,...d.data()})); render(cache);
 }
-
-/* RENDER */
 function render(arr){
   listEl.innerHTML="";
   arr.forEach(p=>{
-    const div=document.createElement("div");
-    div.className="product-item";
-    div.innerHTML=`
+    const d=document.createElement("div"); d.className="product-item";
+    d.innerHTML=`
       <div>
         <strong>${p.name}</strong>
         <span class="badge ${p.status}">${p.status.toUpperCase()}</span>
@@ -117,57 +87,8 @@ function render(arr){
         <button onclick='edit(${JSON.stringify(p).replace(/'/g,"")},"${p.id}")'>Edit</button>
         <button style="background:#ef4444" onclick="del('${p.id}')">Delete</button>
       </div>`;
-    listEl.appendChild(div);
+    listEl.appendChild(d);
   });
 }
-
-/* EDIT */
-window.edit = (p,id)=>{
-  editingId=id;
-  modeTitle.textContent=`✏️ Editing: ${p.name}`;
-  nameEl.value=p.name;
-  slugEl.value=p.slug;
-  summaryEl.value=p.summary;
-  imagesEl.value=(p.images||[]).join("\n");
-  statusEl.value=p.status;
-};
-
-/* SEARCH */
-searchEl.oninput=()=>{
-  const q=searchEl.value.toLowerCase();
-  render(cache.filter(p=>p.name.toLowerCase().includes(q)));
-};
-
-load();    } else {
-      await addDoc(collection(db, "products"), {
-        ...payload,
-        createdAt: serverTimestamp()
-      });
-    }
-
-    showToast("Produk berhasil disimpan", "success");
-    resetForm();
-    loadProducts();
-
-  } catch (e) {
-    console.error(e);
-    showToast("Gagal menyimpan produk", "error");
-  }
-
-  setButtonState(saveBtn, "idle", "Save Product");
-};
-
-/* ===== RESET ===== */
-function resetForm() {
-  editingId = null;
-  nameInput.value = "";
-  slugInput.value = "";
-  summaryInput.value = "";
-  imagesInput.value = "";
-  statusInput.value = "inactive";
-  preview.innerHTML = "";
-  modeEl.textContent = "➕ Create New Product";
-}
-
-/* INIT */
-loadProducts();
+searchEl.oninput=()=>render(cache.filter(p=>p.name.toLowerCase().includes(searchEl.value.toLowerCase())));
+load();

@@ -1,40 +1,55 @@
-import { db } from "./firebase-public.js";
+// products.js
 import {
+  db,
   collection,
   getDocs,
   query,
   where
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+} from "./firebase-public.js";
 
-function getSlug() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("slug");
+// Ambil container grid di index
+const grid = document.getElementById("productGrid");
+
+// Guard: kalau halaman bukan index / grid tidak ada
+if (!grid) {
+  console.warn("productGrid not found. products.js skipped.");
+} else {
+  loadProducts();
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const slug = getSlug();
-  if (!slug) return;
+async function loadProducts() {
+  try {
+    const q = query(
+      collection(db, "products"),
+      where("status", "==", "active")
+    );
 
-  const q = query(
-    collection(db, "products"),
-    where("slug", "==", slug),
-    where("status", "==", "active")
-  );
+    const snapshot = await getDocs(q);
+    grid.innerHTML = "";
 
-  const snapshot = await getDocs(q);
-  if (snapshot.empty) return;
+    if (snapshot.empty) {
+      grid.innerHTML = "<p>Belum ada produk.</p>";
+      return;
+    }
 
-  const data = snapshot.docs[0].data();
+    snapshot.forEach(doc => {
+      const p = doc.data();
 
-  document.title = `${data.name} – AI Tools Library`;
-  document.getElementById("productName").textContent = data.name;
-  document.getElementById("productSummary").textContent = data.summary || "";
+      const card = document.createElement("div");
+      card.className = "card";
 
-  const imageWrap = document.getElementById("productImages");
-  (data.images || []).forEach(src => {
-    const img = document.createElement("img");
-    img.src = src;
-    img.loading = "lazy";
-    imageWrap.appendChild(img);
-  });
-});
+      card.innerHTML = `
+        <div class="product-name">${p.name}</div>
+        <div class="desc">${p.summary || ""}</div>
+        <a class="btn" href="/ai-tools/product.html?slug=${p.slug}">
+          Lihat Produk
+        </a>
+      `;
+
+      grid.appendChild(card);
+    });
+  } catch (err) {
+    console.error("Failed to load products:", err);
+    grid.innerHTML = "<p>Gagal memuat produk.</p>";
+  }
+}

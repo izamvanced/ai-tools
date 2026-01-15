@@ -1,126 +1,156 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Admin Dashboard – AI Tools Library</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>Admin – AI Tools Library</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      margin: 0;
-      padding: 40px 16px;
-    }
+<style>
+:root{
+  --bg:#f4f8ff;
+  --card:#ffffff;
+  --border:#dbe7ff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --primary:#ff8a1f;      /* oranye */
+  --primary-hover:#ff7a00;
+  --accent:#5b8cff;       /* biru pastel */
+}
 
-    .box {
-      max-width: 520px;
-      margin: auto;
-      background: #020617;
-      padding: 28px;
-      border-radius: 14px;
-      border: 1px solid #1e293b;
-      text-align: center;
-    }
+*{box-sizing:border-box}
 
-    h2 {
-      margin-top: 0;
-      margin-bottom: 20px;
-    }
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  background:linear-gradient(180deg,#eef4ff,#f9fbff);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
 
-    .menu {
-      display: grid;
-      gap: 14px;
-    }
+.card{
+  width:100%;
+  max-width:560px;
+  background:var(--card);
+  border-radius:22px;
+  padding:32px;
+  border:1px solid var(--border);
+  box-shadow:0 24px 48px rgba(30,64,175,.12);
+}
 
-    a.button,
-    button {
-      display: block;
-      padding: 14px;
-      border-radius: 10px;
-      border: none;
-      background: #2563eb;
-      color: white;
-      font-size: 15px;
-      font-weight: 500;
-      text-decoration: none;
-      cursor: pointer;
-    }
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:22px;
+}
 
-    a.button:hover,
-    button:hover {
-      background: #3b82f6;
-    }
+.title{
+  font-size:22px;
+  font-weight:800;
+  color:#1e3a8a;
+}
 
-    .secondary {
-      background: #1e293b;
-    }
+.subtitle{
+  font-size:13px;
+  color:var(--muted);
+}
 
-    .secondary:hover {
-      background: #334155;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+  margin-top:18px;
+}
 
-    .logout {
-      background: #7c2d12;
-    }
+a.btn{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 18px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:700;
+  background:#fff;
+  color:var(--text);
+  border:1px solid var(--border);
+  transition:transform .08s ease, box-shadow .08s ease, border .15s ease;
+}
 
-    .logout:hover {
-      background: #9a3412;
-    }
+a.btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 20px rgba(30,64,175,.12);
+  border-color:#c7d7ff;
+}
 
-    .small {
-      font-size: 12px;
-      opacity: .7;
-      margin-top: 18px;
-    }
+a.btn.primary{
+  background:linear-gradient(135deg,var(--primary),#ffb347);
+  color:#fff;
+  border:none;
+}
 
-    .hidden {
-      display: none;
-    }
-  </style>
+a.btn.primary:hover{
+  background:linear-gradient(135deg,var(--primary-hover),#ff9f2f);
+}
+
+.icon{
+  font-size:18px;
+  opacity:.9;
+}
+
+.footer{
+  margin-top:22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.footer a{
+  color:var(--muted);
+  text-decoration:none;
+}
+
+@media (max-width:480px){
+  .card{padding:26px}
+}
+</style>
 </head>
+
 <body>
-
-  <!-- LOGIN -->
-  <div id="loginArea" class="box hidden">
-    <h2>Admin Login</h2>
-    <input type="email" id="email" placeholder="Email"
-      style="width:100%;margin-bottom:10px;padding:10px;border-radius:8px;border:1px solid #1e293b;background:#020617;color:#e5e7eb;" />
-    <input type="password" id="password" placeholder="Password"
-      style="width:100%;margin-bottom:12px;padding:10px;border-radius:8px;border:1px solid #1e293b;background:#020617;color:#e5e7eb;" />
-    <button id="loginBtn">Login</button>
-  </div>
-
-  <!-- DASHBOARD -->
-  <div id="adminArea" class="box hidden">
-    <h2>Admin Dashboard</h2>
-
-    <div class="menu">
-      <a href="./products.html" class="button">Kelola Produk</a>
-      <a href="./posts.html" class="button">Kelola Post / Update</a>
-
-      <!-- PREVIEW SITE -->
-      <a
-        href="/ai-tools/"
-        target="_blank"
-        class="button secondary"
-      >
-        Preview Website
-      </a>
-
-      <button id="logoutBtn" class="logout">Logout</button>
+  <div class="card">
+    <div class="header">
+      <div>
+        <div class="title">Admin Panel</div>
+        <div class="subtitle">AI Tools Library</div>
+      </div>
     </div>
 
-    <p class="small">
-      Produk = Jualan utama<br>
-      Post = Update & Blog Hybrid (siap kapan saja)
-    </p>
+    <div class="grid">
+      <a class="btn primary" href="./products.html">
+        <span>Kelola Produk</span>
+        <span class="icon">📦</span>
+      </a>
+
+      <a class="btn" href="./posts.html">
+        <span>Kelola Post</span>
+        <span class="icon">📝</span>
+      </a>
+
+      <a class="btn" href="/ai-tools/" target="_blank">
+        <span>Lihat Website</span>
+        <span class="icon">🌐</span>
+      </a>
+    </div>
+
+    <div class="footer">
+      <span>izamvanced © AI Tools Library</span>
+      <a href="./login.html">Logout</a>
+    </div>
   </div>
-
-  <!-- SCRIPTS -->
-  <script type="module" src="./firebase.js"></script>
-  <script type="module" src="./auth.js"></script>
-
 </body>
 </html>

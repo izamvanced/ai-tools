@@ -1,94 +1,31 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Product – AI Tools Library</title>
+import {
+  db, collection, getDocs, query, where
+} from "./firebase-public.js";
 
-<style>
-:root{
-  --bg:#f7f5f2;
-  --fg:#1f2937;
-  --card:#ffffff;
-  --accent:#ff8a1f;
-}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
-  background:var(--bg);
-  color:var(--fg);
-}
-header{
-  padding:20px 28px;
-}
-.logo{
-  font-weight:700;
-  font-size:18px;
-  color:var(--accent);
-}
-.section{
-  padding:40px 20px;
-  max-width:900px;
-  margin:auto;
-}
-.card{
-  background:var(--card);
-  border-radius:16px;
-  padding:28px;
-  box-shadow:0 10px 25px rgba(0,0,0,.06);
-}
-h1{
-  margin-top:0;
-}
-.desc{
-  color:#555;
-  margin:14px 0 20px 0;
-}
-.images img{
-  width:100%;
-  border-radius:14px;
-  margin-top:16px;
-}
-.btn{
-  display:inline-block;
-  background:var(--accent);
-  color:#fff;
-  padding:10px 18px;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:600;
-  margin-top:18px;
-}
-footer{
-  text-align:center;
-  padding:30px;
-  color:#777;
-}
-</style>
-</head>
+const grid = document.getElementById("productGrid");
 
-<body>
+async function loadProducts() {
+  const q = query(
+    collection(db, "products"),
+    where("status", "==", "active")
+  );
 
-<header>
-  <div class="logo">AI Tools Library</div>
-</header>
+  const snap = await getDocs(q);
+  grid.innerHTML = "";
 
-<section class="section">
-  <div class="card">
-    <h1 id="productName">Loading...</h1>
-    <p id="productSummary" class="desc"></p>
+  snap.forEach(d => {
+    const p = d.data();
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="product-name">${p.name}</div>
+      <div class="desc">${p.summary || ""}</div>
+      <a class="btn" href="/ai-tools/product.html?slug=${p.slug}">
+        Lihat Produk
+      </a>
+    `;
+    grid.appendChild(card);
+  });
+}
 
-    <div id="productImages" class="images"></div>
-
-    <a href="/ai-tools/" class="btn">← Kembali</a>
-  </div>
-</section>
-
-<footer>
-  izamvanced © AI Tools Library
-</footer>
-
-<script type="module" src="./firebase-public.js"></script>
-<script type="module" src="./product.js"></script>
-</body>
-</html>
+loadProducts();

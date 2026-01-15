@@ -1,91 +1,248 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product Manager</title>
-
-<link rel="stylesheet" href="./shared.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin – Product Manager</title>
 
 <style>
-.notice {
-  margin-top: 16px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  font-size: 14px;
-  display: none;
+:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --primary:#4da3ff;
+  --primary-hover:#2f8cff;
+  --accent:#ff9f1c;
+  --text:#111;
+  --muted:#666;
+  --success:#22c55e;
+  --danger:#ef4444;
 }
-.notice.success { background:#e9f8ef; color:#0a7a3d; }
-.notice.error { background:#fdecec; color:#a40000; }
-.notice.loading { background:#f3f3f3; color:#555; }
 
-.badge {
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  padding:28px 20px 60px;
+  background:var(--bg);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  color:var(--text);
+}
+
+h1,h2{
+  margin:0 0 16px;
+}
+
+.container{
+  max-width:760px;
+  margin:auto;
+}
+
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:22px;
+  box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin:10px 0 6px;
+}
+
+input, textarea, select{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  font-size:14px;
+}
+
+textarea{resize:vertical;min-height:80px}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+button{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(135deg,var(--primary),#8ec5ff);
+  transition:.2s;
+}
+
+button:hover{
+  background:linear-gradient(135deg,var(--primary-hover),#b3d9ff);
+}
+
+.hint{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:6px;
+}
+
+.badge{
   display:inline-block;
   padding:4px 10px;
-  font-size:12px;
+  font-size:11px;
   border-radius:999px;
+  background:var(--success);
+  color:#fff;
   margin-left:8px;
 }
-.badge.active { background:#0a7a3d; color:#fff; }
-.badge.draft { background:#aaa; color:#fff; }
 
-hr { margin:32px 0; opacity:.2; }
+.product-item{
+  padding:14px 16px;
+  border-radius:14px;
+  background:#f9fafb;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#111;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:12px;
+  font-size:14px;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+}
+.toast.show{opacity:1}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
 </style>
 </head>
 
 <body>
+<div class="container">
 
 <h1>Product Manager</h1>
 
-<!-- ===================== -->
-<!-- CREATE / EDIT FORM -->
-<!-- ===================== -->
+<!-- CREATE PRODUCT -->
+<div class="card">
+  <h2>Create New Product</h2>
 
-<h2 id="formTitle">➕ Create New Product</h2>
+  <label>Nama Produk *</label>
+  <input id="name" placeholder="Contoh: EduPrompt Studio"/>
 
-<label>Nama Produk *</label>
-<input id="name" placeholder="Contoh: EduPrompt Studio">
+  <label>Slug (URL) *</label>
+  <input id="slug" placeholder="eduprompt-studio"/>
 
-<label>Slug (URL) *</label>
-<input id="slug" placeholder="contoh: eduprompt-studio">
+  <label>Ringkasan *</label>
+  <textarea id="summary" placeholder="Deskripsi singkat untuk halaman utama"></textarea>
 
-<label>Ringkasan *</label>
-<textarea id="summary" placeholder="Deskripsi singkat untuk halaman utama"></textarea>
+  <label>Image Helper</label>
+  <div class="row">
+    <input id="imageName" placeholder="contoh: cover.png"/>
+    <button type="button" onclick="genPath()">Generate Path</button>
+  </div>
 
-<h3>Image Helper</h3>
-<input id="imageBase" placeholder="contoh: eduprompt">
-<button id="genPath">Generate Path</button>
+  <label>Images (1 per baris)</label>
+  <textarea id="images" placeholder="/assets/products/eduprompt/cover.png"></textarea>
 
-<textarea id="images" placeholder="images/eduprompt/cover.png
-images/eduprompt/preview-1.png"></textarea>
+  <label>Status</label>
+  <select id="status">
+    <option value="active">Active</option>
+    <option value="draft">Draft</option>
+  </select>
 
-<label>Status</label>
-<select id="status">
-  <option value="active">Active</option>
-  <option value="draft">Draft</option>
-</select>
+  <button onclick="saveProduct()">Save Product</button>
+  <div class="hint">Produk ACTIVE akan langsung muncul di halaman utama</div>
+</div>
 
-<button id="saveBtn">Save Product</button>
-
-<div id="notice" class="notice"></div>
-
-<hr>
-
-<!-- ===================== -->
 <!-- PRODUCT LIST -->
-<!-- ===================== -->
+<div class="card">
+  <h2>Product List</h2>
+  <div id="productList">Loading…</div>
+</div>
 
-<h2>Product List</h2>
-<div id="productList"></div>
+</div>
 
-<!-- ===================== -->
-<!-- LEGACY EDITOR (DISABLED) -->
-<!-- ===================== -->
-<!--
-<h2>Product Editor (Legacy)</h2>
-<form>...</form>
--->
+<div id="toast" class="toast"></div>
 
-<script type="module" src="./products.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getFirestore, collection, addDoc, getDocs, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDIts39eYziTvJUVAvun91dIZRNjRO8Qes",
+  authDomain: "ai-tools-library-ac10c.firebaseapp.com",
+  projectId: "ai-tools-library-ac10c"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const toast = (msg,type="success")=>{
+  const el=document.getElementById("toast");
+  el.textContent=msg;
+  el.className=`toast show ${type}`;
+  setTimeout(()=>el.className="toast",2200);
+};
+
+window.genPath=()=>{
+  const name=document.getElementById("imageName").value.trim();
+  if(!name) return;
+  document.getElementById("images").value=
+    `/assets/products/${document.getElementById("slug").value}/${name}`;
+};
+
+window.saveProduct=async()=>{
+  const data={
+    name:name.value.trim(),
+    slug:slug.value.trim(),
+    summary:summary.value.trim(),
+    images:images.value.split("\n").filter(Boolean),
+    status:status.value,
+    createdAt:serverTimestamp()
+  };
+
+  if(!data.name||!data.slug||!data.summary){
+    toast("Field wajib belum diisi","error");
+    return;
+  }
+
+  await addDoc(collection(db,"products"),data);
+  toast("Produk berhasil disimpan");
+  loadProducts();
+};
+
+async function loadProducts(){
+  const wrap=document.getElementById("productList");
+  wrap.innerHTML="";
+  const snap=await getDocs(collection(db,"products"));
+  snap.forEach(d=>{
+    const p=d.data();
+    wrap.innerHTML+=`
+      <div class="product-item">
+        <strong>${p.name}</strong>
+        ${p.status==="active" ? `<span class="badge">ACTIVE</span>` : ""}
+      </div>`;
+  });
+}
+
+loadProducts();
+</script>
 </body>
 </html>

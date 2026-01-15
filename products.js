@@ -1,13 +1,10 @@
-alert("PRODUCTS.JS EXECUTED");
+import { db } from "./firebase-public.js";
+
+alert("PRODUCTS.JS + FIREBASE IMPORT OK");
 
 document.addEventListener("DOMContentLoaded", () => {
-  alert("DOM READY FROM PRODUCTS.JS");
+  alert("DOM READY WITH FIREBASE");
 
-  const el = document.getElementById("productGrid");
-  if (!el) {
-    alert("productGrid NOT FOUND");
-    return;
-  }
-
-  el.innerHTML = "<p>PRODUCT GRID FOUND ✅</p>";
+  const grid = document.getElementById("productGrid");
+  grid.innerHTML = "<p>Firebase import sukses ✅</p>";
 });

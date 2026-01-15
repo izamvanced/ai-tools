@@ -3,45 +3,44 @@ import {
   collection,
   getDocs,
   query,
-  where
+  where,
+  orderBy,
+  limit
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const postList = document.getElementById("postList");
-  if (!postList) return;
-
-  postList.innerHTML = "<p>Loading post...</p>";
+  const list = document.getElementById("postList");
+  if (!list) return;
 
   try {
     const q = query(
       collection(db, "posts"),
-      where("status", "==", "published")
+      where("status", "==", "published"),
+      orderBy("title"),
+      limit(3)
     );
 
-    const snap = await getDocs(q);
+    const snapshot = await getDocs(q);
 
-    if (snap.empty) {
-      postList.innerHTML = "<p>Tidak ada post.</p>";
+    if (snapshot.empty) {
+      list.innerHTML = "<p>Tidak ada post.</p>";
       return;
     }
 
-    postList.innerHTML = "";
+    list.innerHTML = "";
 
-    snap.forEach(doc => {
-      const d = doc.data();
-
-      // FILTER KETAT (ANTI DATA RUSAK)
-      if (!d.title || !d.content) return;
-
-      postList.innerHTML += `
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      list.innerHTML += `
         <div class="post-item">
-          <h3>${d.title}</h3>
-          <p>${d.content}</p>
+          <h3>${data.title || "(tanpa judul)"}</h3>
+          <p>${data.content || ""}</p>
         </div>
       `;
     });
 
-  } catch (e) {
-    postList.innerHTML = "<p>Gagal memuat post.</p>";
+  } catch (err) {
+    console.error(err);
+    list.innerHTML = "<p>Gagal memuat post.</p>";
   }
 });

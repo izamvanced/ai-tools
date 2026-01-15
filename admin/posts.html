@@ -1,202 +1,139 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Admin Post – AI Tools Library</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>Admin Posts – AI Tools Library</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      margin: 0;
-      padding: 40px 16px;
-    }
+<style>
+:root{
+  --bg:#f4f8ff;
+  --card:#ffffff;
+  --border:#dbe7ff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --primary:#ff8a1f;
+  --primary-hover:#ff7a00;
+  --accent:#5b8cff;
+}
 
-    .box {
-      max-width: 760px;
-      margin: auto;
-      background: #020617;
-      padding: 24px;
-      border-radius: 14px;
-      border: 1px solid #1e293b;
-    }
+body{
+  margin:0;
+  padding:32px 16px;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:linear-gradient(180deg,#eef4ff,#f9fbff);
+  color:var(--text);
+}
 
-    h2, h3 {
-      margin-top: 0;
-      margin-bottom: 14px;
-      text-align: center;
-    }
+.box{
+  max-width:760px;
+  margin:auto;
+  background:var(--card);
+  padding:28px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  box-shadow:0 20px 40px rgba(30,64,175,.1);
+}
 
-    label {
-      font-size: 13px;
-      opacity: .8;
-    }
+h2{
+  margin-top:0;
+  text-align:center;
+  color:#1e3a8a;
+}
 
-    input, textarea, select, button {
-      width: 100%;
-      margin-top: 8px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      border: 1px solid #1e293b;
-      background: #020617;
-      color: #e5e7eb;
-      font-size: 14px;
-    }
+label{
+  display:block;
+  margin-top:16px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--muted);
+}
 
-    textarea { resize: vertical; }
+input, textarea, select{
+  width:100%;
+  margin-top:8px;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#f9fbff;
+  font-size:14px;
+}
 
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: #2563eb;
-    }
+textarea{resize:vertical}
 
-    button {
-      background: #2563eb;
-      border: none;
-      cursor: pointer;
-      margin-top: 14px;
-    }
+button{
+  margin-top:22px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--primary),#ffb347);
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}
 
-    button:hover { background: #3b82f6; }
+button:hover{
+  background:linear-gradient(135deg,var(--primary-hover),#ff9f2f);
+}
 
-    .secondary {
-      background: #1e293b;
-    }
+hr{
+  margin:30px 0;
+  border:1px solid var(--border);
+}
 
-    .secondary:hover { background: #334155; }
+.post-item{
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:10px;
+  cursor:pointer;
+}
 
-    .logout {
-      background: #7c2d12;
-    }
+.post-item:hover{
+  background:#f9fbff;
+}
 
-    .logout:hover { background: #9a3412; }
-
-    .hidden { display: none; }
-
-    hr {
-      margin: 28px 0;
-      border: 1px solid #1e293b;
-    }
-
-    .helper {
-      background: #020617;
-      border: 1px dashed #1e293b;
-      padding: 14px;
-      border-radius: 10px;
-      margin-top: 12px;
-    }
-
-    .preview img {
-      max-width: 100%;
-      margin-top: 8px;
-      border-radius: 8px;
-      border: 1px solid #1e293b;
-    }
-
-    .item {
-      border: 1px solid #1e293b;
-      border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 8px;
-      cursor: pointer;
-    }
-
-    .item:hover { background: #020617; }
-
-    .item small { opacity: .6; }
-
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .small {
-      font-size: 12px;
-      opacity: .7;
-      margin-top: 6px;
-    }
-  </style>
+small{color:var(--muted)}
+</style>
 </head>
+
 <body>
 
-  <!-- LOGIN -->
-  <div id="loginArea" class="box hidden">
-    <h2>Admin Login</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button id="loginBtn">Login</button>
-  </div>
+<div class="box">
+  <h2>Post Editor</h2>
 
-  <!-- ADMIN -->
-  <div id="adminArea" class="box hidden">
+  <p id="editInfo" style="display:none;font-size:13px;color:#555">
+    Editing existing post
+  </p>
 
-    <h2>Post / Blog Editor</h2>
+  <label>Judul Post</label>
+  <input id="title" placeholder="Judul post" />
 
-    <p id="editIndicator" class="small hidden">
-      Editing existing post
-    </p>
+  <label>Konten</label>
+  <textarea id="content" rows="6"
+    placeholder="Isi post (teks / HTML ringan)"></textarea>
 
-    <label>Judul</label>
-    <input type="text" id="title" placeholder="Judul post" />
+  <label>Status</label>
+  <select id="status">
+    <option value="draft">Draft</option>
+    <option value="published">Published</option>
+  </select>
 
-    <label>Slug (URL)</label>
-    <input type="text" id="slug" placeholder="update-eduprompt-jan" />
+  <button id="savePost">Save Post</button>
 
-    <label>Excerpt (ringkasan)</label>
-    <textarea id="excerpt" rows="2"
-      placeholder="Ringkasan singkat untuk listing"></textarea>
+  <hr>
 
-    <label>Content (teks saja)</label>
-    <textarea id="content" rows="6"
-      placeholder="Isi post (tanpa HTML)"></textarea>
+  <h3>Recent Posts</h3>
+  <div id="postList"></div>
 
-    <!-- IMAGE HELPER -->
-    <div class="helper">
-      <h3>Image Path Helper</h3>
-      <input id="imageFolder" placeholder="posts/update-eduprompt" />
-      <input id="imageFile" placeholder="hero.png" />
-      <button id="copyImagePath">Copy Path</button>
-      <p id="pathResult" class="small"></p>
-    </div>
+  <p style="margin-top:18px;text-align:center;">
+    <a href="/ai-tools/admin/" style="font-size:13px;opacity:.6;">
+      ← Kembali ke Dashboard
+    </a>
+  </p>
+</div>
 
-    <label>Images (1 path per baris)</label>
-    <textarea id="images" rows="4"
-      placeholder="/assets/posts/update-eduprompt/hero.png"></textarea>
-
-    <div id="imagePreview" class="preview"></div>
-
-    <label>Status</label>
-    <select id="status">
-      <option value="draft">Draft</option>
-      <option value="published">Published</option>
-    </select>
-
-    <div class="actions">
-      <button id="savePost">Save Post</button>
-      <a href="/ai-tools/" target="_blank"
-        class="secondary"
-        style="text-align:center;padding:14px;border-radius:8px;text-decoration:none;color:#e5e7eb;">
-        Preview Website
-      </a>
-    </div>
-
-    <hr>
-
-    <h3>Recent Posts</h3>
-    <div id="postList"></div>
-
-    <button id="logoutBtn" class="logout">Logout</button>
-
-  </div>
-
-  <!-- SCRIPTS -->
-  <script type="module" src="./firebase.js"></script>
-  <script type="module" src="./auth.js"></script>
-  <script type="module" src="./admin-posts.js"></script>
-
+<script type="module" src="./admin-posts.js"></script>
 </body>
 </html>

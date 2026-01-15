@@ -1,75 +1,90 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Admin · Products</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Manager</title>
 
-<!-- TIDAK ubah desain utama -->
-<link rel="stylesheet" href="./shared.css" />
+<link rel="stylesheet" href="./shared.css">
 
 <style>
-/* Tambahan kecil, tidak ubah layout */
-.mode-indicator{
-  font-size:13px;
-  opacity:.7;
-  margin-bottom:10px;
+.notice {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  display: none;
 }
-.list-item{
-  padding:10px;
-  border:1px solid #e5e7eb;
-  border-radius:8px;
-  margin-bottom:8px;
-  cursor:pointer;
+.notice.success { background:#e9f8ef; color:#0a7a3d; }
+.notice.error { background:#fdecec; color:#a40000; }
+.notice.loading { background:#f3f3f3; color:#555; }
+
+.badge {
+  display:inline-block;
+  padding:4px 10px;
+  font-size:12px;
+  border-radius:999px;
+  margin-left:8px;
 }
-.list-item:hover{
-  background:#f8fafc;
-}
+.badge.active { background:#0a7a3d; color:#fff; }
+.badge.draft { background:#aaa; color:#fff; }
+
+hr { margin:32px 0; opacity:.2; }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h2>Product Manager</h2>
-  <div id="modeIndicator" class="mode-indicator">
-    ➕ Create New Product
-  </div>
+<h1>Product Manager</h1>
 
-  <label>Nama Produk *</label>
-  <input id="name" />
+<!-- ===================== -->
+<!-- CREATE / EDIT FORM -->
+<!-- ===================== -->
 
-  <label>Slug *</label>
-  <input id="slug" />
+<h2 id="formTitle">➕ Create New Product</h2>
 
-  <label>Ringkasan *</label>
-  <textarea id="summary"></textarea>
+<label>Nama Produk *</label>
+<input id="name" placeholder="Contoh: EduPrompt Studio">
 
-  <!-- IMAGE HELPER -->
-  <div class="helper">
-    <strong>Image Helper</strong><br><br>
-    <input id="imgFile" placeholder="contoh: cover.png" />
-    <button id="genImage">Generate Path</button>
-    <div id="imgResult"></div>
-  </div>
+<label>Slug (URL) *</label>
+<input id="slug" placeholder="contoh: eduprompt-studio">
 
-  <label>Images (1 per baris)</label>
-  <textarea id="images"></textarea>
-  <div id="imagePreview"></div>
+<label>Ringkasan *</label>
+<textarea id="summary" placeholder="Deskripsi singkat untuk halaman utama"></textarea>
 
-  <label>Status</label>
-  <select id="status">
-    <option value="active">Active</option>
-    <option value="inactive">Inactive</option>
-  </select>
+<h3>Image Helper</h3>
+<input id="imageBase" placeholder="contoh: eduprompt">
+<button id="genPath">Generate Path</button>
 
-  <button id="saveBtn">Save Product</button>
+<textarea id="images" placeholder="images/eduprompt/cover.png
+images/eduprompt/preview-1.png"></textarea>
 
-  <hr>
+<label>Status</label>
+<select id="status">
+  <option value="active">Active</option>
+  <option value="draft">Draft</option>
+</select>
 
-  <h3>Product List</h3>
-  <div id="productList"></div>
-</div>
+<button id="saveBtn">Save Product</button>
+
+<div id="notice" class="notice"></div>
+
+<hr>
+
+<!-- ===================== -->
+<!-- PRODUCT LIST -->
+<!-- ===================== -->
+
+<h2>Product List</h2>
+<div id="productList"></div>
+
+<!-- ===================== -->
+<!-- LEGACY EDITOR (DISABLED) -->
+<!-- ===================== -->
+<!--
+<h2>Product Editor (Legacy)</h2>
+<form>...</form>
+-->
 
 <script type="module" src="./products.js"></script>
 </body>

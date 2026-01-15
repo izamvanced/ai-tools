@@ -1,10 +1,13 @@
-import { db } from "./firebase-public.js";
-import { collection, getDocs } from
-  "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+alert("PRODUCTS.JS EXECUTED");
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const grid = document.getElementById("productGrid");
-  const snap = await getDocs(collection(db, "products"));
+document.addEventListener("DOMContentLoaded", () => {
+  alert("DOM READY FROM PRODUCTS.JS");
 
-  grid.innerHTML = `<p>JUMLAH PRODUCTS: ${snap.size}</p>`;
+  const el = document.getElementById("productGrid");
+  if (!el) {
+    alert("productGrid NOT FOUND");
+    return;
+  }
+
+  el.innerHTML = "<p>PRODUCT GRID FOUND ✅</p>";
 });

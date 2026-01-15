@@ -1,12 +1,38 @@
-console.log("ADMIN PRODUCTS JS LOADED");
+import {
+  db,
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  doc,
+  serverTimestamp
+} from "./firebase.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  alert("DOM READY");
+console.log("ADMIN PRODUCTS READY");
 
-  const btn = document.getElementById("saveProduct");
-  console.log("BUTTON:", btn);
+// EVENT DELEGATION (AMAN)
+document.addEventListener("click", async (e) => {
+  if (e.target.id === "saveProduct") {
+    e.preventDefault();
 
-  btn.addEventListener("click", () => {
-    alert("SAVE BUTTON CLICKED");
-  });
+    const name = document.getElementById("name").value.trim();
+    const slug = document.getElementById("slug").value.trim();
+    const summary = document.getElementById("summary").value.trim();
+
+    if (!name || !slug) {
+      alert("Nama & slug wajib diisi");
+      return;
+    }
+
+    await addDoc(collection(db, "products"), {
+      name,
+      slug,
+      summary,
+      status: "active",
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+
+    alert("PRODUCT SAVED");
+  }
 });

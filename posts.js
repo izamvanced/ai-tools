@@ -1,43 +1,31 @@
-import { db } from "./firebase-public.js";
 import {
+  db,
   collection,
-  getDocs,
-  query,
-  where,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  getDocs
+} from "./firebase-public.js";
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const container = document.getElementById("posts");
+const list = document.getElementById("postList");
 
-  container.innerHTML = "Loading...";
+if (!list) {
+  console.error("postList NOT FOUND");
+} else {
+  loadPosts();
+}
 
-  const q = query(
-    collection(db, "posts"),
-    where("status", "==", "published"),
-    orderBy("createdAt", "desc")
-  );
+async function loadPosts() {
+  const snap = await getDocs(collection(db, "posts"));
+  list.innerHTML = "";
 
-  const snapshot = await getDocs(q);
-  container.innerHTML = "";
+  snap.forEach(doc => {
+    const p = doc.data();
+    if (p.status !== "published") return;
 
-  if (snapshot.empty) {
-    container.innerHTML = "<p>Belum ada konten.</p>";
-    return;
-  }
-
-  snapshot.forEach((doc) => {
-    const data = doc.data();
-    const article = document.createElement("article");
-
-    article.style.borderBottom = "1px solid #e5e7eb";
-    article.style.padding = "16px 0";
-
-    article.innerHTML = `
-      <h2>${data.title}</h2>
-      <p>${data.content}</p>
+    const div = document.createElement("div");
+    div.className = "post-item";
+    div.innerHTML = `
+      <h3>${p.title}</h3>
+      <p>${p.content}</p>
     `;
-
-    container.appendChild(article);
+    list.appendChild(div);
   });
-});
+}

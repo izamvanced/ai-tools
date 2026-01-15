@@ -2,285 +2,103 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>AI Tools Library</title>
 
 <style>
-/* ============================= */
-/* FONT: STRANGER DOCTOR (HERO) */
-/* ============================= */
-@font-face{
-  font-family:'StrangerDoctor';
-  src:url('./assets/fonts/StrangerDoctor-Regular.ttf') format('truetype');
-  font-weight:normal;
-  font-style:normal;
-  font-display:swap;
-}
-
-/* ============================= */
-/* ROOT */
-/* ============================= */
-:root{
-  --bg:#f7f5f2;
-  --fg:#111111;
-  --card:#ffffff;
-  --accent:#ff8a1f;
-}
-
-/* ============================= */
-/* BASE */
-/* ============================= */
 body{
   margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
-  background:var(--bg);
-  color:var(--fg);
-}
-
-/* ============================= */
-/* HEADER */
-/* ============================= */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 28px;
-}
-
-/* LOGO */
-.logo{
-  position:relative;
-  font-weight:700;
-  font-size:18px;
-  line-height:1.1;
-  color:#000;
-}
-.logo-main{margin-right:4px;}
-.logo-sub{font-weight:500;opacity:.6;}
-.logo::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-6px;
-  width:36px;
-  height:2px;
-  background:var(--accent);
-}
-
-/* ============================= */
-/* HERO */
-/* ============================= */
-.hero{
-  text-align:center;
-  padding:56px 20px 44px;
-}
-
-.hero-title{
-  font-family:'StrangerDoctor', serif;
-  font-size:72px;
-  line-height:0.95;
-  letter-spacing:1px;
-  margin:0 0 18px 0;
-  color:#000;
-}
-
-.hero-title span{ color:var(--accent); }
-
-.hero p{
-  max-width:640px;
-  margin:0 auto;
-  color:#333;
-  font-size:16px;
-}
-
-/* ============================= */
-/* SECTIONS */
-/* ============================= */
-.section{
-  padding:40px 20px;
-  max-width:1100px;
-  margin:auto;
-}
-
-.badge{
-  display:inline-block;
-  background:#000;
-  color:#fff;
-  border-radius:999px;
-  padding:6px 14px;
-  margin-bottom:16px;
-  font-size:13px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:24px;
-}
-
-.card{
-  background:var(--card);
-  border-radius:16px;
   padding:24px;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:#f6f7fb;
+}
+h2{
+  text-align:center;
+  margin:40px 0 16px;
+}
+.grid{
+  max-width:820px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+.card{
+  background:#fff;
+  padding:18px;
+  border-radius:18px;
   box-shadow:0 10px 25px rgba(0,0,0,.06);
 }
-
 .product-name{
-  font-size:20px;
   font-weight:700;
-  position:relative;
-  display:inline-block;
+  font-size:18px;
   margin-bottom:6px;
 }
-.product-name::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:-6px;
-  height:2px;
-  background:var(--accent);
-}
-
 .desc{
-  color:#444;
-  margin:12px 0 18px 0;
+  color:#555;
+  font-size:14px;
+  margin-bottom:12px;
 }
-
 .btn{
   display:inline-block;
-  background:#000;
+  background:#111;
   color:#fff;
-  padding:10px 18px;
-  border-radius:10px;
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:14px;
   text-decoration:none;
-  font-weight:600;
 }
-.btn:hover{ background:var(--accent); }
-
-/* ============================= */
-/* POSTS */
-/* ============================= */
-.post-item{
-  background:#fff;
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:16px;
-  box-shadow:0 8px 18px rgba(0,0,0,.05);
-}
-
-/* ============================= */
-/* FOOTER */
-/* ============================= */
-footer{
+.footer{
   text-align:center;
-  padding:30px;
-  color:#777;
-}
-
-/* ============================= */
-/* MOBILE */
-/* ============================= */
-@media(max-width:768px){
-  .hero-title{ font-size:44px; }
+  margin:40px 0 10px;
+  color:#888;
+  font-size:13px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">
-    <span class="logo-main">AI Tools</span>
-    <span class="logo-sub">Library</span>
-  </div>
-
-  <a href="/ai-tools/admin/index.html"
-     style="font-size:13px;opacity:.45;text-decoration:none;color:inherit;">
-    admin
-  </a>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <h1 class="hero-title">
-    <span>Ai</span> tools librarY
-  </h1>
-  <p>
-    Produk AI dengan fungsi spesifik dan workflow terkunci.
-    Bukan AI serba bisa, tapi AI yang bekerja dengan arah jelas.
-  </p>
-</section>
-
-<section class="section" style="text-align:center;">
-  <div class="badge">Curated AI Products</div>
-  <p>
-    Setiap tools dibuat untuk satu tujuan utama.
-    Tidak bercampur, tidak tumpang tindih,
-    dan dirancang agar hasil konsisten serta dapat dikontrol.
-  </p>
-</section>
-
-<!-- PRODUK LEGACY (AMAN, TETAP ADA) -->
-<section class="section">
-  <h2 style="text-align:center;margin-bottom:30px;">
-    Produk Utama
-  </h2>
-
-  <div class="grid">
-    <div class="card">
-      <div class="product-name">📘 EduPrompt Studio</div>
-      <div class="desc">
-        Tools untuk menghasilkan prompt visual edukasi
-        yang terstruktur, sesuai jenjang, dan konsisten.
-      </div>
-      <a class="btn"
-         href="https://izamvanced.github.io/ai-tools/tools/edukasi.html">
-        Lihat Produk
-      </a>
+<!-- PRODUK UTAMA (STATIC) -->
+<h2>Produk Utama</h2>
+<div class="grid">
+  <div class="card">
+    <div class="product-name">📘 EduPrompt Studio</div>
+    <div class="desc">
+      Tools untuk menghasilkan prompt visual edukasi yang terstruktur,
+      sesuai jenjang, dan konsisten.
     </div>
+    <a class="btn" href="/eduprompt-studio/">Lihat Produk</a>
+  </div>
 
-    <div class="card">
-      <div class="product-name">📣 FlyerForge X</div>
-      <div class="desc">
-        Mesin prompt visual premium untuk flyer & undangan
-        multipage dengan hasil full-screen tanpa frame.
-      </div>
-      <a class="btn"
-         href="https://izamvanced.github.io/ai-tools/tools/flyerforgex.html">
-        Buka FlyerForge X
-      </a>
+  <div class="card">
+    <div class="product-name">📣 FlyerForge X</div>
+    <div class="desc">
+      Mesin prompt visual premium untuk flyer & undangan multipage.
     </div>
+    <a class="btn" href="/flyerforge-x/">Buka FlyerForge X</a>
   </div>
-</section>
+</div>
 
-<!-- PRODUK DARI CMS -->
-<section class="section">
-  <h2 style="text-align:center;margin-bottom:30px;">
-    Produk Terbaru
-  </h2>
-  <div id="productGrid" class="grid">
-    <p>Loading products...</p>
-  </div>
-</section>
+<!-- PRODUK TERBARU (CMS) -->
+<h2>Produk Terbaru</h2>
+<div id="productGrid" class="grid">
+  <p style="text-align:center">Memuat produk…</p>
+</div>
 
-<!-- POST / BLOG -->
-<section class="section">
-  <h2 style="text-align:center;margin-bottom:24px;">
-    Update & Insight
-  </h2>
-  <div id="postList"></div>
-</section>
+<!-- UPDATE & INSIGHT -->
+<h2>Update & Insight</h2>
+<div id="postGrid" class="grid">
+  <p style="text-align:center">Memuat post…</p>
+</div>
 
-<footer>
+<div class="footer">
   izamvanced © AI Tools Library
-</footer>
+</div>
 
-<!-- ============================= -->
-<!-- PUBLIC MODULE SCRIPTS -->
-<!-- ============================= -->
-<script type="module" src="./products.js"></script>
-<script type="module" src="./posts.js"></script>
+<!-- SCRIPT -->
+<script type="module" src="/assets/js/products.js"></script>
+<script type="module" src="/assets/js/posts.js"></script>
 
 </body>
 </html>

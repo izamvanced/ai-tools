@@ -1,18 +1,16 @@
-// products.js
 import {
   db,
   collection,
   getDocs,
   query,
-  where
+  where,
+  orderBy
 } from "./firebase-public.js";
 
-// Ambil container grid di index
 const grid = document.getElementById("productGrid");
 
-// Guard: kalau halaman bukan index / grid tidak ada
 if (!grid) {
-  console.warn("productGrid not found. products.js skipped.");
+  console.error("productGrid NOT FOUND");
 } else {
   loadProducts();
 }
@@ -21,27 +19,28 @@ async function loadProducts() {
   try {
     const q = query(
       collection(db, "products"),
-      where("status", "==", "active")
+      where("status", "==", "active"),
+      orderBy("updatedAt", "desc")
     );
 
-    const snapshot = await getDocs(q);
+    const snap = await getDocs(q);
+
     grid.innerHTML = "";
 
-    if (snapshot.empty) {
-      grid.innerHTML = "<p>Belum ada produk.</p>";
+    if (snap.empty) {
+      grid.innerHTML = "<p>Tidak ada produk.</p>";
       return;
     }
 
-    snapshot.forEach(doc => {
+    snap.forEach(doc => {
       const p = doc.data();
 
       const card = document.createElement("div");
       card.className = "card";
-
       card.innerHTML = `
         <div class="product-name">${p.name}</div>
         <div class="desc">${p.summary || ""}</div>
-        <a class="btn" href="/ai-tools/product.html?slug=${p.slug}">
+        <a class="btn" href="./product.html?slug=${p.slug}">
           Lihat Produk
         </a>
       `;
@@ -49,7 +48,7 @@ async function loadProducts() {
       grid.appendChild(card);
     });
   } catch (err) {
-    console.error("Failed to load products:", err);
+    console.error(err);
     grid.innerHTML = "<p>Gagal memuat produk.</p>";
   }
 }

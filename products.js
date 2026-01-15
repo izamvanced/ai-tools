@@ -1,1 +1,5 @@
-alert("HELLO FROM PRODUCTS.JS");
+console.log("PRODUCTS JS START");
+
+document.addEventListener("DOMContentLoaded", () => {
+  alert("PRODUCTS JS DOM READY");
+});

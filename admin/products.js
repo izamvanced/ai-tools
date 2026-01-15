@@ -1,119 +1,144 @@
 import { db } from "./firebase.js";
 import {
-  collection,
-  addDoc,
-  getDocs,
-  updateDoc,
-  doc,
+  collection, addDoc, getDocs,
+  updateDoc, deleteDoc, doc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-import {
-  showToast,
-  setButtonState,
-  renderStatusBadge
-} from "./shared-ui.js";
+/* ELEMENTS */
+const nameEl = name;
+const slugEl = slug;
+const summaryEl = summary;
+const imagesEl = images;
+const statusEl = status;
+const saveBtn = saveBtn;
+const cancelBtn = cancelBtn;
+const listEl = productList;
+const searchEl = search;
+const modeTitle = modeTitle;
+const toastEl = toast;
+const genPath = document.getElementById("genPath");
+const imgFile = document.getElementById("imgFile");
 
-/* ===== STATE ===== */
 let editingId = null;
+let cache = [];
 
-/* ===== ELEMENTS ===== */
-const nameInput = document.getElementById("name");
-const slugInput = document.getElementById("slug");
-const summaryInput = document.getElementById("summary");
-const imagesInput = document.getElementById("images");
-const statusInput = document.getElementById("status");
-const saveBtn = document.getElementById("saveBtn");
-const listEl = document.getElementById("productList");
-const modeEl = document.getElementById("modeIndicator");
+/* TOAST */
+function toast(msg,type="success"){
+  toastEl.textContent = msg;
+  toastEl.className = `toast show ${type}`;
+  setTimeout(()=>toastEl.className="toast",2200);
+}
 
 /* IMAGE HELPER */
-const imgFile = document.getElementById("imgFile");
-const imgResult = document.getElementById("imgResult");
-const genBtn = document.getElementById("genImage");
-const preview = document.getElementById("imagePreview");
+genPath.onclick = ()=>{
+  if(!slugEl.value||!imgFile.value) return;
+  imagesEl.value = `/assets/products/${slugEl.value}/${imgFile.value}`;
+};
 
-/* ===== IMAGE HELPER ===== */
-genBtn.addEventListener("click", () => {
-  if (!slugInput.value || !imgFile.value) {
-    imgResult.textContent = "❌ Slug & file wajib";
+/* CANCEL */
+cancelBtn.onclick = ()=>{
+  editingId=null;
+  modeTitle.textContent="➕ Create New Product";
+  nameEl.value=slugEl.value=summaryEl.value=imagesEl.value="";
+  statusEl.value="draft";
+};
+
+/* SAVE */
+saveBtn.onclick = async ()=>{
+  if(!nameEl.value||!slugEl.value||!summaryEl.value){
+    toast("Field wajib belum lengkap","error");
     return;
   }
-  const path = `/assets/products/${slugInput.value}/${imgFile.value}`;
-  imgResult.textContent = path;
-  navigator.clipboard.writeText(path);
-});
 
-/* PREVIEW */
-imagesInput.addEventListener("input", () => {
-  preview.innerHTML = "";
-  imagesInput.value
-    .split("\n")
-    .map(v => v.trim())
-    .filter(Boolean)
-    .forEach(src => {
-      const img = document.createElement("img");
-      img.src = src;
-      img.style.maxWidth = "120px";
-      img.style.marginRight = "6px";
-      img.onerror = () => img.style.opacity = ".3";
-      preview.appendChild(img);
-    });
-});
+  if(statusEl.value==="active" && !imagesEl.value){
+    if(!confirm("Produk belum punya gambar. Tetap aktifkan?")) return;
+  }
 
-/* ===== LOAD PRODUCTS ===== */
-async function loadProducts() {
-  listEl.innerHTML = "Loading...";
-  const snap = await getDocs(collection(db, "products"));
-  listEl.innerHTML = "";
+  saveBtn.disabled=true;
+  saveBtn.textContent="Saving…";
 
-  snap.forEach(d => {
-    const data = d.data();
-    const div = document.createElement("div");
-    div.className = "list-item";
-    div.innerHTML = `<strong>${data.name}</strong>`;
-    div.appendChild(renderStatusBadge(data.status || "inactive"));
+  const payload={
+    name:nameEl.value.trim(),
+    slug:slugEl.value.trim(),
+    summary:summaryEl.value.trim(),
+    images:imagesEl.value.split("\n").filter(Boolean),
+    status:statusEl.value,
+    updatedAt:serverTimestamp()
+  };
 
-    div.onclick = () => loadToForm(d.id, data);
+  try{
+    if(editingId){
+      await updateDoc(doc(db,"products",editingId),payload);
+      toast("Produk diperbarui");
+    }else{
+      payload.createdAt=serverTimestamp();
+      await addDoc(collection(db,"products"),payload);
+      toast("Produk disimpan");
+    }
+    cancelBtn.onclick();
+    load();
+  }catch(e){
+    console.error(e);
+    toast("Gagal menyimpan","error");
+  }
+
+  saveBtn.disabled=false;
+  saveBtn.textContent="Save Product";
+};
+
+/* DELETE */
+window.del = async id=>{
+  if(!confirm("Yakin hapus produk ini?")) return;
+  await deleteDoc(doc(db,"products",id));
+  toast("Produk dihapus");
+  load();
+};
+
+/* LOAD */
+async function load(){
+  const snap=await getDocs(collection(db,"products"));
+  cache=snap.docs.map(d=>({id:d.id,...d.data()}));
+  render(cache);
+}
+
+/* RENDER */
+function render(arr){
+  listEl.innerHTML="";
+  arr.forEach(p=>{
+    const div=document.createElement("div");
+    div.className="product-item";
+    div.innerHTML=`
+      <div>
+        <strong>${p.name}</strong>
+        <span class="badge ${p.status}">${p.status.toUpperCase()}</span>
+      </div>
+      <div class="actions">
+        <button onclick='edit(${JSON.stringify(p).replace(/'/g,"")},"${p.id}")'>Edit</button>
+        <button style="background:#ef4444" onclick="del('${p.id}')">Delete</button>
+      </div>`;
     listEl.appendChild(div);
   });
 }
 
-/* ===== LOAD TO FORM ===== */
-function loadToForm(id, d) {
-  editingId = id;
-  nameInput.value = d.name || "";
-  slugInput.value = d.slug || "";
-  summaryInput.value = d.summary || "";
-  imagesInput.value = (d.images || []).join("\n");
-  statusInput.value = d.status || "inactive";
+/* EDIT */
+window.edit = (p,id)=>{
+  editingId=id;
+  modeTitle.textContent=`✏️ Editing: ${p.name}`;
+  nameEl.value=p.name;
+  slugEl.value=p.slug;
+  summaryEl.value=p.summary;
+  imagesEl.value=(p.images||[]).join("\n");
+  statusEl.value=p.status;
+};
 
-  modeEl.textContent = `✏️ Editing: ${d.name}`;
-  imagesInput.dispatchEvent(new Event("input"));
-}
+/* SEARCH */
+searchEl.oninput=()=>{
+  const q=searchEl.value.toLowerCase();
+  render(cache.filter(p=>p.name.toLowerCase().includes(q)));
+};
 
-/* ===== SAVE ===== */
-saveBtn.onclick = async () => {
-  if (!nameInput.value || !slugInput.value || !summaryInput.value) {
-    showToast("Field wajib belum lengkap", "error");
-    return;
-  }
-
-  const payload = {
-    name: nameInput.value.trim(),
-    slug: slugInput.value.trim(),
-    summary: summaryInput.value.trim(),
-    images: imagesInput.value.split("\n").filter(Boolean),
-    status: statusInput.value,
-    updatedAt: serverTimestamp()
-  };
-
-  setButtonState(saveBtn, "loading", "Saving...");
-
-  try {
-    if (editingId) {
-      await updateDoc(doc(db, "products", editingId), payload);
-    } else {
+load();    } else {
       await addDoc(collection(db, "products"), {
         ...payload,
         createdAt: serverTimestamp()

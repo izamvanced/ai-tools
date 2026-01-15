@@ -1,8 +1,4 @@
-alert("STEP 1: products.js LOADED");
-
 import { db } from "./firebase-public.js";
-alert("STEP 2: firebase-public.js OK");
-
 import {
   collection,
   getDocs,
@@ -10,18 +6,18 @@ import {
   where
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-alert("STEP 3: Firestore SDK OK");
+alert("STEP 1: imports OK");
 
 document.addEventListener("DOMContentLoaded", async () => {
-  alert("STEP 4: DOM READY");
+  alert("STEP 2: DOM READY");
 
   const grid = document.getElementById("productGrid");
   if (!grid) {
-    alert("❌ productGrid NOT FOUND");
+    alert("❌ STEP 3: productGrid NOT FOUND");
     return;
   }
 
-  alert("STEP 5: productGrid FOUND");
+  alert("STEP 3: productGrid FOUND");
 
   try {
     const q = query(
@@ -29,11 +25,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       where("status", "==", "active")
     );
 
-    alert("STEP 6: QUERY CREATED");
+    alert("STEP 4: QUERY CREATED");
 
     const snapshot = await getDocs(q);
 
-    alert("STEP 7: QUERY DONE, docs = " + snapshot.size);
+    alert("STEP 5: QUERY DONE, docs = " + snapshot.size);
 
     if (snapshot.empty) {
       grid.innerHTML = "<p>Tidak ada produk.</p>";
@@ -44,7 +40,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     snapshot.forEach(doc => {
       const p = doc.data();
-
       const div = document.createElement("div");
       div.className = "card";
       div.innerHTML = `
@@ -54,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       grid.appendChild(div);
     });
 
-    alert("STEP 8: RENDER DONE");
+    alert("STEP 6: RENDER DONE");
 
   } catch (e) {
     alert("🔥 ERROR: " + e.message);

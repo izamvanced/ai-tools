@@ -15,51 +15,63 @@ body{
   margin:0;padding:28px 20px 60px;background:var(--bg);
   font-family:system-ui,-apple-system,Segoe UI,Roboto;color:var(--text);
 }
-.container{max-width:780px;margin:auto}
+.container{max-width:900px;margin:auto}
 h1{color:var(--accent);margin:0 0 18px}
+
+.nav{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.nav a{
+  text-decoration:none;font-size:13px;padding:6px 12px;border-radius:999px;
+  background:#fff;color:#111;box-shadow:0 4px 10px rgba(0,0,0,.05)
+}
+.nav a:hover{background:var(--accent);color:#fff}
+
 .card{
   background:var(--card);border-radius:18px;padding:20px;margin-bottom:22px;
   box-shadow:0 10px 25px rgba(0,0,0,.06);
 }
 label{display:block;font-size:13px;font-weight:600;margin:10px 0 6px}
 input,textarea,select{
-  width:100%;padding:12px 14px;border-radius:12px;border:1px solid #ddd;font-size:14px
+  width:100%;padding:12px 14px;border-radius:12px;
+  border:1px solid #ddd;font-size:14px
 }
-textarea{resize:vertical;min-height:80px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+textarea{resize:vertical;min-height:90px}
+
 button{
   width:100%;margin-top:12px;padding:14px;border:none;border-radius:14px;
-  font-size:15px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff
+  font-size:15px;font-weight:700;cursor:pointer
 }
-button.secondary{background:#111}
-button.muted{background:#9ca3af}
-button[disabled]{opacity:.6}
-.badge{padding:4px 10px;font-size:11px;border-radius:999px;color:#fff}
+.primary{background:var(--accent);color:#fff}
+.secondary{background:#111;color:#fff}
+.muted{background:#9ca3af;color:#fff}
+
+.badge{
+  padding:4px 10px;font-size:11px;border-radius:999px;color:#fff
+}
 .badge.active{background:var(--success)}
-.badge.draft{background:#64748b}
-.badge.archived{background:#9ca3af}
+.badge.inactive{background:#64748b}
+
 .product-item{
   background:#f9fafb;border-radius:14px;padding:14px;margin-bottom:10px;
   display:flex;justify-content:space-between;align-items:center
 }
 .actions{display:flex;gap:8px}
-.actions button{margin:0;padding:6px 10px;font-size:12px;border-radius:8px}
+.actions button{
+  margin:0;padding:6px 10px;font-size:12px;border-radius:8px;width:auto
+}
+
+.preview{
+  background:#f9fafb;border-radius:14px;padding:14px;margin-top:12px;
+  display:none
+}
+
 .toast{
   position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-  padding:12px 18px;border-radius:12px;font-size:14px;color:#fff;opacity:0;transition:.3s
+  padding:12px 18px;border-radius:12px;font-size:14px;color:#fff;
+  opacity:0;transition:.3s
 }
 .toast.show{opacity:1}
 .toast.success{background:var(--success)}
 .toast.error{background:var(--danger)}
-.toast.info{background:#334155}
-.nav{
-  display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap
-}
-.nav a{
-  text-decoration:none;font-size:13px;padding:6px 12px;border-radius:999px;
-  background:#fff;color:#111;box-shadow:0 4px 10px rgba(0,0,0,.05)
-}
-.nav a:hover{background:var(--accent);color:#fff}
 </style>
 </head>
 
@@ -76,48 +88,166 @@ button[disabled]{opacity:.6}
 
 <h1>Product Manager</h1>
 
+<!-- FORM -->
 <div class="card">
   <h2 id="modeTitle">➕ Create New Product</h2>
 
   <label>Nama Produk *</label>
   <input id="name">
 
-  <label>Slug *</label>
-  <input id="slug">
+  <label>Slug (URL) *</label>
+  <input id="slug" placeholder="contoh: eduprompt-studio">
 
   <label>Ringkasan *</label>
-  <textarea id="summary"></textarea>
-
-  <label>Image Helper (auto pakai slug)</label>
-  <div class="row">
-    <input id="imgFile" placeholder="cover.png">
-    <button type="button" class="secondary" id="genPath">Generate Path</button>
-  </div>
-
-  <label>Images (baris pertama = cover)</label>
-  <textarea id="images"></textarea>
+  <textarea id="summary"
+    placeholder="Deskripsi singkat untuk halaman depan"></textarea>
 
   <label>Status</label>
   <select id="status">
-    <option value="draft">Draft</option>
     <option value="active">Active</option>
-    <option value="archived">Archived</option>
+    <option value="inactive">Inactive</option>
   </select>
 
-  <button id="saveBtn">Save Product</button>
-  <button type="button" class="secondary" id="previewBtn">Preview Product</button>
-  <button type="button" class="muted" id="cancelBtn">Cancel Edit</button>
+  <button class="primary" id="saveBtn">Save Product</button>
+  <button class="secondary" id="previewBtn">Preview</button>
+  <button class="muted" id="cancelBtn">Cancel Edit</button>
+
+  <div id="preview" class="preview"></div>
 </div>
 
+<!-- LIST -->
 <div class="card">
   <h2>Product List</h2>
-  <input id="search" placeholder="Search product…" style="margin-bottom:12px">
   <div id="productList"></div>
 </div>
 
 </div>
 
 <div id="toast" class="toast"></div>
-<script type="module" src="./products.js"></script>
+
+<!-- AUTH -->
+<script type="module" src="./auth.js"></script>
+
+<!-- LOGIC -->
+<script type="module">
+import { db } from "../firebase-public.js";
+import {
+  collection, addDoc, getDocs,
+  updateDoc, deleteDoc, doc, query, orderBy
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const nameEl=document.getElementById("name");
+const slugEl=document.getElementById("slug");
+const summaryEl=document.getElementById("summary");
+const statusEl=document.getElementById("status");
+const listEl=document.getElementById("productList");
+const previewEl=document.getElementById("preview");
+const toast=document.getElementById("toast");
+
+let editId=null;
+
+function toastMsg(msg,type="success"){
+  toast.textContent=msg;
+  toast.className=`toast show ${type}`;
+  setTimeout(()=>toast.className="toast",2500);
+}
+
+async function loadProducts(){
+  listEl.innerHTML="";
+  const q=query(collection(db,"products"),orderBy("createdAt","desc"));
+  const snap=await getDocs(q);
+
+  snap.forEach(d=>{
+    const p=d.data();
+    const div=document.createElement("div");
+    div.className="product-item";
+    div.innerHTML=`
+      <div>
+        <strong>${p.name}</strong><br>
+        <small>/${p.slug}</small><br>
+        <span class="badge ${p.status}">${p.status}</span>
+      </div>
+      <div class="actions">
+        <button onclick="editProduct('${d.id}')">Edit</button>
+        <button onclick="delProduct('${d.id}')">Delete</button>
+      </div>
+    `;
+    listEl.appendChild(div);
+  });
+}
+
+window.editProduct=async id=>{
+  const snap=await getDocs(collection(db,"products"));
+  snap.forEach(d=>{
+    if(d.id===id){
+      const p=d.data();
+      nameEl.value=p.name;
+      slugEl.value=p.slug;
+      summaryEl.value=p.summary;
+      statusEl.value=p.status;
+      editId=id;
+      document.getElementById("modeTitle").textContent="✏️ Edit Product";
+    }
+  });
+};
+
+window.delProduct=async id=>{
+  if(!confirm("Hapus produk ini?"))return;
+  await deleteDoc(doc(db,"products",id));
+  toastMsg("Produk dihapus");
+  loadProducts();
+};
+
+document.getElementById("saveBtn").onclick=async()=>{
+  if(!nameEl.value||!slugEl.value||!summaryEl.value){
+    toastMsg("Semua field wajib diisi","error");return;
+  }
+  const data={
+    name:nameEl.value,
+    slug:slugEl.value,
+    summary:summaryEl.value,
+    status:statusEl.value,
+    updatedAt:Date.now(),
+    createdAt:editId?undefined:Date.now()
+  };
+  try{
+    if(editId){
+      await updateDoc(doc(db,"products",editId),data);
+      toastMsg("Produk diperbarui");
+    }else{
+      await addDoc(collection(db,"products"),data);
+      toastMsg("Produk tersimpan");
+    }
+    editId=null;
+    nameEl.value=slugEl.value=summaryEl.value="";
+    statusEl.value="active";
+    previewEl.style.display="none";
+    document.getElementById("modeTitle").textContent="➕ Create New Product";
+    loadProducts();
+  }catch{
+    toastMsg("Gagal menyimpan","error");
+  }
+};
+
+document.getElementById("previewBtn").onclick=()=>{
+  previewEl.style.display="block";
+  previewEl.innerHTML=`
+    <strong>${nameEl.value||"(nama produk)"}</strong>
+    <p>${summaryEl.value||"(ringkasan)"}</p>
+    <small>/${slugEl.value}</small>
+  `;
+};
+
+document.getElementById("cancelBtn").onclick=()=>{
+  editId=null;
+  nameEl.value=slugEl.value=summaryEl.value="";
+  statusEl.value="active";
+  previewEl.style.display="none";
+  document.getElementById("modeTitle").textContent="➕ Create New Product";
+};
+
+loadProducts();
+</script>
+
 </body>
 </html>

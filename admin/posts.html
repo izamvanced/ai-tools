@@ -2,138 +2,54 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
-<title>Admin Posts – AI Tools Library</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin – Posts</title>
 
 <style>
-:root{
-  --bg:#f4f8ff;
-  --card:#ffffff;
-  --border:#dbe7ff;
-  --text:#1f2937;
-  --muted:#6b7280;
-  --primary:#ff8a1f;
-  --primary-hover:#ff7a00;
-  --accent:#5b8cff;
-}
-
 body{
+  font-family:system-ui;
+  background:#f4f7fb;
   margin:0;
-  padding:32px 16px;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
-  background:linear-gradient(180deg,#eef4ff,#f9fbff);
-  color:var(--text);
+  padding:20px;
 }
 
-.box{
-  max-width:760px;
-  margin:auto;
-  background:var(--card);
-  padding:28px;
-  border-radius:18px;
-  border:1px solid var(--border);
-  box-shadow:0 20px 40px rgba(30,64,175,.1);
+h1{ margin-bottom:16px }
+
+.post{
+  background:#fff;
+  padding:16px;
+  border-radius:12px;
+  margin-bottom:12px;
+  box-shadow:0 6px 16px rgba(0,0,0,.06);
 }
 
-h2{
-  margin-top:0;
-  text-align:center;
-  color:#1e3a8a;
-}
+.post h3{ margin:0 0 6px 0 }
 
-label{
-  display:block;
-  margin-top:16px;
+.status{
   font-size:13px;
-  font-weight:600;
-  color:var(--muted);
+  margin-bottom:10px;
+  opacity:.7;
 }
-
-input, textarea, select{
-  width:100%;
-  margin-top:8px;
-  padding:12px 14px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:#f9fbff;
-  font-size:14px;
-}
-
-textarea{resize:vertical}
 
 button{
-  margin-top:22px;
-  width:100%;
-  padding:14px;
+  padding:6px 12px;
+  border-radius:8px;
   border:none;
-  border-radius:12px;
-  background:linear-gradient(135deg,var(--primary),#ffb347);
-  color:#fff;
-  font-weight:700;
   cursor:pointer;
+  font-weight:600;
 }
 
-button:hover{
-  background:linear-gradient(135deg,var(--primary-hover),#ff9f2f);
-}
+.publish{ background:#ff8a1f; color:#000 }
+.draft{ background:#ddd }
 
-hr{
-  margin:30px 0;
-  border:1px solid var(--border);
-}
-
-.post-item{
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:14px;
-  margin-bottom:10px;
-  cursor:pointer;
-}
-
-.post-item:hover{
-  background:#f9fbff;
-}
-
-small{color:var(--muted)}
 </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h2>Post Editor</h2>
+<h1>Admin – Posts</h1>
+<div id="postAdminList">Loading…</div>
 
-  <p id="editInfo" style="display:none;font-size:13px;color:#555">
-    Editing existing post
-  </p>
-
-  <label>Judul Post</label>
-  <input id="title" placeholder="Judul post" />
-
-  <label>Konten</label>
-  <textarea id="content" rows="6"
-    placeholder="Isi post (teks / HTML ringan)"></textarea>
-
-  <label>Status</label>
-  <select id="status">
-    <option value="draft">Draft</option>
-    <option value="published">Published</option>
-  </select>
-
-  <button id="savePost">Save Post</button>
-
-  <hr>
-
-  <h3>Recent Posts</h3>
-  <div id="postList"></div>
-
-  <p style="margin-top:18px;text-align:center;">
-    <a href="/ai-tools/admin/" style="font-size:13px;opacity:.6;">
-      ← Kembali ke Dashboard
-    </a>
-  </p>
-</div>
-
-<script type="module" src="./admin-posts.js"></script>
+<script type="module" src="./posts.js"></script>
 </body>
 </html>

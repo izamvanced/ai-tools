@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin – Product Manager</title>
 
 <style>
 :root{
   --bg:#f4f7fb;
   --card:#ffffff;
-  --primary:#4da3ff;
-  --primary-hover:#2f8cff;
-  --accent:#ff9f1c;
+  --accent:#ff8a1f;
   --text:#111;
   --muted:#666;
   --success:#22c55e;
@@ -28,13 +26,14 @@ body{
   color:var(--text);
 }
 
-h1,h2{
-  margin:0 0 16px;
+.container{
+  max-width:780px;
+  margin:auto;
 }
 
-.container{
-  max-width:760px;
-  margin:auto;
+h1{
+  color:var(--accent);
+  margin:0 0 18px;
 }
 
 .card{
@@ -77,39 +76,42 @@ button{
   font-size:15px;
   font-weight:700;
   cursor:pointer;
+  background:var(--accent);
   color:#fff;
-  background:linear-gradient(135deg,var(--primary),#8ec5ff);
-  transition:.2s;
 }
 
-button:hover{
-  background:linear-gradient(135deg,var(--primary-hover),#b3d9ff);
-}
-
-.hint{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:6px;
-}
+button[disabled]{opacity:.6;cursor:not-allowed}
 
 .badge{
-  display:inline-block;
   padding:4px 10px;
   font-size:11px;
   border-radius:999px;
-  background:var(--success);
   color:#fff;
-  margin-left:8px;
 }
+.badge.active{background:var(--success)}
+.badge.draft{background:#64748b}
+.badge.archived{background:#9ca3af}
 
 .product-item{
-  padding:14px 16px;
-  border-radius:14px;
   background:#f9fafb;
+  border-radius:14px;
+  padding:14px;
   margin-bottom:10px;
   display:flex;
   justify-content:space-between;
   align-items:center;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+}
+
+.actions button{
+  margin:0;
+  padding:6px 10px;
+  font-size:12px;
+  border-radius:8px;
 }
 
 .toast{
@@ -117,18 +119,17 @@ button:hover{
   bottom:24px;
   left:50%;
   transform:translateX(-50%);
-  background:#111;
-  color:#fff;
   padding:12px 18px;
   border-radius:12px;
   font-size:14px;
+  color:#fff;
   opacity:0;
-  pointer-events:none;
   transition:.3s;
 }
 .toast.show{opacity:1}
 .toast.success{background:var(--success)}
 .toast.error{background:var(--danger)}
+.toast.info{background:#334155}
 </style>
 </head>
 
@@ -137,112 +138,50 @@ button:hover{
 
 <h1>Product Manager</h1>
 
-<!-- CREATE PRODUCT -->
+<!-- FORM -->
 <div class="card">
-  <h2>Create New Product</h2>
+  <h2 id="modeTitle">➕ Create New Product</h2>
 
   <label>Nama Produk *</label>
-  <input id="name" placeholder="Contoh: EduPrompt Studio"/>
+  <input id="name">
 
-  <label>Slug (URL) *</label>
-  <input id="slug" placeholder="eduprompt-studio"/>
+  <label>Slug *</label>
+  <input id="slug">
 
   <label>Ringkasan *</label>
-  <textarea id="summary" placeholder="Deskripsi singkat untuk halaman utama"></textarea>
+  <textarea id="summary"></textarea>
 
-  <label>Image Helper</label>
+  <label>Image Helper (auto pakai slug)</label>
   <div class="row">
-    <input id="imageName" placeholder="contoh: cover.png"/>
-    <button type="button" onclick="genPath()">Generate Path</button>
+    <input id="imgFile" placeholder="cover.png">
+    <button type="button" id="genPath">Generate Path</button>
   </div>
 
-  <label>Images (1 per baris)</label>
-  <textarea id="images" placeholder="/assets/products/eduprompt/cover.png"></textarea>
+  <label>Images (baris pertama = cover)</label>
+  <textarea id="images"></textarea>
 
   <label>Status</label>
   <select id="status">
-    <option value="active">Active</option>
     <option value="draft">Draft</option>
+    <option value="active">Active</option>
+    <option value="archived">Archived</option>
   </select>
 
-  <button onclick="saveProduct()">Save Product</button>
-  <div class="hint">Produk ACTIVE akan langsung muncul di halaman utama</div>
+  <button id="saveBtn">Save Product</button>
+  <button id="cancelBtn" style="background:#9ca3af">Cancel Edit</button>
 </div>
 
-<!-- PRODUCT LIST -->
+<!-- LIST -->
 <div class="card">
   <h2>Product List</h2>
-  <div id="productList">Loading…</div>
+  <input id="search" placeholder="Search product…" style="margin-bottom:12px">
+  <div id="productList"></div>
 </div>
 
 </div>
 
 <div id="toast" class="toast"></div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {
-  getFirestore, collection, addDoc, getDocs, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDIts39eYziTvJUVAvun91dIZRNjRO8Qes",
-  authDomain: "ai-tools-library-ac10c.firebaseapp.com",
-  projectId: "ai-tools-library-ac10c"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const toast = (msg,type="success")=>{
-  const el=document.getElementById("toast");
-  el.textContent=msg;
-  el.className=`toast show ${type}`;
-  setTimeout(()=>el.className="toast",2200);
-};
-
-window.genPath=()=>{
-  const name=document.getElementById("imageName").value.trim();
-  if(!name) return;
-  document.getElementById("images").value=
-    `/assets/products/${document.getElementById("slug").value}/${name}`;
-};
-
-window.saveProduct=async()=>{
-  const data={
-    name:name.value.trim(),
-    slug:slug.value.trim(),
-    summary:summary.value.trim(),
-    images:images.value.split("\n").filter(Boolean),
-    status:status.value,
-    createdAt:serverTimestamp()
-  };
-
-  if(!data.name||!data.slug||!data.summary){
-    toast("Field wajib belum diisi","error");
-    return;
-  }
-
-  await addDoc(collection(db,"products"),data);
-  toast("Produk berhasil disimpan");
-  loadProducts();
-};
-
-async function loadProducts(){
-  const wrap=document.getElementById("productList");
-  wrap.innerHTML="";
-  const snap=await getDocs(collection(db,"products"));
-  snap.forEach(d=>{
-    const p=d.data();
-    wrap.innerHTML+=`
-      <div class="product-item">
-        <strong>${p.name}</strong>
-        ${p.status==="active" ? `<span class="badge">ACTIVE</span>` : ""}
-      </div>`;
-  });
-}
-
-loadProducts();
-</script>
+<script type="module" src="./products.js"></script>
 </body>
 </html>

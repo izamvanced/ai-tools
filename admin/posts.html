@@ -1,54 +1,169 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Admin – Posts</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Post Manager</title>
 
 <style>
+:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --accent:#ff8a1f;
+  --text:#111;
+  --muted:#666;
+  --success:#22c55e;
+  --danger:#ef4444;
+}
+
+*{box-sizing:border-box}
+
 body{
-  font-family:system-ui;
-  background:#f4f7fb;
   margin:0;
+  padding:28px 20px 60px;
+  background:var(--bg);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  color:var(--text);
+}
+
+.container{
+  max-width:780px;
+  margin:auto;
+}
+
+h1{
+  color:var(--accent);
+  margin:0 0 18px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:18px;
   padding:20px;
+  margin-bottom:22px;
+  box-shadow:0 10px 25px rgba(0,0,0,.06);
 }
 
-h1{ margin-bottom:16px }
-
-.post{
-  background:#fff;
-  padding:16px;
-  border-radius:12px;
-  margin-bottom:12px;
-  box-shadow:0 6px 16px rgba(0,0,0,.06);
-}
-
-.post h3{ margin:0 0 6px 0 }
-
-.status{
+label{
+  display:block;
   font-size:13px;
-  margin-bottom:10px;
-  opacity:.7;
+  font-weight:600;
+  margin:10px 0 6px;
+}
+
+input, textarea, select{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  font-size:14px;
+}
+
+textarea{
+  resize:vertical;
+  min-height:120px;
 }
 
 button{
-  padding:6px 12px;
-  border-radius:8px;
+  width:100%;
+  margin-top:18px;
+  padding:14px;
   border:none;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:700;
   cursor:pointer;
-  font-weight:600;
+  background:var(--accent);
+  color:#fff;
 }
 
-.publish{ background:#ff8a1f; color:#000 }
-.draft{ background:#ddd }
+button[disabled]{opacity:.6}
 
+.badge{
+  padding:4px 10px;
+  font-size:11px;
+  border-radius:999px;
+  color:#fff;
+}
+.badge.published{background:var(--success)}
+.badge.draft{background:#64748b}
+
+.post-item{
+  background:#f9fafb;
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+}
+
+.actions button{
+  margin:0;
+  padding:6px 10px;
+  font-size:12px;
+  border-radius:8px;
+}
+
+.toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:12px 18px;
+  border-radius:12px;
+  font-size:14px;
+  color:#fff;
+  opacity:0;
+  transition:.3s;
+}
+.toast.show{opacity:1}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
 </style>
 </head>
 
 <body>
+<div class="container">
 
-<h1>Admin – Posts</h1>
-<div id="postAdminList">Loading…</div>
+<h1>Post Manager</h1>
+
+<!-- FORM -->
+<div class="card">
+  <h2 id="modeTitle">➕ Create New Post</h2>
+
+  <label>Judul *</label>
+  <input id="title">
+
+  <label>Konten *</label>
+  <textarea id="content"
+    placeholder="Teks biasa / HTML / markdown ringan"></textarea>
+
+  <label>Status</label>
+  <select id="status">
+    <option value="draft">Draft</option>
+    <option value="published">Published</option>
+  </select>
+
+  <button id="saveBtn">Save Post</button>
+  <button id="cancelBtn" style="background:#9ca3af">Cancel Edit</button>
+</div>
+
+<!-- LIST -->
+<div class="card">
+  <h2>Post List</h2>
+  <input id="search" placeholder="Search post…" style="margin-bottom:12px">
+  <div id="postList"></div>
+</div>
+
+</div>
+
+<div id="toast" class="toast"></div>
 
 <script type="module" src="./posts.js"></script>
 </body>

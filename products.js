@@ -1,9 +1,8 @@
-/* ================================
-   PRODUCTS (PUBLIC FRONTEND)
-   File: /products.js
-================================ */
+alert("STEP 1: products.js LOADED");
 
 import { db } from "./firebase-public.js";
+alert("STEP 2: firebase-public.js OK");
+
 import {
   collection,
   getDocs,
@@ -11,19 +10,18 @@ import {
   where
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-console.log("PRODUCTS.JS LOADED");
+alert("STEP 3: Firestore SDK OK");
 
-document.addEventListener("DOMContentLoaded", loadProducts);
-
-async function loadProducts() {
-  console.log("LOAD PRODUCTS RUNNING");
+document.addEventListener("DOMContentLoaded", async () => {
+  alert("STEP 4: DOM READY");
 
   const grid = document.getElementById("productGrid");
-
   if (!grid) {
-    console.error("❌ productGrid element NOT FOUND");
+    alert("❌ productGrid NOT FOUND");
     return;
   }
+
+  alert("STEP 5: productGrid FOUND");
 
   try {
     const q = query(
@@ -31,10 +29,13 @@ async function loadProducts() {
       where("status", "==", "active")
     );
 
+    alert("STEP 6: QUERY CREATED");
+
     const snapshot = await getDocs(q);
 
+    alert("STEP 7: QUERY DONE, docs = " + snapshot.size);
+
     if (snapshot.empty) {
-      console.warn("⚠️ No active products found");
       grid.innerHTML = "<p>Tidak ada produk.</p>";
       return;
     }
@@ -42,26 +43,20 @@ async function loadProducts() {
     grid.innerHTML = "";
 
     snapshot.forEach(doc => {
-      const data = doc.data();
+      const p = doc.data();
 
-      const card = document.createElement("div");
-      card.className = "card";
-
-      card.innerHTML = `
-        <div class="product-name">${data.name || "Untitled Product"}</div>
-        <div class="desc">${data.summary || ""}</div>
-        <a class="btn" href="product.html?slug=${data.slug}">
-          Lihat Produk
-        </a>
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <div class="product-name">${p.name}</div>
+        <div class="desc">${p.summary || ""}</div>
       `;
-
-      grid.appendChild(card);
+      grid.appendChild(div);
     });
 
-    console.log("✅ PRODUCTS RENDERED:", snapshot.size);
+    alert("STEP 8: RENDER DONE");
 
-  } catch (err) {
-    console.error("🔥 LOAD PRODUCTS ERROR:", err);
-    grid.innerHTML = "<p>Gagal memuat produk.</p>";
+  } catch (e) {
+    alert("🔥 ERROR: " + e.message);
   }
-}
+});

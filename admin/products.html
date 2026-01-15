@@ -1,84 +1,79 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Admin Products – AI Tools Library</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin · Products</title>
 
-  <style>
-    :root {
-      --bg: #f4f8ff;
-      --card: #ffffff;
-      --border: #dbe7ff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --primary: #ff8a1f;
-      --primary-hover: #ff7a00;
-      --accent: #5b8cff;
-    }
+<!-- TIDAK ubah desain utama -->
+<link rel="stylesheet" href="./shared.css" />
 
-    * {
-      box-sizing: border-box;
-    }
+<style>
+/* Tambahan kecil, tidak ubah layout */
+.mode-indicator{
+  font-size:13px;
+  opacity:.7;
+  margin-bottom:10px;
+}
+.list-item{
+  padding:10px;
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  margin-bottom:8px;
+  cursor:pointer;
+}
+.list-item:hover{
+  background:#f8fafc;
+}
+</style>
+</head>
 
-    body {
-      margin: 0;
-      padding: 40px 16px;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: linear-gradient(180deg, #eef4ff, #f9fbff);
-      color: var(--text);
-    }
+<body>
 
-    .box {
-      max-width: 720px;
-      margin: auto;
-      background: var(--card);
-      padding: 28px;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      box-shadow: 0 20px 40px rgba(30, 64, 175, 0.08);
-    }
+<div class="box">
+  <h2>Product Manager</h2>
+  <div id="modeIndicator" class="mode-indicator">
+    ➕ Create New Product
+  </div>
 
-    h2 {
-      margin: 0 0 20px 0;
-      text-align: center;
-      font-size: 24px;
-      color: #1e3a8a;
-    }
+  <label>Nama Produk *</label>
+  <input id="name" />
 
-    label {
-      display: block;
-      margin-top: 16px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-    }
+  <label>Slug *</label>
+  <input id="slug" />
 
-    input,
-    textarea {
-      width: 100%;
-      margin-top: 8px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #f9fbff;
-      color: var(--text);
-      font-size: 14px;
-      transition: border 0.2s, box-shadow 0.2s;
-    }
+  <label>Ringkasan *</label>
+  <textarea id="summary"></textarea>
 
-    input:focus,
-    textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(91, 140, 255, 0.15);
-      background: #ffffff;
-    }
+  <!-- IMAGE HELPER -->
+  <div class="helper">
+    <strong>Image Helper</strong><br><br>
+    <input id="imgFile" placeholder="contoh: cover.png" />
+    <button id="genImage">Generate Path</button>
+    <div id="imgResult"></div>
+  </div>
 
-    textarea {
-      resize: vertical;
-    }
+  <label>Images (1 per baris)</label>
+  <textarea id="images"></textarea>
+  <div id="imagePreview"></div>
 
+  <label>Status</label>
+  <select id="status">
+    <option value="active">Active</option>
+    <option value="inactive">Inactive</option>
+  </select>
+
+  <button id="saveBtn">Save Product</button>
+
+  <hr>
+
+  <h3>Product List</h3>
+  <div id="productList"></div>
+</div>
+
+<script type="module" src="./products.js"></script>
+</body>
+</html>
     button {
       width: 100%;
       margin-top: 24px;

@@ -1,3 +1,7 @@
+// admin-posts.js
+// POST MANAGER — CREATE / EDIT / DELETE
+// FIXED: time field ALWAYS updated (biar muncul di homepage)
+
 import {
   collection,
   addDoc,
@@ -5,108 +9,158 @@ import {
   doc,
   updateDoc,
   deleteDoc,
-  serverTimestamp,
-  orderBy,
-  query
+  query,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 import { db } from "./firebase.js";
 
-let editId = null;
+/* =========================
+   ELEMENTS
+========================= */
+const form = document.getElementById("postForm");
+const titleInput = document.getElementById("postTitle");
+const contentInput = document.getElementById("postContent");
+const statusInput = document.getElementById("postStatus");
+const postList = document.getElementById("postList");
+const cancelBtn = document.getElementById("cancelEdit");
 
-const titleInput   = document.getElementById("title");
-const contentInput = document.getElementById("content");
-const statusSelect = document.getElementById("status");
-const saveBtn      = document.getElementById("saveBtn");
-const postList     = document.getElementById("postList");
+let editingId = null;
 
-/* ================= LOAD POSTS ================= */
+/* =========================
+   LOAD POSTS
+========================= */
 async function loadPosts() {
-  postList.innerHTML = "<p>Loading…</p>";
+  postList.innerHTML = "<p>Memuat post...</p>";
 
-  const q = query(
-    collection(db, "posts"),
-    orderBy("createdAt", "desc")
-  );
+  try {
+    const q = query(
+      collection(db, "posts"),
+      orderBy("time", "desc")
+    );
 
-  const snap = await getDocs(q);
+    const snap = await getDocs(q);
 
-  postList.innerHTML = "";
+    if (snap.empty) {
+      postList.innerHTML = "<p>Tidak ada post.</p>";
+      return;
+    }
 
-  snap.forEach(d => {
-    const p = d.data();
-    postList.innerHTML += `
-      <div>
-        <b>${p.title}</b> (${p.status})
-        <button onclick="editPost('${d.id}')">Edit</button>
-        <button onclick="deletePost('${d.id}')">Delete</button>
-      </div>
-    `;
-  });
+    postList.innerHTML = "";
+
+    snap.forEach(docSnap => {
+      const p = docSnap.data();
+      const id = docSnap.id;
+
+      postList.innerHTML += `
+        <div class="post-item">
+          <div>
+            <strong>${p.title || "(tanpa judul)"}</strong>
+            <span class="badge ${p.status}">
+              ${p.status}
+            </span>
+          </div>
+          <div class="actions">
+            <button data-edit="${id}">Edit</button>
+            <button data-del="${id}">Delete</button>
+          </div>
+        </div>
+      `;
+    });
+
+  } catch (err) {
+    console.error(err);
+    postList.innerHTML = "<p>Gagal memuat post.</p>";
+  }
 }
 
-/* ================= SAVE ================= */
-saveBtn.onclick = async () => {
-  const title   = titleInput.value.trim();
+/* =========================
+   SAVE POST (CREATE / EDIT)
+========================= */
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const title = titleInput.value.trim();
   const content = contentInput.value.trim();
-  const status  = statusSelect.value;
+  const status = statusInput.value;
 
   if (!title || !content) {
-    alert("Judul & konten wajib.");
+    alert("Judul dan konten wajib diisi.");
     return;
   }
 
+  try {
+    if (editingId) {
+      // UPDATE POST
+      await updateDoc(doc(db, "posts", editingId), {
+        title,
+        content,
+        status,
+        time: Date.now() // 🔥 WAJIB
+      });
+    } else {
+      // CREATE POST
+      await addDoc(collection(db, "posts"), {
+        title,
+        content,
+        status,
+        time: Date.now() // 🔥 WAJIB
+      });
+    }
+
+    resetForm();
+    loadPosts();
+
+  } catch (err) {
+    console.error(err);
+    alert("Gagal menyimpan post.");
+  }
+});
+
+/* =========================
+   CLICK HANDLER (EDIT / DELETE)
+========================= */
+postList.addEventListener("click", async (e) => {
+  const editId = e.target.dataset.edit;
+  const delId = e.target.dataset.del;
+
   if (editId) {
-    // UPDATE
-    await updateDoc(doc(db, "posts", editId), {
-      title,
-      content,
-      status,
-      updatedAt: serverTimestamp()
-    });
-  } else {
-    // CREATE — 🔥 WAJIB ISI time
-    await addDoc(collection(db, "posts"), {
-      title,
-      content,
-      status,
-      time: Date.now(),                 // KUNCI FRONTEND
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
+    const snap = await getDocs(collection(db, "posts"));
+    snap.forEach(d => {
+      if (d.id === editId) {
+        const p = d.data();
+        editingId = editId;
+        titleInput.value = p.title || "";
+        contentInput.value = p.content || "";
+        statusInput.value = p.status || "draft";
+      }
     });
   }
 
-  resetForm();
-  loadPosts();
-};
-
-/* ================= EDIT ================= */
-window.editPost = async (id) => {
-  const snap = await getDocs(collection(db, "posts"));
-  snap.forEach(d => {
-    if (d.id === id) {
-      const p = d.data();
-      editId = id;
-      titleInput.value   = p.title;
-      contentInput.value = p.content;
-      statusSelect.value = p.status;
+  if (delId) {
+    if (confirm("Hapus post ini?")) {
+      await deleteDoc(doc(db, "posts", delId));
+      loadPosts();
     }
-  });
-};
+  }
+});
 
-/* ================= DELETE ================= */
-window.deletePost = async (id) => {
-  if (!confirm("Hapus post?")) return;
-  await deleteDoc(doc(db, "posts", id));
-  loadPosts();
-};
+/* =========================
+   CANCEL EDIT
+========================= */
+cancelBtn.addEventListener("click", () => {
+  resetForm();
+});
 
-/* ================= RESET ================= */
+/* =========================
+   RESET FORM
+========================= */
 function resetForm() {
-  editId = null;
-  titleInput.value = "";
-  contentInput.value = "";
-  statusSelect.value = "draft";
+  editingId = null;
+  form.reset();
 }
 
+/* =========================
+   INIT
+========================= */
 loadPosts();

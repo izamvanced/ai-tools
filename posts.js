@@ -1,23 +1,30 @@
-import { db } from "./firebase-public.js";
+// posts.js — PUBLIC POSTS RENDER
+// Digunakan di index.html
+// REQUIRE: firebase-public.js sudah diload lebih dulu
+
 import {
   collection,
-  getDocs,
   query,
   where,
   orderBy,
-  limit
+  limit,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import { db } from "./firebase-public.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const list = document.getElementById("postList");
   if (!list) return;
+
+  list.innerHTML = "<p>Memuat post...</p>";
 
   try {
     const q = query(
       collection(db, "posts"),
       where("status", "==", "published"),
       orderBy("time", "desc"),
-      limit(3) // ⬅️ MAX POST DI HALAMAN DEPAN
+      limit(3) // 🔒 MAKS POST DI HALAMAN DEPAN
     );
 
     const snap = await getDocs(q);
@@ -30,18 +37,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     list.innerHTML = "";
 
     snap.forEach(doc => {
-      const p = doc.data();
+      const data = doc.data();
+
+      const title = data.title || "(tanpa judul)";
+      const content = data.content || "";
 
       list.innerHTML += `
         <div class="cms-post">
-          <strong>${p.title || "(tanpa judul)"}</strong>
-          <p>${p.content || ""}</p>
+          <strong>${escapeHTML(title)}</strong>
+          <p>${escapeHTML(content)}</p>
         </div>
       `;
     });
 
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error("POST LOAD ERROR:", err);
     list.innerHTML = "<p>Gagal memuat post.</p>";
   }
 });
+
+/* ===============================
+   UTIL — ANTI XSS SEDERHANA
+================================ */
+function escapeHTML(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}

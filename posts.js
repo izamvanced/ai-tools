@@ -16,31 +16,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     const q = query(
       collection(db, "posts"),
       where("status", "==", "published"),
-      orderBy("title"),
-      limit(3)
+      orderBy("time", "desc"),
+      limit(3) // ⬅️ MAX POST DI HALAMAN DEPAN
     );
 
-    const snapshot = await getDocs(q);
+    const snap = await getDocs(q);
 
-    if (snapshot.empty) {
+    if (snap.empty) {
       list.innerHTML = "<p>Tidak ada post.</p>";
       return;
     }
 
     list.innerHTML = "";
 
-    snapshot.forEach(doc => {
-      const data = doc.data();
+    snap.forEach(doc => {
+      const p = doc.data();
+
       list.innerHTML += `
-        <div class="post-item">
-          <h3>${data.title || "(tanpa judul)"}</h3>
-          <p>${data.content || ""}</p>
+        <div class="cms-post">
+          <strong>${p.title || "(tanpa judul)"}</strong>
+          <p>${p.content || ""}</p>
         </div>
       `;
     });
 
-  } catch (err) {
-    console.error(err);
+  } catch (e) {
+    console.error(e);
     list.innerHTML = "<p>Gagal memuat post.</p>";
   }
 });

@@ -1,64 +1,46 @@
-// product.js
+import { db } from "./firebase-public.js";
 import {
-  db,
   collection,
   getDocs,
   query,
   where
-} from "./firebase-public.js";
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// Ambil slug dari URL
-function getSlug() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("slug");
-}
-
-document.addEventListener("DOMContentLoaded", loadProduct);
-
-async function loadProduct() {
-  const slug = getSlug();
-  if (!slug) {
-    console.warn("No slug provided.");
-    return;
-  }
+document.addEventListener("DOMContentLoaded", async () => {
+  const grid = document.getElementById("productGrid");
+  if (!grid) return;
 
   try {
     const q = query(
       collection(db, "products"),
-      where("slug", "==", slug),
       where("status", "==", "active")
     );
 
-    const snapshot = await getDocs(q);
+    const snap = await getDocs(q);
 
-    if (snapshot.empty) {
-      console.warn("Product not found.");
+    if (snap.empty) {
+      grid.innerHTML = "<p>Tidak ada produk.</p>";
       return;
     }
 
-    const data = snapshot.docs[0].data();
+    grid.innerHTML = "";
 
-    // Update title
-    document.title = `${data.name} – AI Tools Library`;
+    snap.forEach(doc => {
+      const p = doc.data();
 
-    // Render content
-    const nameEl = document.getElementById("productName");
-    const summaryEl = document.getElementById("productSummary");
-    const imagesEl = document.getElementById("productImages");
+      grid.innerHTML += `
+        <div class="cms-card">
+          <div class="cms-title">${p.name}</div>
+          <div class="cms-desc">${p.summary || ""}</div>
+          <a class="btn" href="./product.html?slug=${p.slug}">
+            Lihat Produk
+          </a>
+        </div>
+      `;
+    });
 
-    if (nameEl) nameEl.textContent = data.name;
-    if (summaryEl) summaryEl.textContent = data.summary || "";
-
-    if (imagesEl) {
-      imagesEl.innerHTML = "";
-      (data.images || []).forEach(src => {
-        const img = document.createElement("img");
-        img.src = src;
-        img.loading = "lazy";
-        imagesEl.appendChild(img);
-      });
-    }
-  } catch (err) {
-    console.error("Failed to load product:", err);
+  } catch (e) {
+    console.error(e);
+    grid.innerHTML = "<p>Gagal memuat produk.</p>";
   }
-}
+});

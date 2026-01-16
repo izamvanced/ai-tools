@@ -1,7 +1,3 @@
-// admin-posts.js — ADMIN POST MANAGER (FINAL LOCK)
-// Aman untuk data lama & Android
-// REQUIRE: firebase.js + auth.js sudah jalan
-
 import {
   collection,
   addDoc,
@@ -16,168 +12,96 @@ import {
 
 import { db } from "./firebase.js";
 
-/* ===============================
-   STATE
-================================ */
 let editId = null;
 
-/* ===============================
-   ELEMENTS
-================================ */
-const titleInput = document.getElementById("postTitle");
-const contentInput = document.getElementById("postContent");
-const statusSelect = document.getElementById("postStatus");
-const saveBtn = document.getElementById("savePostBtn");
-const cancelBtn = document.getElementById("cancelEditBtn");
-const postList = document.getElementById("postList");
-const previewBtn = document.getElementById("previewPostBtn");
+const titleInput   = document.getElementById("title");
+const contentInput = document.getElementById("content");
+const statusSelect = document.getElementById("status");
+const saveBtn      = document.getElementById("saveBtn");
+const postList     = document.getElementById("postList");
 
-/* ===============================
-   LOAD POSTS
-================================ */
+/* ================= LOAD POSTS ================= */
 async function loadPosts() {
-  postList.innerHTML = "<p>Memuat post...</p>";
+  postList.innerHTML = "<p>Loading…</p>";
 
-  try {
-    const q = query(
-      collection(db, "posts"),
-      orderBy("createdAt", "desc") // 🔒 AMAN UNTUK SEMUA DATA
-    );
+  const q = query(
+    collection(db, "posts"),
+    orderBy("createdAt", "desc")
+  );
 
-    const snap = await getDocs(q);
+  const snap = await getDocs(q);
 
-    if (snap.empty) {
-      postList.innerHTML = "<p>Belum ada post.</p>";
-      return;
-    }
+  postList.innerHTML = "";
 
-    postList.innerHTML = "";
-
-    snap.forEach(docSnap => {
-      const p = docSnap.data();
-      const id = docSnap.id;
-
-      postList.innerHTML += `
-        <div class="post-item">
-          <div>
-            <strong>${escapeHTML(p.title || "(tanpa judul)")}</strong>
-            <span class="badge ${p.status === "published" ? "green" : "gray"}">
-              ${p.status}
-            </span>
-          </div>
-          <div class="actions">
-            <button onclick="editPost('${id}')">Edit</button>
-            <button onclick="deletePost('${id}')">Delete</button>
-          </div>
-        </div>
-      `;
-    });
-
-  } catch (e) {
-    console.error("LOAD POST ERROR:", e);
-    postList.innerHTML = "<p>Gagal memuat post.</p>";
-  }
+  snap.forEach(d => {
+    const p = d.data();
+    postList.innerHTML += `
+      <div>
+        <b>${p.title}</b> (${p.status})
+        <button onclick="editPost('${d.id}')">Edit</button>
+        <button onclick="deletePost('${d.id}')">Delete</button>
+      </div>
+    `;
+  });
 }
 
-/* ===============================
-   SAVE / UPDATE POST
-================================ */
-saveBtn.addEventListener("click", async () => {
-  const title = titleInput.value.trim();
+/* ================= SAVE ================= */
+saveBtn.onclick = async () => {
+  const title   = titleInput.value.trim();
   const content = contentInput.value.trim();
-  const status = statusSelect.value;
+  const status  = statusSelect.value;
 
   if (!title || !content) {
-    alert("Judul dan konten wajib diisi.");
+    alert("Judul & konten wajib.");
     return;
   }
 
-  saveBtn.disabled = true;
-  saveBtn.innerText = "Menyimpan...";
-
-  try {
-    if (editId) {
-      // UPDATE
-      await updateDoc(doc(db, "posts", editId), {
-        title,
-        content,
-        status,
-        updatedAt: serverTimestamp()
-      });
-    } else {
-      // CREATE
-      await addDoc(collection(db, "posts"), {
-        title,
-        content,
-        status,
-        createdAt: serverTimestamp(),
-        time: Date.now() // 🔒 dipakai di halaman depan
-      });
-    }
-
-    resetForm();
-    await loadPosts();
-
-  } catch (e) {
-    console.error("SAVE ERROR:", e);
-    alert("Gagal menyimpan post.");
-  }
-
-  saveBtn.disabled = false;
-  saveBtn.innerText = "Save Post";
-});
-
-/* ===============================
-   EDIT
-================================ */
-window.editPost = async (id) => {
-  try {
-    const snap = await getDocs(collection(db, "posts"));
-    snap.forEach(d => {
-      if (d.id === id) {
-        const p = d.data();
-        editId = id;
-        titleInput.value = p.title || "";
-        contentInput.value = p.content || "";
-        statusSelect.value = p.status || "draft";
-      }
+  if (editId) {
+    // UPDATE
+    await updateDoc(doc(db, "posts", editId), {
+      title,
+      content,
+      status,
+      updatedAt: serverTimestamp()
     });
-  } catch (e) {
-    console.error("EDIT ERROR:", e);
+  } else {
+    // CREATE — 🔥 WAJIB ISI time
+    await addDoc(collection(db, "posts"), {
+      title,
+      content,
+      status,
+      time: Date.now(),                 // KUNCI FRONTEND
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
   }
+
+  resetForm();
+  loadPosts();
 };
 
-/* ===============================
-   DELETE
-================================ */
+/* ================= EDIT ================= */
+window.editPost = async (id) => {
+  const snap = await getDocs(collection(db, "posts"));
+  snap.forEach(d => {
+    if (d.id === id) {
+      const p = d.data();
+      editId = id;
+      titleInput.value   = p.title;
+      contentInput.value = p.content;
+      statusSelect.value = p.status;
+    }
+  });
+};
+
+/* ================= DELETE ================= */
 window.deletePost = async (id) => {
-  if (!confirm("Hapus post ini?")) return;
-
-  try {
-    await deleteDoc(doc(db, "posts", id));
-    await loadPosts();
-  } catch (e) {
-    console.error("DELETE ERROR:", e);
-    alert("Gagal menghapus post.");
-  }
+  if (!confirm("Hapus post?")) return;
+  await deleteDoc(doc(db, "posts", id));
+  loadPosts();
 };
 
-/* ===============================
-   PREVIEW
-================================ */
-previewBtn.addEventListener("click", () => {
-  alert(
-    "PREVIEW\n\n" +
-    titleInput.value + "\n\n" +
-    contentInput.value
-  );
-});
-
-/* ===============================
-   RESET
-================================ */
-cancelBtn.addEventListener("click", resetForm);
-
+/* ================= RESET ================= */
 function resetForm() {
   editId = null;
   titleInput.value = "";
@@ -185,17 +109,4 @@ function resetForm() {
   statusSelect.value = "draft";
 }
 
-/* ===============================
-   UTIL
-================================ */
-function escapeHTML(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
-
-/* ===============================
-   INIT
-================================ */
 loadPosts();

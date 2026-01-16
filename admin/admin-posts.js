@@ -1,104 +1,201 @@
-import { db } from "./firebase.js";
+// admin-posts.js — ADMIN POST MANAGER (FINAL LOCK)
+// Aman untuk data lama & Android
+// REQUIRE: firebase.js + auth.js sudah jalan
+
 import {
   collection,
   addDoc,
   getDocs,
-  updateDoc,
   doc,
+  updateDoc,
+  deleteDoc,
   serverTimestamp,
-  query,
-  orderBy
+  orderBy,
+  query
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-let editingPostId = null;
+import { db } from "./firebase.js";
 
-const titleInput = document.getElementById("title");
-const contentInput = document.getElementById("content");
-const statusInput = document.getElementById("status");
-const saveBtn = document.getElementById("savePost");
+/* ===============================
+   STATE
+================================ */
+let editId = null;
+
+/* ===============================
+   ELEMENTS
+================================ */
+const titleInput = document.getElementById("postTitle");
+const contentInput = document.getElementById("postContent");
+const statusSelect = document.getElementById("postStatus");
+const saveBtn = document.getElementById("savePostBtn");
+const cancelBtn = document.getElementById("cancelEditBtn");
 const postList = document.getElementById("postList");
-const editInfo = document.getElementById("editInfo");
+const previewBtn = document.getElementById("previewPostBtn");
 
-/* =====================
+/* ===============================
    LOAD POSTS
-===================== */
-async function loadPosts(){
-  postList.innerHTML = "Loading…";
+================================ */
+async function loadPosts() {
+  postList.innerHTML = "<p>Memuat post...</p>";
 
-  const q = query(
-    collection(db, "posts"),
-    orderBy("updatedAt", "desc")
-  );
+  try {
+    const q = query(
+      collection(db, "posts"),
+      orderBy("createdAt", "desc") // 🔒 AMAN UNTUK SEMUA DATA
+    );
 
-  const snap = await getDocs(q);
-  postList.innerHTML = "";
+    const snap = await getDocs(q);
 
-  snap.forEach(docSnap=>{
-    const data = docSnap.data();
-    const div = document.createElement("div");
-    div.className = "post-item";
+    if (snap.empty) {
+      postList.innerHTML = "<p>Belum ada post.</p>";
+      return;
+    }
 
-    div.innerHTML = `
-      <strong>${data.title}</strong><br>
-      <small>${data.status}</small>
-    `;
+    postList.innerHTML = "";
 
-    div.onclick = () => loadToForm(docSnap.id, data);
-    postList.appendChild(div);
-  });
+    snap.forEach(docSnap => {
+      const p = docSnap.data();
+      const id = docSnap.id;
+
+      postList.innerHTML += `
+        <div class="post-item">
+          <div>
+            <strong>${escapeHTML(p.title || "(tanpa judul)")}</strong>
+            <span class="badge ${p.status === "published" ? "green" : "gray"}">
+              ${p.status}
+            </span>
+          </div>
+          <div class="actions">
+            <button onclick="editPost('${id}')">Edit</button>
+            <button onclick="deletePost('${id}')">Delete</button>
+          </div>
+        </div>
+      `;
+    });
+
+  } catch (e) {
+    console.error("LOAD POST ERROR:", e);
+    postList.innerHTML = "<p>Gagal memuat post.</p>";
+  }
 }
 
-/* =====================
-   LOAD TO FORM
-===================== */
-function loadToForm(id, data){
-  editingPostId = id;
-  titleInput.value = data.title || "";
-  contentInput.value = data.content || "";
-  statusInput.value = data.status || "draft";
-  editInfo.style.display = "block";
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-/* =====================
-   SAVE POST
-===================== */
-saveBtn.addEventListener("click", async ()=>{
+/* ===============================
+   SAVE / UPDATE POST
+================================ */
+saveBtn.addEventListener("click", async () => {
   const title = titleInput.value.trim();
   const content = contentInput.value.trim();
-  const status = statusInput.value;
+  const status = statusSelect.value;
 
-  if(!title || !content){
-    alert("Judul dan konten wajib diisi");
+  if (!title || !content) {
+    alert("Judul dan konten wajib diisi.");
     return;
   }
 
-  const payload = {
-    title,
-    content,
-    status,
-    updatedAt: serverTimestamp()
-  };
+  saveBtn.disabled = true;
+  saveBtn.innerText = "Menyimpan...";
 
-  if(editingPostId){
-    await updateDoc(doc(db,"posts",editingPostId), payload);
-    editingPostId = null;
-    editInfo.style.display = "none";
-  }else{
-    await addDoc(collection(db,"posts"), {
-      ...payload,
-      createdAt: serverTimestamp()
-    });
+  try {
+    if (editId) {
+      // UPDATE
+      await updateDoc(doc(db, "posts", editId), {
+        title,
+        content,
+        status,
+        updatedAt: serverTimestamp()
+      });
+    } else {
+      // CREATE
+      await addDoc(collection(db, "posts"), {
+        title,
+        content,
+        status,
+        createdAt: serverTimestamp(),
+        time: Date.now() // 🔒 dipakai di halaman depan
+      });
+    }
+
+    resetForm();
+    await loadPosts();
+
+  } catch (e) {
+    console.error("SAVE ERROR:", e);
+    alert("Gagal menyimpan post.");
   }
 
-  titleInput.value = "";
-  contentInput.value = "";
-  statusInput.value = "draft";
-
-  loadPosts();
+  saveBtn.disabled = false;
+  saveBtn.innerText = "Save Post";
 });
 
-/* =====================
+/* ===============================
+   EDIT
+================================ */
+window.editPost = async (id) => {
+  try {
+    const snap = await getDocs(collection(db, "posts"));
+    snap.forEach(d => {
+      if (d.id === id) {
+        const p = d.data();
+        editId = id;
+        titleInput.value = p.title || "";
+        contentInput.value = p.content || "";
+        statusSelect.value = p.status || "draft";
+      }
+    });
+  } catch (e) {
+    console.error("EDIT ERROR:", e);
+  }
+};
+
+/* ===============================
+   DELETE
+================================ */
+window.deletePost = async (id) => {
+  if (!confirm("Hapus post ini?")) return;
+
+  try {
+    await deleteDoc(doc(db, "posts", id));
+    await loadPosts();
+  } catch (e) {
+    console.error("DELETE ERROR:", e);
+    alert("Gagal menghapus post.");
+  }
+};
+
+/* ===============================
+   PREVIEW
+================================ */
+previewBtn.addEventListener("click", () => {
+  alert(
+    "PREVIEW\n\n" +
+    titleInput.value + "\n\n" +
+    contentInput.value
+  );
+});
+
+/* ===============================
+   RESET
+================================ */
+cancelBtn.addEventListener("click", resetForm);
+
+function resetForm() {
+  editId = null;
+  titleInput.value = "";
+  contentInput.value = "";
+  statusSelect.value = "draft";
+}
+
+/* ===============================
+   UTIL
+================================ */
+function escapeHTML(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+/* ===============================
    INIT
-===================== */
+================================ */
 loadPosts();

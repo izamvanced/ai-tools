@@ -1,141 +1,173 @@
-import { db } from "./firebase.js";
+// admin/posts.js
+// FINAL VERSION — ANTI POST TIDAK MUNCUL
+// REQUIRE: firebase.js (ADMIN) sudah load db + auth
+
 import {
-  collection, addDoc, getDocs,
-  updateDoc, deleteDoc, doc,
-  serverTimestamp
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp,
+  orderBy,
+  query
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const titleEl = title;
-const contentEl = content;
-const statusEl = status;
-const saveBtnEl = saveBtn;
-const cancelBtnEl = cancelBtn;
-const previewBtnEl = previewBtn;
-const listEl = postList;
-const searchEl = search;
-const modeTitleEl = modeTitle;
-const toastEl = toast;
+import { db } from "./firebase.js";
 
+/* =====================
+   STATE
+===================== */
 let editingId = null;
-let cache = [];
 
-const toastMsg = (m,t="success")=>{
-  toastEl.textContent = m;
-  toastEl.className = `toast show ${t}`;
-  setTimeout(()=>toastEl.className="toast",2200);
-};
+/* =====================
+   ELEMENTS
+===================== */
+const titleInput   = document.getElementById("title");
+const contentInput = document.getElementById("content");
+const statusInput  = document.getElementById("status");
+const saveBtn      = document.getElementById("saveBtn");
+const cancelBtn    = document.getElementById("cancelBtn");
+const postList     = document.getElementById("postList");
+const modeTitle    = document.getElementById("modeTitle");
 
-/* CANCEL */
-cancelBtnEl.onclick = ()=>{
-  editingId=null;
-  modeTitleEl.textContent="➕ Create New Post";
-  titleEl.value="";
-  contentEl.value="";
-  statusEl.value="draft";
-};
+/* =====================
+   LOAD POSTS (ADMIN LIST)
+===================== */
+async function loadPosts() {
+  postList.innerHTML = "<p>Loading posts…</p>";
 
-/* PREVIEW */
-previewBtnEl.onclick = ()=>{
-  if(!titleEl.value){
-    toastMsg("Judul belum diisi","error"); return;
-  }
-  const html = `
-    <html><head><title>Preview</title></head>
-    <body style="font-family:system-ui;padding:20px">
-      <h1>${titleEl.value}</h1>
-      <div>${contentEl.value.replace(/\n/g,"<br>")}</div>
-    </body></html>`;
-  const blob = new Blob([html],{type:"text/html"});
-  window.open(URL.createObjectURL(blob),"_blank");
-};
+  const q = query(
+    collection(db, "posts"),
+    orderBy("createdAt", "desc")
+  );
 
-/* SAVE */
-saveBtnEl.onclick = async ()=>{
-  if(!titleEl.value||!contentEl.value){
-    toastMsg("Judul & konten wajib diisi","error"); return;
+  const snap = await getDocs(q);
+
+  if (snap.empty) {
+    postList.innerHTML = "<p>Belum ada post.</p>";
+    return;
   }
 
-  saveBtnEl.disabled=true;
-  saveBtnEl.textContent="Saving…";
+  postList.innerHTML = "";
 
-  const payload={
-    title:titleEl.value.trim(),
-    content:contentEl.value.trim(),
-    status:statusEl.value,
-    updatedAt:serverTimestamp()
-  };
+  snap.forEach(d => {
+    const p = d.data();
 
-  try{
-    if(editingId){
-      await updateDoc(doc(db,"posts",editingId),payload);
-      toastMsg("Post diperbarui");
-    }else{
-      payload.createdAt=serverTimestamp();
-      await addDoc(collection(db,"posts"),payload);
-      toastMsg("Post disimpan");
-    }
-    cancelBtnEl.onclick();
-    await load();
-  }catch(e){
-    console.error(e);
-    toastMsg("Gagal menyimpan","error");
-  }
+    const badge =
+      p.status === "published"
+        ? `<span style="color:green">published</span>`
+        : `<span style="color:#888">draft</span>`;
 
-  saveBtnEl.disabled=false;
-  saveBtnEl.textContent="Save Post";
-};
-
-/* DELETE */
-window.del = async id=>{
-  if(!confirm("Yakin hapus post ini?")) return;
-  await deleteDoc(doc(db,"posts",id));
-  toastMsg("Post dihapus");
-  load();
-};
-
-/* EDIT */
-window.edit = (p,id)=>{
-  editingId=id;
-  modeTitleEl.textContent=`✏️ Editing: ${p.title}`;
-  titleEl.value=p.title;
-  contentEl.value=p.content;
-  statusEl.value=p.status;
-};
-
-/* LOAD */
-async function load(){
-  const snap=await getDocs(collection(db,"posts"));
-  cache=snap.docs.map(d=>({id:d.id,...d.data()}));
-  render(cache);
-}
-
-/* RENDER */
-function render(arr){
-  listEl.innerHTML="";
-  arr.forEach(p=>{
-    const d=document.createElement("div");
-    d.className="post-item";
-    d.innerHTML=`
-      <div>
-        <strong>${p.title}</strong>
-        <span class="badge ${p.status}">${p.status.toUpperCase()}</span>
+    postList.innerHTML += `
+      <div class="post-item">
+        <div>
+          <strong>${p.title || "(tanpa judul)"}</strong><br>
+          <small>${badge}</small>
+        </div>
+        <div class="actions">
+          <button onclick="editPost('${d.id}')">Edit</button>
+          <button onclick="removePost('${d.id}')">Delete</button>
+        </div>
       </div>
-      <div class="actions">
-        <button onclick='edit(${JSON.stringify(p).replace(/'/g,"")},"${p.id}")'>
-          Edit
-        </button>
-        <button style="background:#ef4444" onclick="del('${p.id}')">
-          Delete
-        </button>
-      </div>`;
-    listEl.appendChild(d);
+    `;
   });
 }
 
-/* SEARCH */
-searchEl.oninput = ()=>{
-  const q = searchEl.value.toLowerCase();
-  render(cache.filter(p=>p.title.toLowerCase().includes(q)));
+/* =====================
+   SAVE (CREATE / UPDATE)
+===================== */
+saveBtn.addEventListener("click", async () => {
+  const title   = titleInput.value.trim();
+  const content = contentInput.value.trim();
+  const status  = statusInput.value;
+
+  if (!title || !content) {
+    alert("Judul dan konten wajib diisi.");
+    return;
+  }
+
+  // PAYLOAD WAJIB — FRONTEND SAFE
+  const payload = {
+    title,
+    content,
+    status,
+    time: Date.now(),                // 🔥 KUNCI AGAR MUNCUL DI DEPAN
+    updatedAt: serverTimestamp()
+  };
+
+  try {
+    if (editingId) {
+      // UPDATE
+      await updateDoc(doc(db, "posts", editingId), payload);
+    } else {
+      // CREATE
+      await addDoc(collection(db, "posts"), {
+        ...payload,
+        createdAt: serverTimestamp()
+      });
+    }
+
+    resetForm();
+    loadPosts();
+
+  } catch (err) {
+    console.error("SAVE ERROR:", err);
+    alert("Gagal menyimpan post.");
+  }
+});
+
+/* =====================
+   EDIT
+===================== */
+window.editPost = async (id) => {
+  const snap = await getDocs(collection(db, "posts"));
+
+  snap.forEach(d => {
+    if (d.id === id) {
+      const p = d.data();
+      editingId = id;
+
+      titleInput.value   = p.title || "";
+      contentInput.value = p.content || "";
+      statusInput.value  = p.status || "draft";
+
+      modeTitle.textContent = "✏️ Edit Post";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
 };
 
-load();
+/* =====================
+   DELETE
+===================== */
+window.removePost = async (id) => {
+  if (!confirm("Hapus post ini?")) return;
+  await deleteDoc(doc(db, "posts", id));
+  loadPosts();
+};
+
+/* =====================
+   RESET FORM
+===================== */
+function resetForm() {
+  editingId = null;
+  titleInput.value = "";
+  contentInput.value = "";
+  statusInput.value = "published"; // 👈 DEFAULT AGAR LANGSUNG TAMPIL
+  modeTitle.textContent = "➕ Create New Post";
+}
+
+/* =====================
+   CANCEL EDIT
+===================== */
+cancelBtn.addEventListener("click", () => {
+  resetForm();
+});
+
+/* =====================
+   INIT
+===================== */
+resetForm();
+loadPosts();

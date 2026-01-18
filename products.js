@@ -1,7 +1,8 @@
 // products.js — PUBLIC PRODUCT RENDER
-// Digunakan di index.html
+// Dipakai di index.html
+// REQUIRE: firebase-public.js sudah di-load
 
-import { db } from "/ai-tools/firebase-public.js";
+import { db } from "./firebase-public.js";
 import {
   collection,
   getDocs,
@@ -38,13 +39,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     snap.forEach(doc => {
       const p = doc.data();
 
+      // SAFETY GUARD (biar ga error di HP)
+      const name = p.name || "(Tanpa nama)";
+      const summary = p.summary || "";
+      const url = p.url || "#";
+
       const card = document.createElement("div");
       card.className = "card";
 
       card.innerHTML = `
-        <div class="product-name">${p.name}</div>
-        <div class="desc">${p.summary || ""}</div>
-        <a class="btn" href="${p.url || "#"}">Lihat Produk</a>
+        <div class="product-name">${escapeHTML(name)}</div>
+        <div class="desc">${escapeHTML(summary)}</div>
+        <a class="btn" href="${url}">Lihat Produk</a>
       `;
 
       grid.appendChild(card);
@@ -55,3 +61,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     grid.innerHTML = "<p>Gagal memuat produk.</p>";
   }
 });
+
+/* ===============================
+   UTIL — ANTI XSS (AMAN DI PUBLIK)
+================================ */
+function escapeHTML(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}

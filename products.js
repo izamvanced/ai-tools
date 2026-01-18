@@ -1,16 +1,17 @@
-// products.js — PUBLIC PRODUCT RENDER
+// products.js — PUBLIC PRODUCTS RENDER
 // Dipakai di index.html
-// REQUIRE: firebase-public.js sudah di-load
+// REQUIRE: firebase-public.js sudah diload lebih dulu
 
-import { db } from "./firebase-public.js";
 import {
   collection,
-  getDocs,
   query,
   where,
   orderBy,
-  limit
+  limit,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import { db } from "./firebase-public.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const grid = document.getElementById("productGrid");
@@ -21,16 +22,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const q = query(
       collection(db, "products"),
-      where("status", "==", "active"),
-      where("featured", "==", true),
-      orderBy("time", "desc"),
-      limit(3) // 🔒 BATAS PRODUK DI HALAMAN DEPAN
+      where("status", "==", "active"),   // ⬅️ SESUAI DATA LO
+      orderBy("time", "desc"),           // ⬅️ FIELD SUDAH ADA
+      limit(3)                           // 🔒 MAKS PRODUK DI DEPAN
     );
 
     const snap = await getDocs(q);
 
     if (snap.empty) {
-      grid.innerHTML = "<p>Belum ada produk.</p>";
+      grid.innerHTML = "<p>Tidak ada produk.</p>";
       return;
     }
 
@@ -39,21 +39,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     snap.forEach(doc => {
       const p = doc.data();
 
-      // SAFETY GUARD (biar ga error di HP)
-      const name = p.name || "(Tanpa nama)";
-      const summary = p.summary || "";
-      const url = p.url || "#";
-
-      const card = document.createElement("div");
-      card.className = "card";
-
-      card.innerHTML = `
-        <div class="product-name">${escapeHTML(name)}</div>
-        <div class="desc">${escapeHTML(summary)}</div>
-        <a class="btn" href="${url}">Lihat Produk</a>
+      grid.innerHTML += `
+        <div class="card">
+          <div class="product-name">${p.name || "(tanpa nama)"}</div>
+          <div class="desc">${p.summary || ""}</div>
+          <a class="btn" href="${p.url || "#"}">Lihat Produk</a>
+        </div>
       `;
-
-      grid.appendChild(card);
     });
 
   } catch (err) {
@@ -61,13 +53,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     grid.innerHTML = "<p>Gagal memuat produk.</p>";
   }
 });
-
-/* ===============================
-   UTIL — ANTI XSS (AMAN DI PUBLIK)
-================================ */
-function escapeHTML(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}

@@ -1,4 +1,7 @@
-import { db } from "./firebase-public.js";
+// products.js — PUBLIC PRODUCT RENDER
+// Digunakan di index.html
+
+import { db } from "/ai-tools/firebase-public.js";
 import {
   collection,
   getDocs,
@@ -12,42 +15,43 @@ document.addEventListener("DOMContentLoaded", async () => {
   const grid = document.getElementById("productGrid");
   if (!grid) return;
 
+  grid.innerHTML = "<p>Memuat produk...</p>";
+
   try {
     const q = query(
       collection(db, "products"),
       where("status", "==", "active"),
-      orderBy("name"),
-      limit(3)
+      where("featured", "==", true),
+      orderBy("time", "desc"),
+      limit(3) // 🔒 BATAS PRODUK DI HALAMAN DEPAN
     );
 
-    const snapshot = await getDocs(q);
+    const snap = await getDocs(q);
 
-    if (snapshot.empty) {
-      grid.innerHTML = "<p>Tidak ada produk.</p>";
+    if (snap.empty) {
+      grid.innerHTML = "<p>Belum ada produk.</p>";
       return;
     }
 
     grid.innerHTML = "";
 
-    snapshot.forEach(doc => {
-      const data = doc.data();
+    snap.forEach(doc => {
+      const p = doc.data();
 
-      grid.innerHTML += `
-        <div class="card">
-          <div class="product-name">${data.name || "(Tanpa nama)"}</div>
-          <div class="desc">
-            ${data.summary || ""}
-          </div>
-          <a class="btn"
-             href="./product.html?slug=${data.slug}">
-            Lihat Produk
-          </a>
-        </div>
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <div class="product-name">${p.name}</div>
+        <div class="desc">${p.summary || ""}</div>
+        <a class="btn" href="${p.url || "#"}">Lihat Produk</a>
       `;
+
+      grid.appendChild(card);
     });
 
   } catch (err) {
-    console.error(err);
+    console.error("PRODUCT LOAD ERROR:", err);
     grid.innerHTML = "<p>Gagal memuat produk.</p>";
   }
 });

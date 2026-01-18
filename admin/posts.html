@@ -144,9 +144,10 @@ button{
 
 <!-- POSTS LOGIC -->
 <script type="module">
-/* ============================
-   IMPORTANT: ABSOLUTE PATH
-============================ */
+/*
+  🔴 INI BAGIAN KRUSIAL YANG SEBELUMNYA SALAH
+  HARUS ABSOLUTE PATH
+*/
 import { db } from "/ai-tools/firebase-public.js";
 import {
   collection,
@@ -159,35 +160,28 @@ import {
   orderBy
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-/* ============================
-   ELEMENTS
-============================ */
 const titleEl = document.getElementById("title");
 const contentEl = document.getElementById("content");
 const statusEl = document.getElementById("status");
 const postList = document.getElementById("postList");
 const toast = document.getElementById("toast");
+const modeTitle = document.getElementById("modeTitle");
+const saveBtn = document.getElementById("saveBtn");
+const cancelBtn = document.getElementById("cancelBtn");
 
 let editId = null;
 
-/* ============================
-   TOAST
-============================ */
-function toastMsg(msg,type="success"){
+/* TOAST */
+function showToast(msg,type="success"){
   toast.textContent = msg;
   toast.className = `toast show ${type}`;
   setTimeout(()=>toast.className="toast",2500);
 }
 
-/* ============================
-   LOAD POSTS
-============================ */
+/* LOAD POSTS */
 async function loadPosts(){
   postList.innerHTML = "Memuat...";
-  const q = query(
-    collection(db,"posts"),
-    orderBy("time","desc")
-  );
+  const q = query(collection(db,"posts"), orderBy("time","desc"));
   const snap = await getDocs(q);
 
   postList.innerHTML = "";
@@ -196,7 +190,7 @@ async function loadPosts(){
     postList.innerHTML += `
       <div class="post-item">
         <div>
-          <strong>${p.title || "(tanpa judul)"}</strong><br>
+          <strong>${p.title}</strong><br>
           <span class="badge ${p.status}">${p.status}</span>
         </div>
         <div class="actions">
@@ -208,79 +202,70 @@ async function loadPosts(){
   });
 }
 
-/* ============================
-   SAVE POST (CREATE / EDIT)
-============================ */
-document.getElementById("saveBtn").onclick = async () => {
+/* SAVE */
+saveBtn.onclick = async () => {
   if (!titleEl.value || !contentEl.value) {
-    toastMsg("Judul & konten wajib","error");
+    showToast("Judul & konten wajib","error");
     return;
   }
 
   const now = Date.now();
 
+  const payload = {
+    title: titleEl.value.trim(),
+    content: contentEl.value.trim(),
+    status: statusEl.value,
+    time: now
+  };
+
   try {
     if (editId) {
-      await updateDoc(doc(db,"posts",editId),{
-        title: titleEl.value,
-        content: contentEl.value,
-        status: statusEl.value,
-        time: now
-      });
-      toastMsg("Post diperbarui");
+      await updateDoc(doc(db,"posts",editId),payload);
+      showToast("Post diperbarui");
     } else {
-      await addDoc(collection(db,"posts"),{
-        title: titleEl.value,
-        content: contentEl.value,
-        status: statusEl.value,
-        time: now
-      });
-      toastMsg("Post dibuat");
+      await addDoc(collection(db,"posts"),payload);
+      showToast("Post dibuat");
     }
 
     reset();
     loadPosts();
   } catch (e) {
     console.error(e);
-    toastMsg("Gagal menyimpan","error");
+    showToast("Gagal menyimpan","error");
   }
 };
 
-/* ============================
-   EDIT / DELETE
-============================ */
+/* EDIT / DELETE */
 window.editPost = async (id) => {
   const snap = await getDocs(collection(db,"posts"));
   snap.forEach(d=>{
     if(d.id===id){
       const p=d.data();
-      titleEl.value=p.title||"";
-      contentEl.value=p.content||"";
-      statusEl.value=p.status||"draft";
       editId=id;
-      document.getElementById("modeTitle").textContent="✏️ Edit Post";
+      titleEl.value=p.title;
+      contentEl.value=p.content;
+      statusEl.value=p.status;
+      modeTitle.textContent="✏️ Edit Post";
     }
   });
 };
 
 window.delPost = async (id) => {
-  if (confirm("Hapus post ini?")) {
+  if(confirm("Hapus post ini?")){
     await deleteDoc(doc(db,"posts",id));
-    toastMsg("Post dihapus");
+    showToast("Post dihapus");
     loadPosts();
   }
 };
 
-/* ============================
-   RESET
-============================ */
-document.getElementById("cancelBtn").onclick = reset;
+/* RESET */
+cancelBtn.onclick = reset;
 function reset(){
   editId=null;
   titleEl.value="";
   contentEl.value="";
   statusEl.value="draft";
-  document.getElementById("modeTitle").textContent="➕ Create New Post";
+  modeTitle.textContent="➕ Create New Post";
 }
 
 loadPosts();

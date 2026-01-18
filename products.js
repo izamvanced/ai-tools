@@ -22,9 +22,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const q = query(
       collection(db, "products"),
-      where("status", "==", "active"),   // ⬅️ SESUAI DATA LO
-      orderBy("time", "desc"),           // ⬅️ FIELD SUDAH ADA
-      limit(3)                           // 🔒 MAKS PRODUK DI DEPAN
+      where("status", "==", "active"),
+      orderBy("time", "desc"),
+      limit(3)
     );
 
     const snap = await getDocs(q);
@@ -39,11 +39,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     snap.forEach(doc => {
       const p = doc.data();
 
+      const name = p.name || "(tanpa nama)";
+      const summary = p.summary || "";
+      const url = p.url || "#";
+
       grid.innerHTML += `
         <div class="card">
-          <div class="product-name">${p.name || "(tanpa nama)"}</div>
-          <div class="desc">${p.summary || ""}</div>
-          <a class="btn" href="${p.url || "#"}">Lihat Produk</a>
+          <div class="product-name">${escapeHTML(name)}</div>
+          <div class="desc">${escapeHTML(summary)}</div>
+          <a class="btn" href="${url}">Lihat Produk</a>
         </div>
       `;
     });
@@ -53,3 +57,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     grid.innerHTML = "<p>Gagal memuat produk.</p>";
   }
 });
+
+/* ===============================
+   UTIL — ANTI XSS
+================================ */
+function escapeHTML(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}

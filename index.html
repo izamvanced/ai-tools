@@ -51,6 +51,7 @@ header{
   position:relative;
   font-weight:700;
   font-size:18px;
+  color:#000;
 }
 .logo::after{
   content:"";
@@ -74,8 +75,8 @@ header{
   font-family:'StrangerDoctor', serif;
   font-size:72px;
   line-height:0.95;
-  letter-spacing:1px;
   margin:0 0 18px 0;
+  color:#000;
 }
 
 .hero-title span{ color:var(--accent); }
@@ -113,6 +114,7 @@ header{
   font-weight:700;
   position:relative;
   display:inline-block;
+  margin-bottom:6px;
 }
 .product-name::after{
   content:"";
@@ -125,8 +127,8 @@ header{
 }
 
 .desc{
-  margin:12px 0 18px;
   color:#444;
+  margin:12px 0 18px 0;
 }
 
 .btn{
@@ -138,6 +140,7 @@ header{
   text-decoration:none;
   font-weight:600;
 }
+.btn:hover{ background:var(--accent); }
 
 /* ============================= */
 /* POSTS */
@@ -158,6 +161,13 @@ footer{
   padding:30px;
   color:#777;
 }
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+@media(max-width:768px){
+  .hero-title{ font-size:44px; }
+}
 </style>
 </head>
 
@@ -165,51 +175,68 @@ footer{
 
 <header>
   <div class="logo">AI Tools Library</div>
-  <a href="./admin/index.html" style="opacity:.4;text-decoration:none;color:inherit">admin</a>
+  <a href="/ai-tools/admin/posts.html"
+     style="font-size:13px;opacity:.45;text-decoration:none;color:inherit;">
+    admin
+  </a>
 </header>
 
+<!-- HERO -->
 <section class="hero">
-  <h1 class="hero-title"><span>Ai</span> tools librarY</h1>
-  <p>Produk AI dengan fungsi spesifik dan workflow terkunci.</p>
+  <h1 class="hero-title">
+    <span>AI</span> Tools Library
+  </h1>
+  <p>
+    Produk AI dengan fungsi spesifik dan workflow terkunci.
+    Bukan AI serba bisa, tapi AI yang bekerja dengan arah jelas.
+  </p>
 </section>
 
+<!-- PRODUK LEGACY -->
 <section class="section">
-  <h2 style="text-align:center">Produk Utama</h2>
+  <h2 style="text-align:center;margin-bottom:30px;">Produk Utama</h2>
   <div class="grid">
+
     <div class="card">
       <div class="product-name">📘 EduPrompt Studio</div>
-      <div class="desc">Tools prompt visual edukasi terstruktur.</div>
-      <a class="btn" href="./tools/edukasi.html">Lihat Produk</a>
+      <div class="desc">
+        Tools untuk prompt visual edukasi terstruktur.
+      </div>
+      <a class="btn" href="/ai-tools/tools/edukasi.html">Lihat Produk</a>
     </div>
 
     <div class="card">
       <div class="product-name">📣 FlyerForge X</div>
-      <div class="desc">Mesin prompt visual premium.</div>
-      <a class="btn" href="./tools/flyerforgex.html">Buka FlyerForge X</a>
+      <div class="desc">
+        Mesin prompt visual premium untuk flyer & undangan.
+      </div>
+      <a class="btn" href="/ai-tools/tools/flyerforgex.html">Buka FlyerForge</a>
     </div>
+
   </div>
 </section>
 
+<!-- PRODUK DARI CMS -->
 <section class="section">
-  <h2 style="text-align:center">Produk Terbaru</h2>
+  <h2 style="text-align:center;margin-bottom:30px;">Produk Terbaru</h2>
   <div id="productGrid" class="grid">
     <p>Memuat produk...</p>
   </div>
 </section>
 
+<!-- UPDATE & INSIGHT -->
 <section class="section">
-  <h2 style="text-align:center">Update & Insight</h2>
-  <div id="postList">
-    <p>Memuat post...</p>
-  </div>
+  <h2 style="text-align:center;margin-bottom:24px;">Update & Insight</h2>
+  <div id="postList"></div>
 </section>
 
 <footer>
   izamvanced © AI Tools Library
 </footer>
 
-<!-- CMS PUBLIC SCRIPTS (JANGAN DIUBAH) -->
-<script type="module" src="./firebase-public.js"></script>
+<!-- ============================= -->
+<!-- PUBLIC MODULE SCRIPTS -->
+<!-- ============================= -->
 <script type="module" src="./products.js"></script>
 <script type="module" src="./posts.js"></script>
 

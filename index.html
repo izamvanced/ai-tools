@@ -1,243 +1,144 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AI Tools Library</title>
 
 <style>
-/* ============================= */
-/* FONT: STRANGER DOCTOR (HERO) */
-/* ============================= */
-@font-face{
-  font-family:'StrangerDoctor';
-  src:url('./assets/fonts/StrangerDoctor-Regular.ttf') format('truetype');
-  font-weight:normal;
-  font-style:normal;
-  font-display:swap;
-}
-
-/* ============================= */
-/* ROOT */
-/* ============================= */
 :root{
-  --bg:#f7f5f2;
-  --fg:#111111;
+  --bg:#f7f5ef;
   --card:#ffffff;
   --accent:#ff8a1f;
+  --text:#111;
+  --muted:#666;
 }
-
-/* ============================= */
-/* BASE */
-/* ============================= */
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
   background:var(--bg);
-  color:var(--fg);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  color:var(--text);
 }
-
-/* ============================= */
-/* HEADER */
-/* ============================= */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 28px;
-}
-
-.logo{
-  position:relative;
-  font-weight:700;
-  font-size:18px;
-  color:#000;
-}
-.logo::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-6px;
-  width:36px;
-  height:2px;
-  background:var(--accent);
-}
-
-/* ============================= */
-/* HERO */
-/* ============================= */
-.hero{
-  text-align:center;
-  padding:56px 20px 44px;
-}
-
-.hero-title{
-  font-family:'StrangerDoctor', serif;
-  font-size:72px;
-  line-height:0.95;
-  margin:0 0 18px 0;
-  color:#000;
-}
-
-.hero-title span{ color:var(--accent); }
-
-.hero p{
-  max-width:640px;
-  margin:0 auto;
-  color:#333;
-}
-
-/* ============================= */
-/* SECTIONS */
-/* ============================= */
-.section{
-  padding:40px 20px;
-  max-width:1100px;
+.container{
+  max-width:960px;
   margin:auto;
+  padding:28px 18px 60px;
 }
-
+h1,h2{
+  text-align:center;
+  margin-bottom:18px;
+}
+.section{
+  margin-top:42px;
+}
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
 }
-
 .card{
   background:var(--card);
-  border-radius:16px;
-  padding:24px;
-  box-shadow:0 10px 25px rgba(0,0,0,.06);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
 }
-
 .product-name{
-  font-size:20px;
-  font-weight:700;
-  position:relative;
-  display:inline-block;
+  font-weight:800;
+  font-size:17px;
   margin-bottom:6px;
 }
-.product-name::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:-6px;
-  height:2px;
-  background:var(--accent);
-}
-
 .desc{
-  color:#444;
-  margin:12px 0 18px 0;
+  font-size:14px;
+  color:var(--muted);
+  margin-bottom:12px;
 }
-
 .btn{
   display:inline-block;
-  background:#000;
+  padding:10px 16px;
+  background:#111;
   color:#fff;
-  padding:10px 18px;
-  border-radius:10px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:700;
   text-decoration:none;
-  font-weight:600;
 }
-.btn:hover{ background:var(--accent); }
-
-/* ============================= */
-/* POSTS */
-/* ============================= */
-.post-item{
-  background:#fff;
-  border-radius:14px;
-  padding:20px;
+.cms-post{
   margin-bottom:16px;
-  box-shadow:0 8px 18px rgba(0,0,0,.05);
 }
-
-/* ============================= */
-/* FOOTER */
-/* ============================= */
+.cms-post strong{
+  display:block;
+  margin-bottom:4px;
+}
 footer{
   text-align:center;
-  padding:30px;
-  color:#777;
-}
-
-/* ============================= */
-/* MOBILE */
-/* ============================= */
-@media(max-width:768px){
-  .hero-title{ font-size:44px; }
+  font-size:13px;
+  color:#666;
+  margin-top:60px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">AI Tools Library</div>
-  <a href="/ai-tools/admin/posts.html"
-     style="font-size:13px;opacity:.45;text-decoration:none;color:inherit;">
-    admin
-  </a>
-</header>
+<div class="container">
 
 <!-- HERO -->
-<section class="hero">
-  <h1 class="hero-title">
-    <span>AI</span> Tools Library
-  </h1>
-  <p>
+<section class="section">
+  <h1><span style="color:var(--accent)">AI</span> Tools Library</h1>
+  <p style="text-align:center;color:#555">
     Produk AI dengan fungsi spesifik dan workflow terkunci.
-    Bukan AI serba bisa, tapi AI yang bekerja dengan arah jelas.
   </p>
 </section>
 
-<!-- PRODUK LEGACY -->
+<!-- PRODUK UTAMA (STATIC) -->
 <section class="section">
-  <h2 style="text-align:center;margin-bottom:30px;">Produk Utama</h2>
+  <h2>Produk Utama</h2>
   <div class="grid">
-
     <div class="card">
       <div class="product-name">📘 EduPrompt Studio</div>
-      <div class="desc">
-        Tools untuk prompt visual edukasi terstruktur.
-      </div>
-      <a class="btn" href="/ai-tools/tools/edukasi.html">Lihat Produk</a>
+      <div class="desc">Tools prompt visual edukasi terstruktur.</div>
+      <a class="btn" href="./tools/edukasi.html">Lihat Produk</a>
     </div>
 
     <div class="card">
       <div class="product-name">📣 FlyerForge X</div>
-      <div class="desc">
-        Mesin prompt visual premium untuk flyer & undangan.
-      </div>
-      <a class="btn" href="/ai-tools/tools/flyerforgex.html">Buka FlyerForge</a>
+      <div class="desc">Mesin prompt visual premium.</div>
+      <a class="btn" href="./tools/flyerforgex.html">Buka FlyerForge X</a>
     </div>
-
   </div>
 </section>
 
-<!-- PRODUK DARI CMS -->
+<!-- PRODUK TERBARU (FIRESTORE) -->
 <section class="section">
-  <h2 style="text-align:center;margin-bottom:30px;">Produk Terbaru</h2>
+  <h2>Produk Terbaru</h2>
   <div id="productGrid" class="grid">
     <p>Memuat produk...</p>
   </div>
 </section>
 
-<!-- UPDATE & INSIGHT -->
+<!-- UPDATE & INSIGHT (FIRESTORE) -->
 <section class="section">
-  <h2 style="text-align:center;margin-bottom:24px;">Update & Insight</h2>
-  <div id="postList"></div>
+  <h2>Update & Insight</h2>
+  <div id="postList">
+    <p>Memuat post...</p>
+  </div>
 </section>
 
 <footer>
   izamvanced © AI Tools Library
 </footer>
 
-<!-- ============================= -->
-<!-- PUBLIC MODULE SCRIPTS -->
-<!-- ============================= -->
+</div>
+
+<!-- 🔥 FIREBASE PUBLIC (WAJIB PALING ATAS) -->
+<script type="module" src="./firebase-public.js"></script>
+
+<!-- 📦 PRODUK -->
 <script type="module" src="./products.js"></script>
+
+<!-- 📝 POST -->
 <script type="module" src="./posts.js"></script>
 
 </body>

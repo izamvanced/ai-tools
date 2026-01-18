@@ -23,8 +23,30 @@ body{
   color:var(--text);
 }
 .container{max-width:820px;margin:auto}
-h1{color:var(--accent)}
+h1{color:var(--accent);margin:0 0 18px}
 
+/* ================= NAV ================= */
+.admin-nav{
+  display:flex;
+  gap:10px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+.admin-nav a{
+  text-decoration:none;
+  font-size:13px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:#fff;
+  color:#111;
+  box-shadow:0 4px 10px rgba(0,0,0,.05);
+}
+.admin-nav a:hover{
+  background:var(--accent);
+  color:#fff;
+}
+
+/* ================= CARD ================= */
 .card{
   background:var(--card);
   border-radius:18px;
@@ -47,6 +69,7 @@ input,textarea,select{
 }
 textarea{min-height:120px}
 
+/* ================= BUTTON ================= */
 button{
   width:100%;
   margin-top:12px;
@@ -60,6 +83,7 @@ button{
 .primary{background:var(--accent);color:#fff}
 .muted{background:#9ca3af;color:#fff}
 
+/* ================= LIST ================= */
 .badge{
   padding:4px 10px;
   font-size:11px;
@@ -78,7 +102,6 @@ button{
   justify-content:space-between;
   align-items:center
 }
-
 .actions{display:flex;gap:8px}
 .actions button{
   width:auto;
@@ -87,6 +110,7 @@ button{
   border-radius:8px
 }
 
+/* ================= TOAST ================= */
 .toast{
   position:fixed;
   bottom:24px;
@@ -107,9 +131,17 @@ button{
 <body>
 <div class="container">
 
+<!-- ================= NAV BAR ================= -->
+<div class="admin-nav">
+  <a href="/ai-tools/">🏠 Home</a>
+  <a href="/ai-tools/admin/">🛠 Admin</a>
+  <a href="/ai-tools/admin/posts.html">📝 Posts</a>
+  <a href="/ai-tools/admin/products.html">📦 Products</a>
+</div>
+
 <h1>Post Manager</h1>
 
-<!-- FORM -->
+<!-- ================= FORM ================= -->
 <div class="card">
   <h2 id="modeTitle">➕ Create New Post</h2>
 
@@ -129,7 +161,7 @@ button{
   <button class="muted" id="cancelBtn">Cancel Edit</button>
 </div>
 
-<!-- LIST -->
+<!-- ================= LIST ================= -->
 <div class="card">
   <h2>Post List</h2>
   <div id="postList"></div>
@@ -144,10 +176,6 @@ button{
 
 <!-- POSTS LOGIC -->
 <script type="module">
-/*
-  🔴 INI BAGIAN KRUSIAL YANG SEBELUMNYA SALAH
-  HARUS ABSOLUTE PATH
-*/
 import { db } from "/ai-tools/firebase-public.js";
 import {
   collection,
@@ -209,13 +237,11 @@ saveBtn.onclick = async () => {
     return;
   }
 
-  const now = Date.now();
-
   const payload = {
     title: titleEl.value.trim(),
     content: contentEl.value.trim(),
     status: statusEl.value,
-    time: now
+    time: Date.now()
   };
 
   try {

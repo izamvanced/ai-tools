@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const q = query(
       collection(db, "products"),
       where("status", "==", "active"),
-      orderBy("time", "desc"),
+      orderBy("createdAt", "desc"),
       limit(3)
     );
 

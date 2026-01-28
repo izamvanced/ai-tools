@@ -1,138 +1,76 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tools Library</title>
+  
+  <!-- Link ke Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<title>AI Tools Library</title>
-
-<style>
-:root{
-  --bg:#f7f5ef;
-  --card:#ffffff;
-  --accent:#ff8a1f;
-  --text:#111;
-  --muted:#666;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
-  color:var(--text);
-}
-.container{
-  max-width:960px;
-  margin:auto;
-  padding:28px 18px 60px;
-}
-h1,h2{
-  text-align:center;
-  margin-bottom:18px;
-}
-.section{
-  margin-top:42px;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:18px;
-}
-.card{
-  background:var(--card);
-  border-radius:18px;
-  padding:18px;
-  box-shadow:0 10px 24px rgba(0,0,0,.08);
-}
-.product-name{
-  font-weight:800;
-  font-size:17px;
-  margin-bottom:6px;
-}
-.desc{
-  font-size:14px;
-  color:var(--muted);
-  margin-bottom:12px;
-}
-.btn{
-  display:inline-block;
-  padding:10px 16px;
-  background:#111;
-  color:#fff;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:700;
-  text-decoration:none;
-}
-.cms-post{
-  margin-bottom:16px;
-}
-.cms-post strong{
-  display:block;
-  margin-bottom:4px;
-}
-footer{
-  text-align:center;
-  font-size:13px;
-  color:#666;
-  margin-top:60px;
-}
-</style>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --card: #ffffff;
+      --accent: #ff8a1f;
+      --text: #111;
+      --muted: #666;
+    }
+  </style>
 </head>
 
-<body>
+<body class="bg-gray-50 text-gray-900">
 
-<div class="container">
+  <div class="max-w-7xl mx-auto py-12 px-6">
+    <!-- HERO -->
+    <section class="text-center mb-12">
+      <h1 class="text-5xl font-bold text-indigo-600">
+        <span class="text-orange-500">AI</span> Tools Library
+      </h1>
+      <p class="text-lg text-gray-600 mt-4">
+        Produk AI dengan fungsi spesifik dan workflow terkunci.
+      </p>
+    </section>
 
-<!-- HERO -->
-<section class="section">
-  <h1><span style="color:var(--accent)">AI</span> Tools Library</h1>
-  <p style="text-align:center;color:#555">
-    Produk AI dengan fungsi spesifik dan workflow terkunci.
-  </p>
-</section>
+    <!-- PRODUK UTAMA (STATIC) -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-center mb-6">Produk Utama</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-<!-- PRODUK UTAMA (STATIC) -->
-<section class="section">
-  <h2>Produk Utama</h2>
-  <div class="grid">
-    <div class="card">
-      <div class="product-name">📘 EduPrompt Studio</div>
-      <div class="desc">Tools prompt visual edukasi terstruktur.</div>
-      <a class="btn" href="./tools/edukasi/eduprompt-studio.html">Lihat Produk</a>
-    </div>
+        <div class="bg-white rounded-lg p-6 shadow-md">
+          <div class="font-semibold text-xl mb-4">📘 EduPrompt Studio</div>
+          <p class="text-gray-600 mb-6">Tools prompt visual edukasi terstruktur.</p>
+          <a href="./tools/edukasi/eduprompt-studio.html" class="bg-black text-white px-6 py-2 rounded-full text-sm">Lihat Produk</a>
+        </div>
 
-    <div class="card">
-      <div class="product-name">📣 WeddingForge</div>
-      <div class="desc">Undangan Pernikahan.</div>
-      <a class="btn" href="./tools/flyerforgex.html">Buka WeddingForge</a>
-    </div>
+        <div class="bg-white rounded-lg p-6 shadow-md">
+          <div class="font-semibold text-xl mb-4">📣 WeddingForge</div>
+          <p class="text-gray-600 mb-6">Undangan Pernikahan.</p>
+          <a href="./tools/flyerforgex.html" class="bg-black text-white px-6 py-2 rounded-full text-sm">Buka WeddingForge</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- UPDATE & INSIGHT (FIRESTORE) -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-center mb-6">Update & Insight</h2>
+      <div id="postList">
+        <p>Memuat post...</p>
+      </div>
+    </section>
+
+    <footer class="text-center text-sm text-gray-500">
+      izamvanced © AI Tools Library
+    </footer>
+
   </div>
-</section>
 
+  <!-- 🔥 FIREBASE PUBLIC (WAJIB PALING ATAS) -->
+  <script type="module" src="./firebase-public.js"></script>
 
-
-<!-- UPDATE & INSIGHT (FIRESTORE) -->
-<section class="section">
-  <h2>Update & Insight</h2>
-  <div id="postList">
-    <p>Memuat post...</p>
-  </div>
-</section>
-
-<footer>
-  izamvanced © AI Tools Library
-</footer>
-
-</div>
-
-<!-- 🔥 FIREBASE PUBLIC (WAJIB PALING ATAS) -->
-<script type="module" src="./firebase-public.js"></script>
-
-
-
-<!-- 📝 POST -->
-<script type="module" src="./posts.js"></script>
+  <!-- 📝 POST -->
+  <script type="module" src="./posts.js"></script>
 
 </body>
 </html>

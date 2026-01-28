@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FlyerForge X</title>
+<title>WeddingForge</title>
 <style>
 :root{
   --bg:#f7f5f2;
@@ -24,7 +23,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:20p
 .card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 10px 25px rgba(0,0,0,.06);}
 .samples img{width:60%;border-radius:14px;box-shadow:0 10px 20px rgba(0,0,0,.15);}
 label{display:block;font-weight:600;margin-top:14px;}
-input{width:100%;padding:10px;margin-top:6px;border-radius:10px;border:1px solid #ddd;}
+input, select{width:100%;padding:10px;margin-top:6px;border-radius:10px;border:1px solid #ddd;}
 .btn{margin-top:20px;background:var(--accent);color:#fff;padding:12px 20px;border:none;border-radius:12px;font-weight:700;cursor:pointer;}
 textarea{width:100%;aspect-ratio:4/5;padding:16px;margin-top:20px;border-radius:16px;border:1px solid #ddd;font-family:monospace;font-size:14px;}
 footer{text-align:center;padding:30px;color:#777;}
@@ -39,7 +38,7 @@ footer a{color:#777;text-decoration:none;}
 </header>
 
 <section class="hero">
-  <h1><span>Flyer</span>WeedingForge</h1>
+  <h1><span>Wedding</span>Forge</h1>
   <p>Mesin prompt visual premium untuk flyer & undangan full-screen tanpa frame.</p>
 </section>
 
@@ -55,12 +54,125 @@ footer a{color:#777;text-decoration:none;}
 </section>
 
 <section class="section">
-<div class="card">
-<h2>Buat Prompt</h2>
+  <div class="card">
+    <span><p>Untuk memudahkan kamu dalam membuat struktur, silakan isi form di bawah, kemudian copy/paste hasilnya di FlyerForge.</p></span>
+    <h2>Buat Prompt</h2>
+    
+    <label>Nama Pengantin Pria</label>
+    <input id="pria" placeholder="Nama Pengantin Pria">
+    
+    <label>Nama Pengantin Wanita</label>
+    <input id="wanita" placeholder="Nama Pengantin Wanita">
 
-<label>Nama / Judul</label>
-<input id="judul" value="Resepsi Pernikahan Ahmad & Siti">
+    <label>Judul Pernikahan</label>
+    <input id="judul" placeholder="Contoh: Resepsi Pernikahan Ahmad & Siti">
+    
+    <label>Tema Pernikahan</label>
+    <input id="tema" placeholder="Contoh: Walimatul Ursy">
+    
+    <label>Tanggal & Waktu</label>
+    <input id="tanggal" placeholder="Contoh: Minggu, 21 September 2026 · 10.00 – 14.00">
+    
+    <label>Lokasi</label>
+    <input id="lokasi" placeholder="Contoh: Aula Masjid Al-Ikhlas, Bogor">
 
+    <label>Tema Desain</label>
+    <select id="layout">
+      <option value="Vogue Editorial">Vogue Editorial</option>
+      <option value="Royal Frame">Royal Frame</option>
+      <option value="Modern Islamic Arch">Modern Islamic Arch</option>
+      <option value="Botanical Luxury">Botanical Luxury</option>
+      <option value="Couture Minimal">Couture Minimal</option>
+      <option value="Cinematic Poster">Cinematic Poster</option>
+      <option value="Contemporary Split">Contemporary Split</option>
+    </select>
+
+    <label>Ornamen</label>
+    <select id="ornament">
+      <option value="Subtle Islamic Geometry">Subtle Islamic Geometry</option>
+      <option value="Javanese Batik">Javanese Batik</option>
+      <option value="Sundanese Jasmine">Sundanese Jasmine</option>
+      <option value="Gold Filigree">Gold Filigree</option>
+      <option value="Modern Floral">Modern Floral</option>
+      <option value="Calligraphic Lines">Calligraphic Lines</option>
+    </select>
+
+    <label>Warna Mood</label>
+    <select id="colorMood">
+      <option value="Emerald + Champagne + Ivory">Emerald + Champagne + Ivory</option>
+      <option value="Deep Navy + Soft Gold + Cream">Deep Navy + Soft Gold + Cream</option>
+      <option value="Dusty Blue + Warm Sand + Bronze">Dusty Blue + Warm Sand + Bronze</option>
+      <option value="Charcoal + Rose Gold + Pearl">Charcoal + Rose Gold + Pearl</option>
+      <option value="Royal Brown + Antique Gold + Ivory">Royal Brown + Antique Gold + Ivory</option>
+      <option value="Olive + Champagne + Cream">Olive + Champagne + Cream</option>
+    </select>
+
+    <button class="btn" id="generateBtn" onclick="generate()" disabled>Generate Prompt</button>
+    <button class="btn" id="copyBtn" onclick="copyPrompt()" disabled>Copy Prompt</button>
+
+    <textarea id="output" readonly>
+Full-screen vertical wedding poster artwork for {Nama Pengantin Pria} & {Nama Pengantin Wanita}, {Tema Pernikahan} theme, {Warna Mood} color harmony, layered {Ornamen} accents, premium editorial layout, showing {Tanggal & Waktu} at {Lokasi}, background fills the entire canvas, no card, no frame, no border, 4:5 vertical, high resolution
+    </textarea>
+
+    <p style="text-align:center;margin-top:24px;">
+      <a href="flyerforgex2.html" style="color:#ff8a1f;font-weight:700;text-decoration:none;">
+        Klik di sini untuk lebih banyak fitur WeddingForge →
+      </a>
+    </p>
+
+  </div>
+</section>
+
+<footer>
+  <a href="https://izamvanced.github.io/ai-tools/">
+    izamvanced © AI Tools Library
+  </a>
+</footer>
+
+<script>
+function generate(){
+  const pria = document.getElementById("pria").value;
+  const wanita = document.getElementById("wanita").value;
+  const judul = document.getElementById("judul").value;
+  const tema = document.getElementById("tema").value;
+  const tanggal = document.getElementById("tanggal").value;
+  const lokasi = document.getElementById("lokasi").value;
+  const layout = document.getElementById("layout").value;
+  const ornament = document.getElementById("ornament").value;
+  const colorMood = document.getElementById("colorMood").value;
+
+  // Ensure all fields are filled
+  if (pria && wanita && judul && tema && tanggal && lokasi && layout && ornament && colorMood) {
+    const output = `Full-screen vertical wedding poster artwork for ${pria} & ${wanita}, ${tema} theme, ${colorMood} color harmony, layered ${ornament} accents, premium editorial layout, showing ${tanggal} at ${lokasi}, background fills the entire canvas, no card, no frame, no border, 4:5 vertical, high resolution`;
+    document.getElementById("output").value = output;
+    document.getElementById("generateBtn").disabled = true;  // Disable generate after use
+    document.getElementById("copyBtn").disabled = false;    // Enable copy button
+  } else {
+    document.getElementById("generateBtn").disabled = true;
+    alert("Kolom isian belum lengkap. Pastikan semua kolom diisi.");
+  }
+}
+
+function copyPrompt() {
+  const output = document.getElementById("output");
+  output.select();
+  document.execCommand("copy");
+  alert("Prompt telah disalin ke clipboard!");
+}
+
+function enableGenerateBtn() {
+  const inputs = document.querySelectorAll("input, select");
+  const allFilled = Array.from(inputs).every(input => input.value !== "");
+  document.getElementById("generateBtn").disabled = !allFilled;
+}
+
+document.querySelectorAll("input, select").forEach(input => {
+  input.addEventListener("input", enableGenerateBtn);
+});
+</script>
+
+</body>
+</html>
 <label>Tema</label>
 <input id="tema" value="Walimatul Ursy">
 

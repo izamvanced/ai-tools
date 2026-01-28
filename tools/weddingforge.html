@@ -59,22 +59,28 @@ footer a{color:#777;text-decoration:none;}
     <h2>Buat Prompt</h2>
     
     <label>Nama Pengantin Pria</label>
-    <input id="pria" placeholder="Nama Pengantin Pria">
+    <input id="pria" placeholder="Nama Pengantin Pria" value="Ahmad">
     
     <label>Nama Pengantin Wanita</label>
-    <input id="wanita" placeholder="Nama Pengantin Wanita">
+    <input id="wanita" placeholder="Nama Pengantin Wanita" value="Siti">
+
+    <label>Nama Orang Tua Pengantin Pria</label>
+    <input id="ortu-pria" placeholder="Nama Orang Tua Pengantin Pria" value="Bapak Ahmad, Ibu Siti">
+    
+    <label>Nama Orang Tua Pengantin Wanita</label>
+    <input id="ortu-wanita" placeholder="Nama Orang Tua Pengantin Wanita" value="Bapak Agus, Ibu Rina">
 
     <label>Judul Pernikahan</label>
-    <input id="judul" placeholder="Contoh: Resepsi Pernikahan Ahmad & Siti">
+    <input id="judul" placeholder="Contoh: Resepsi Pernikahan Ahmad & Siti" value="Resepsi Pernikahan Ahmad & Siti">
     
     <label>Tema Pernikahan</label>
-    <input id="tema" placeholder="Contoh: Walimatul Ursy">
+    <input id="tema" placeholder="Contoh: Walimatul Ursy" value="Walimatul Ursy">
     
     <label>Tanggal & Waktu</label>
-    <input id="tanggal" placeholder="Contoh: Minggu, 21 September 2026 · 10.00 – 14.00">
+    <input id="tanggal" placeholder="Contoh: Minggu, 21 September 2026 · 10.00 – 14.00" value="Minggu, 21 September 2026 · 10.00 – 14.00">
     
     <label>Lokasi</label>
-    <input id="lokasi" placeholder="Contoh: Aula Masjid Al-Ikhlas, Bogor">
+    <input id="lokasi" placeholder="Contoh: Aula Masjid Al-Ikhlas, Bogor" value="Aula Masjid Al-Ikhlas, Bogor">
 
     <label>Tema Desain</label>
     <select id="layout">
@@ -133,6 +139,8 @@ Full-screen vertical wedding poster artwork for {Nama Pengantin Pria} & {Nama Pe
 function generate(){
   const pria = document.getElementById("pria").value;
   const wanita = document.getElementById("wanita").value;
+  const ortuPria = document.getElementById("ortu-pria").value;
+  const ortuWanita = document.getElementById("ortu-wanita").value;
   const judul = document.getElementById("judul").value;
   const tema = document.getElementById("tema").value;
   const tanggal = document.getElementById("tanggal").value;
@@ -143,7 +151,7 @@ function generate(){
 
   // Ensure all fields are filled
   if (pria && wanita && judul && tema && tanggal && lokasi && layout && ornament && colorMood) {
-    const output = `Full-screen vertical wedding poster artwork for ${pria} & ${wanita}, ${tema} theme, ${colorMood} color harmony, layered ${ornament} accents, premium editorial layout, showing ${tanggal} at ${lokasi}, background fills the entire canvas, no card, no frame, no border, 4:5 vertical, high resolution`;
+    const output = `Full-screen vertical wedding poster artwork for ${pria} & ${wanita}, ${tema} theme, ${colorMood} color harmony, layered ${ornament} accents, premium editorial layout, showing ${tanggal} at ${lokasi}, background fills the entire canvas, no card, no frame, no border, 4:5 vertical, high resolution. Parent names: ${ortuPria} & ${ortuWanita}.`;
     document.getElementById("output").value = output;
     document.getElementById("generateBtn").disabled = true;  // Disable generate after use
     document.getElementById("copyBtn").disabled = false;    // Enable copy button

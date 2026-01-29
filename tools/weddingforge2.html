@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WeddingForge page 2</title>
 <style>
 :root{
@@ -138,6 +138,25 @@ section {
 body {
   background: var(--bg) !important;
 }
+
+.nav-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.nav-container a {
+  text-decoration: none;
+  font-size: 16px;
+  color: var(--fg);
+  padding: 10px 20px;
+  background: var(--accent);
+  border-radius: 50px;
+  margin: 0 5px;
+}
+
+.nav-container a:hover {
+  background: #f8a01a;
+}
 </style>
 </head>
 <body>
@@ -175,7 +194,6 @@ body {
     <div class="slider" id="slider1">
       <div class="slider-container">
         <div class="slide">
-          <!-- Use same image but smaller size for slider -->
           <img src="../assets/wedding1.jpg" alt="Wedding 1" onclick="openFullscreen(this)">
         </div>
         <div class="slide">
@@ -286,13 +304,6 @@ function moveSlide(step, sliderId) {
 
   sliderContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
-
-setInterval(() => {
-  moveSlide(1, 'slider1');
-  moveSlide(1, 'slider2');
-  moveSlide(1, 'slider3');
-  moveSlide(1, 'slider4');
-}, 3000); // Change slide every 3 seconds
 
 // Open image in fullscreen mode
 function openFullscreen(image) {

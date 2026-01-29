@@ -85,18 +85,19 @@ button {
 }
 
 .slide { 
-  min-width: 100%;
+  min-width: 80%; /* Decrease width to make the image smaller */
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 10%; /* Add space between slides */
 }
 
 .slide img { 
   width: 100%; 
   height: auto;
+  max-width: 100%; /* Ensure image does not stretch */
+  object-fit: cover;  /* Ensures image covers the area without distortion */
   border-radius: 14px; /* Add rounded corners to images */
-  max-width: 100%;
-  object-fit: cover;
 }
 
 .fullscreen { 
@@ -178,13 +179,14 @@ body {
     <div class="slider" id="slider1">
       <div class="slider-container">
         <div class="slide">
-          <img src="../assets/wedding1.jpg" alt="Wedding 1" onclick="openFullscreen(this)">
+          <!-- Use low resolution images for slider -->
+          <img src="../assets/wedding1-low.jpg" alt="Wedding 1" onclick="openFullscreen(this)">
         </div>
         <div class="slide">
-          <img src="../assets/wedding2.jpg" alt="Wedding 2" onclick="openFullscreen(this)">
+          <img src="../assets/wedding2-low.jpg" alt="Wedding 2" onclick="openFullscreen(this)">
         </div>
         <div class="slide">
-          <img src="../assets/wedding3.jpg" alt="Wedding 3" onclick="openFullscreen(this)">
+          <img src="../assets/wedding3-low.jpg" alt="Wedding 3" onclick="openFullscreen(this)">
         </div>
       </div>
       <button class="prev" onclick="moveSlide(-1, 'slider1')">&#10094;</button>
@@ -198,13 +200,13 @@ body {
     <div class="slider" id="slider2">
       <div class="slider-container">
         <div class="slide">
-          <img src="../assets/wedding4.jpg" alt="Wedding 4" onclick="openFullscreen(this)">
+          <img src="../assets/wedding4-low.jpg" alt="Wedding 4" onclick="openFullscreen(this)">
         </div>
         <div class="slide">
-          <img src="../assets/wedding5.jpg" alt="Wedding 5" onclick="openFullscreen(this)">
+          <img src="../assets/wedding5-low.jpg" alt="Wedding 5" onclick="openFullscreen(this)">
         </div>
         <div class="slide">
-          <img src="../assets/wedding6.jpg" alt="Wedding 6" onclick="openFullscreen(this)">
+          <img src="../assets/wedding6-low.jpg" alt="Wedding 6" onclick="openFullscreen(this)">
         </div>
       </div>
       <button class="prev" onclick="moveSlide(-1, 'slider2')">&#10094;</button>
@@ -218,13 +220,13 @@ body {
     <div class="slider" id="slider3">
       <div class="slider-container">
         <div class="slide">
-          <img src="../assets/wedding7.jpg" alt="Wedding 7" onclick="openFullscreen(this)">
+          <img src="../assets/wedding7-low.jpg" alt="Wedding 7" onclick="openFullscreen(this)">
         </div>
         <div class="slide">
-          <img src="../assets/wedding8.jpg" alt="Wedding 8" onclick="openFullscreen(this)">
+          <img src="../assets/wedding8-low.jpg" alt="Wedding 8" onclick="openFullscreen(this)">
         </div>
         <div class="slide">
-          <img src="../assets/wedding9.jpg" alt="Wedding 9" onclick="openFullscreen(this)">
+          <img src="../assets/wedding9-low.jpg" alt="Wedding 9" onclick="openFullscreen(this)">
         </div>
       </div>
       <button class="prev" onclick="moveSlide(-1, 'slider3')">&#10094;</button>
@@ -238,13 +240,13 @@ body {
     <div class="slider" id="slider4">
       <div class="slider-container">
         <div class="slide">
-          <img src="../assets/wedding10.jpg" alt="Wedding 10" onclick="openFullscreen(this)">
+          <img src="../assets/wedding10-low.jpg" alt="Wedding 10" onclick="openFullscreen(this)">
         </div>
         <div class="slide">
-          <img src="../assets/wedding11.jpg" alt="Wedding 11" onclick="openFullscreen(this)">
+          <img src="../assets/wedding11-low.jpg" alt="Wedding 11" onclick="openFullscreen(this)">
         </div>
         <div class="slide">
-          <img src="../assets/wedding12.jpg" alt="Wedding 12" onclick="openFullscreen(this)">
+          <img src="../assets/wedding12-low.jpg" alt="Wedding 12" onclick="openFullscreen(this)">
         </div>
       </div>
       <button class="prev" onclick="moveSlide(-1, 'slider4')">&#10094;</button>
@@ -301,7 +303,7 @@ function openFullscreen(image) {
   const fullscreen = document.createElement('div');
   fullscreen.classList.add('fullscreen');
   const img = document.createElement('img');
-  img.src = image.src;
+  img.src = image.src.replace('-low', ''); // Use the high-res version when clicked
   fullscreen.appendChild(img);
   
   // Close fullscreen on click

@@ -96,6 +96,18 @@ button {
 .next {
   right: 10px;
 }
+
+/* Styles for multiple images in one row */
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.row img {
+  width: 33.33%;  /* Makes three images fit in one row */
+  height: auto;
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -129,14 +141,13 @@ button {
           <img src="../assets/wedding3.jpg" alt="Wedding 3" onclick="openFullscreen(this)">
         </div>
 
-        <!-- Gambar keempat yang baru -->
+        <!-- Baris baru dengan tiga gambar -->
         <div class="slide">
-          <img src="../assets/wedding4.jpg" alt="Wedding 4" onclick="openFullscreen(this)">
-        </div>
-
-        <!-- Gambar kelima yang baru -->
-        <div class="slide">
-          <img src="../assets/wedding5.jpg" alt="Wedding 5" onclick="openFullscreen(this)">
+          <div class="row">
+            <img src="../assets/wedding4.jpg" alt="Wedding 4" onclick="openFullscreen(this)">
+            <img src="../assets/wedding5.jpg" alt="Wedding 5" onclick="openFullscreen(this)">
+            <img src="../assets/wedding6.jpg" alt="Wedding 6" onclick="openFullscreen(this)">
+          </div>
         </div>
       </div>
 

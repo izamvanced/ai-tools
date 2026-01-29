@@ -157,6 +157,27 @@ body {
 .nav-container a:hover {
   background: #f8a01a;
 }
+
+/* Navigation buttons for slider positioned at the center */
+button.prev, button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+button.prev {
+  left: 10px;
+}
+
+button.next {
+  right: 10px;
+}
 </style>
 </head>
 <body>

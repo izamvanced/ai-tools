@@ -128,7 +128,7 @@ button {
   <div class="card">
     <h3>Contoh 1:</h3>
     <!-- Slider Contoh 1 -->
-    <div class="slider">
+    <div class="slider" id="slider1">
       <div class="slider-container">
         <div class="slide">
           <img src="../assets/wedding1.jpg" alt="Wedding 1" onclick="openFullscreen(this)">
@@ -140,8 +140,8 @@ button {
           <img src="../assets/wedding3.jpg" alt="Wedding 3" onclick="openFullscreen(this)">
         </div>
       </div>
-      <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-      <button class="next" onclick="moveSlide(1)">&#10095;</button>
+      <button class="prev" onclick="moveSlide(-1, 'slider1')">&#10094;</button>
+      <button class="next" onclick="moveSlide(1, 'slider1')">&#10095;</button>
     </div>
   </div>
 
@@ -149,7 +149,7 @@ button {
   <div class="card">
     <h3>Contoh 2:</h3>
     <!-- Slider Contoh 2 -->
-    <div class="slider">
+    <div class="slider" id="slider2">
       <div class="slider-container">
         <div class="slide">
           <img src="../assets/wedding4.jpg" alt="Wedding 4" onclick="openFullscreen(this)">
@@ -161,8 +161,8 @@ button {
           <img src="../assets/wedding6.jpg" alt="Wedding 6" onclick="openFullscreen(this)">
         </div>
       </div>
-      <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-      <button class="next" onclick="moveSlide(1)">&#10095;</button>
+      <button class="prev" onclick="moveSlide(-1, 'slider2')">&#10094;</button>
+      <button class="next" onclick="moveSlide(1, 'slider2')">&#10095;</button>
     </div>
   </div>
 
@@ -170,7 +170,7 @@ button {
   <div class="card">
     <h3>Contoh 3:</h3>
     <!-- Slider Contoh 3 -->
-    <div class="slider">
+    <div class="slider" id="slider3">
       <div class="slider-container">
         <div class="slide">
           <img src="../assets/wedding7.jpg" alt="Wedding 7" onclick="openFullscreen(this)">
@@ -182,8 +182,8 @@ button {
           <img src="../assets/wedding9.jpg" alt="Wedding 9" onclick="openFullscreen(this)">
         </div>
       </div>
-      <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-      <button class="next" onclick="moveSlide(1)">&#10095;</button>
+      <button class="prev" onclick="moveSlide(-1, 'slider3')">&#10094;</button>
+      <button class="next" onclick="moveSlide(1, 'slider3')">&#10095;</button>
     </div>
   </div>
 
@@ -191,7 +191,7 @@ button {
   <div class="card">
     <h3>Contoh 4:</h3>
     <!-- Slider Contoh 4 -->
-    <div class="slider">
+    <div class="slider" id="slider4">
       <div class="slider-container">
         <div class="slide">
           <img src="../assets/wedding10.jpg" alt="Wedding 10" onclick="openFullscreen(this)">
@@ -203,8 +203,8 @@ button {
           <img src="../assets/wedding12.jpg" alt="Wedding 12" onclick="openFullscreen(this)">
         </div>
       </div>
-      <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-      <button class="next" onclick="moveSlide(1)">&#10095;</button>
+      <button class="prev" onclick="moveSlide(-1, 'slider4')">&#10094;</button>
+      <button class="next" onclick="moveSlide(1, 'slider4')">&#10095;</button>
     </div>
   </div>
 
@@ -217,18 +217,36 @@ button {
 </footer>
 
 <script>
-let currentIndex = 0;
+let currentIndex1 = 0, currentIndex2 = 0, currentIndex3 = 0, currentIndex4 = 0;
 
-function moveSlide(step) {
-  const slides = document.querySelectorAll('.slide');
+function moveSlide(step, sliderId) {
+  let currentIndex;
+  const sliderContainer = document.querySelector(`#${sliderId} .slider-container`);
+  const slides = document.querySelectorAll(`#${sliderId} .slide`);
   const totalSlides = slides.length;
-  currentIndex = (currentIndex + step + totalSlides) % totalSlides;
-  const sliderContainer = document.querySelector('.slider-container');
+
+  if (sliderId === 'slider1') {
+    currentIndex = currentIndex1;
+    currentIndex1 = (currentIndex + step + totalSlides) % totalSlides;
+  } else if (sliderId === 'slider2') {
+    currentIndex = currentIndex2;
+    currentIndex2 = (currentIndex + step + totalSlides) % totalSlides;
+  } else if (sliderId === 'slider3') {
+    currentIndex = currentIndex3;
+    currentIndex3 = (currentIndex + step + totalSlides) % totalSlides;
+  } else if (sliderId === 'slider4') {
+    currentIndex = currentIndex4;
+    currentIndex4 = (currentIndex + step + totalSlides) % totalSlides;
+  }
+
   sliderContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
 
 setInterval(() => {
-  moveSlide(1);
+  moveSlide(1, 'slider1');
+  moveSlide(1, 'slider2');
+  moveSlide(1, 'slider3');
+  moveSlide(1, 'slider4');
 }, 3000); // Change slide every 3 seconds
 
 // Open image in fullscreen mode

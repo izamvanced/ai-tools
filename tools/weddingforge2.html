@@ -1,347 +1,327 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WeddingForge page 2</title>
-<style>
-:root{
-  --bg:#f7f5f2;
-  --fg:#1f2937;
-  --card:#ffffff;
-  --accent:#ff8a1f;
-}
-html, body {
-  margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto;
-  background: var(--bg);
-  color: var(--fg);
-  height: 100%; /* Ensures body takes full height */
-  display: flex;
-  flex-direction: column;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeddingForge page 2</title>
+  <style>
+    :root{
+      --bg: #f7f5f2;
+      --fg: #1f2937;
+      --card: #ffffff;
+      --accent: #ff8a1f;
+    }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 28px;
-  background-color: var(--fg);
-  color: white;
-}
+    html, body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto;
+      background: var(--bg);
+      color: var(--fg);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
 
-.logo {
-  font-weight: 700;
-  font-size: 18px;
-  color: var(--accent);
-}
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 28px;
+      background-color: var(--fg);
+      color: white;
+    }
 
-.hero {
-  text-align: center;
-  padding: 40px 20px;
-}
+    .logo {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--accent);
+    }
 
-.hero h1 {
-  font-size: 40px;
-  margin: 0;
-}
+    .hero {
+      text-align: center;
+      padding: 40px 20px;
+    }
 
-.hero span {
-  color: var(--accent);
-}
+    .hero h1 {
+      font-size: 40px;
+      margin: 0;
+    }
 
-.hero p {
-  max-width: 640px;
-  margin: 10px auto;
-  color: #555;
-}
+    .hero span {
+      color: var(--accent);
+    }
 
-.nav-container {
-  margin-top: 20px;
-  text-align: center;
-}
+    .hero p {
+      max-width: 640px;
+      margin: 10px auto;
+      color: #555;
+    }
 
-button {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
+    /* Panel Home dan Kembali */
+    .nav-container {
+      margin-top: 20px;
+      text-align: center;
+    }
 
-/* Slider styles */
-.slider { 
-  width: 100%; 
-  overflow: hidden; 
-  position: relative;
-  padding: 0 16px; /* Add padding to the left and right */
-  box-sizing: border-box;
-}
+    .nav-container a {
+      text-decoration: none;
+      font-size: 16px;
+      color: var(--fg);
+      padding: 10px 20px;
+      background: var(--accent);
+      border-radius: 50px;
+      margin: 0 5px;
+    }
 
-.slider-container { 
-  display: flex; 
-  transition: transform 0.5s ease;
-}
+    .nav-container a:hover {
+      background: #f8a01a;
+    }
 
-.slide { 
-  min-width: 80%; /* Decrease width to make the image smaller */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 10%; /* Add space between slides */
-}
+    /* Slider styles */
+    .slider { 
+      width: 100%; 
+      overflow: hidden; 
+      position: relative;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
 
-.slide img { 
-  width: 100%; 
-  height: auto;
-  max-width: 100%; /* Ensure image does not stretch */
-  object-fit: cover;  /* Ensures image covers the area without distortion */
-  border-radius: 14px; /* Add rounded corners to images */
-}
+    .slider-container { 
+      display: flex; 
+      transition: transform 0.5s ease;
+    }
 
-.fullscreen { 
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  width: 100%; 
-  height: 100%; 
-  background: rgba(0, 0, 0, 0.8); 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  z-index: 9999; 
-}
+    .slide { 
+      min-width: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 10%;
+    }
 
-.fullscreen img { 
-  width: 90%; 
-  height: auto; 
-  max-width: 100%;
-}
+    .slide img { 
+      width: 100%; 
+      height: auto;
+      max-width: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+    }
 
-/* Footer Styles */
-footer {
-  background-color: var(--fg);
-  color: white;
-  text-align: center;
-  padding: 30px;
-  margin-top: 20px; /* Added margin-top to create space between content and footer */
-}
+    .fullscreen { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: rgba(0, 0, 0, 0.8); 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 9999; 
+    }
 
-/* Ensure the background is covering the entire page */
-section {
-  flex: 1; /* Ensures section takes the available space and footer stays at the bottom */
-  padding-bottom: 40px; /* Added padding-bottom to create more space between content and footer */
-}
+    .fullscreen img { 
+      width: 90%; 
+      height: auto; 
+      max-width: 100%;
+    }
 
-/* Make sure the background is applied correctly */
-body {
-  background: var(--bg) !important;
-}
+    /* Footer Styles */
+    footer {
+      background-color: var(--fg);
+      color: white;
+      text-align: center;
+      padding: 30px;
+      margin-top: 20px;
+    }
 
-.nav-container {
-  margin-top: 20px;
-  text-align: center;
-}
+    section {
+      flex: 1;
+      padding-bottom: 40px;
+    }
 
-.nav-container a {
-  text-decoration: none;
-  font-size: 16px;
-  color: var(--fg);
-  padding: 10px 20px;
-  background: var(--accent);
-  border-radius: 50px;
-  margin: 0 5px;
-}
+    /* Navigation buttons for slider positioned at the center */
+    button.prev, button.next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 2;
+    }
 
-.nav-container a:hover {
-  background: #f8a01a;
-}
+    button.prev {
+      left: 10px;
+    }
 
-/* Navigation buttons for slider positioned at the center */
-button.prev, button.next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: var(--accent);
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 2;
-}
-
-button.prev {
-  left: 10px;
-}
-
-button.next {
-  right: 10px;
-}
-</style>
+    button.next {
+      right: 10px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- START OF HEADER (DO NOT CHANGE) -->
-<header>
-  <div class="logo">WeddingForge 2</div>
-</header>
-<!-- END OF HEADER -->
+  <!-- START OF HEADER -->
+  <header>
+    <div class="logo">WeddingForge 2</div>
+  </header>
+  <!-- END OF HEADER -->
 
-<!-- START OF HOME AND BACK BUTTON AREA -->
-<div class="nav-container">
-  <a href="https://izamvanced.github.io/ai-tools/">
-    <button>Home</button>
-  </a>
-  <a href="javascript:history.back()">
-    <button>Kembali</button>
-  </a>
-</div>
-<!-- END OF HOME AND BACK BUTTON AREA -->
-
-<!-- START OF HERO SECTION (YOU CAN MODIFY THIS) -->
-<section class="hero">
-  <h1><span>Wedding</span>Forge</h1>
-  <p>Mesin prompt visual premium untuk flyer & undangan full-screen tanpa frame.</p>
-</section>
-<!-- END OF HERO SECTION -->
-
-<!-- START OF CONTENT SECTION (YOU CAN MODIFY THIS) -->
-<section class="section">
-  
-  <!-- Contoh 1: Slider dengan 3 gambar -->
-  <div class="card">
-    <h3>Contoh 1:</h3>
-    <div class="slider" id="slider1">
-      <div class="slider-container">
-        <div class="slide">
-          <img src="../assets/wedding1.jpg" alt="Wedding 1" onclick="openFullscreen(this)">
-        </div>
-        <div class="slide">
-          <img src="../assets/wedding2.jpg" alt="Wedding 2" onclick="openFullscreen(this)">
-        </div>
-        <div class="slide">
-          <img src="../assets/wedding3.jpg" alt="Wedding 3" onclick="openFullscreen(this)">
-        </div>
-      </div>
-      <button class="prev" onclick="moveSlide(-1, 'slider1')">&#10094;</button>
-      <button class="next" onclick="moveSlide(1, 'slider1')">&#10095;</button>
-    </div>
+  <!-- START OF HOME AND BACK BUTTON AREA -->
+  <div class="nav-container">
+    <a href="https://izamvanced.github.io/ai-tools/">
+      <button>Home</button>
+    </a>
+    <a href="javascript:history.back()">
+      <button>Kembali</button>
+    </a>
   </div>
+  <!-- END OF HOME AND BACK BUTTON AREA -->
 
-  <!-- Contoh 2: Slider dengan 3 gambar -->
-  <div class="card">
-    <h3>Contoh 2:</h3>
-    <div class="slider" id="slider2">
-      <div class="slider-container">
-        <div class="slide">
-          <img src="../assets/wedding4.jpg" alt="Wedding 4" onclick="openFullscreen(this)">
+  <!-- START OF HERO SECTION -->
+  <section class="hero">
+    <h1><span>Wedding</span>Forge</h1>
+    <p>Mesin prompt visual premium untuk flyer & undangan full-screen tanpa frame.</p>
+  </section>
+  <!-- END OF HERO SECTION -->
+
+  <!-- START OF CONTENT SECTION -->
+  <section class="section">
+    
+    <!-- Contoh 1: Slider dengan 3 gambar -->
+    <div class="card">
+      <h3>Contoh 1:</h3>
+      <div class="slider" id="slider1">
+        <div class="slider-container">
+          <div class="slide">
+            <img src="../assets/wedding1.jpg" alt="Wedding 1" onclick="openFullscreen(this)">
+          </div>
+          <div class="slide">
+            <img src="../assets/wedding2.jpg" alt="Wedding 2" onclick="openFullscreen(this)">
+          </div>
+          <div class="slide">
+            <img src="../assets/wedding3.jpg" alt="Wedding 3" onclick="openFullscreen(this)">
+          </div>
         </div>
-        <div class="slide">
-          <img src="../assets/wedding5.jpg" alt="Wedding 5" onclick="openFullscreen(this)">
-        </div>
-        <div class="slide">
-          <img src="../assets/wedding6.jpg" alt="Wedding 6" onclick="openFullscreen(this)">
-        </div>
+        <button class="prev" onclick="moveSlide(-1, 'slider1')">&#10094;</button>
+        <button class="next" onclick="moveSlide(1, 'slider1')">&#10095;</button>
       </div>
-      <button class="prev" onclick="moveSlide(-1, 'slider2')">&#10094;</button>
-      <button class="next" onclick="moveSlide(1, 'slider2')">&#10095;</button>
     </div>
-  </div>
 
-  <!-- Contoh 3: Slider dengan 3 gambar -->
-  <div class="card">
-    <h3>Contoh 3:</h3>
-    <div class="slider" id="slider3">
-      <div class="slider-container">
-        <div class="slide">
-          <img src="../assets/wedding7.jpg" alt="Wedding 7" onclick="openFullscreen(this)">
+    <!-- Contoh 2: Slider dengan 3 gambar -->
+    <div class="card">
+      <h3>Contoh 2:</h3>
+      <div class="slider" id="slider2">
+        <div class="slider-container">
+          <div class="slide">
+            <img src="../assets/wedding4.jpg" alt="Wedding 4" onclick="openFullscreen(this)">
+          </div>
+          <div class="slide">
+            <img src="../assets/wedding5.jpg" alt="Wedding 5" onclick="openFullscreen(this)">
+          </div>
+          <div class="slide">
+            <img src="../assets/wedding6.jpg" alt="Wedding 6" onclick="openFullscreen(this)">
+          </div>
         </div>
-        <div class="slide">
-          <img src="../assets/wedding8.jpg" alt="Wedding 8" onclick="openFullscreen(this)">
-        </div>
-        <div class="slide">
-          <img src="../assets/wedding9.jpg" alt="Wedding 9" onclick="openFullscreen(this)">
-        </div>
+        <button class="prev" onclick="moveSlide(-1, 'slider2')">&#10094;</button>
+        <button class="next" onclick="moveSlide(1, 'slider2')">&#10095;</button>
       </div>
-      <button class="prev" onclick="moveSlide(-1, 'slider3')">&#10094;</button>
-      <button class="next" onclick="moveSlide(1, 'slider3')">&#10095;</button>
     </div>
-  </div>
 
-  <!-- Contoh 4: Slider dengan 3 gambar -->
-  <div class="card">
-    <h3>Contoh 4:</h3>
-    <div class="slider" id="slider4">
-      <div class="slider-container">
-        <div class="slide">
-          <img src="../assets/wedding10.jpg" alt="Wedding 10" onclick="openFullscreen(this)">
+    <!-- Contoh 3: Slider dengan 3 gambar -->
+    <div class="card">
+      <h3>Contoh 3:</h3>
+      <div class="slider" id="slider3">
+        <div class="slider-container">
+          <div class="slide">
+            <img src="../assets/wedding7.jpg" alt="Wedding 7" onclick="openFullscreen(this)">
+          </div>
+          <div class="slide">
+            <img src="../assets/wedding8.jpg" alt="Wedding 8" onclick="openFullscreen(this)">
+          </div>
+          <div class="slide">
+            <img src="../assets/wedding9.jpg" alt="Wedding 9" onclick="openFullscreen(this)">
+          </div>
         </div>
-        <div class="slide">
-          <img src="../assets/wedding11.jpg" alt="Wedding 11" onclick="openFullscreen(this)">
-        </div>
-        <div class="slide">
-          <img src="../assets/wedding12.jpg" alt="Wedding 12" onclick="openFullscreen(this)">
-        </div>
+        <button class="prev" onclick="moveSlide(-1, 'slider3')">&#10094;</button>
+        <button class="next" onclick="moveSlide(1, 'slider3')">&#10095;</button>
       </div>
-      <button class="prev" onclick="moveSlide(-1, 'slider4')">&#10094;</button>
-      <button class="next" onclick="moveSlide(1, 'slider4')">&#10095;</button>
     </div>
-  </div>
 
-</section>
-<!-- END OF CONTENT SECTION -->
+    <!-- Contoh 4: Slider dengan 3 gambar -->
+    <div class="card">
+      <h3>Contoh 4:</h3>
+      <div class="slider" id="slider4">
+        <div class="slider-container">
+          <div class="slide">
+            <img src="../assets/wedding10.jpg" alt="Wedding 10" onclick="openFullscreen(this)">
+          </div>
+          <div class="slide">
+            <img src="../assets/wedding11.jpg" alt="Wedding 11" onclick="openFullscreen(this)">
+          </div>
+          <div class="slide">
+            <img src="../assets/wedding12.jpg" alt="Wedding 12" onclick="openFullscreen(this)">
+          </div>
+        </div>
+        <button class="prev" onclick="moveSlide(-1, 'slider4')">&#10094;</button>
+        <button class="next" onclick="moveSlide(1, 'slider4')">&#10095;</button>
+      </div>
+    </div>
 
-<!-- START OF FOOTER SECTION (DO NOT CHANGE) -->
-<footer>
-  <a href="https://izamvanced.github.io/ai-tools/">
-    izamvanced © AI Tools Library
-  </a>
-</footer>
-<!-- END OF FOOTER SECTION -->
+  </section>
+  <!-- END OF CONTENT SECTION -->
 
-<script>
-let currentIndex1 = 0, currentIndex2 = 0, currentIndex3 = 0, currentIndex4 = 0;
+  <!-- START OF FOOTER SECTION -->
+  <footer>
+    <a href="https://izamvanced.github.io/ai-tools/">
+      izamvanced © AI Tools Library
+    </a>
+  </footer>
+  <!-- END OF FOOTER SECTION -->
 
-function moveSlide(step, sliderId) {
-  let currentIndex;
-  const sliderContainer = document.querySelector(`#${sliderId} .slider-container`);
-  const slides = document.querySelectorAll(`#${sliderId} .slide`);
-  const totalSlides = slides.length;
+  <script>
+    let currentIndex1 = 0, currentIndex2 = 0, currentIndex3 = 0, currentIndex4 = 0;
 
-  if (sliderId === 'slider1') {
-    currentIndex = currentIndex1;
-    currentIndex1 = (currentIndex + step + totalSlides) % totalSlides;
-  } else if (sliderId === 'slider2') {
-    currentIndex = currentIndex2;
-    currentIndex2 = (currentIndex + step + totalSlides) % totalSlides;
-  } else if (sliderId === 'slider3') {
-    currentIndex = currentIndex3;
-    currentIndex3 = (currentIndex + step + totalSlides) % totalSlides;
-  } else if (sliderId === 'slider4') {
-    currentIndex = currentIndex4;
-    currentIndex4 = (currentIndex + step + totalSlides) % totalSlides;
-  }
+    function moveSlide(step, sliderId) {
+      let currentIndex;
+      const sliderContainer = document.querySelector(`#${sliderId} .slider-container`);
+      const slides = document.querySelectorAll(`#${sliderId} .slide`);
+      const totalSlides = slides.length;
 
-  sliderContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
+      if (sliderId === 'slider1') {
+        currentIndex = currentIndex1;
+        currentIndex1 = (currentIndex + step + totalSlides) % totalSlides;
+      } else if (sliderId === 'slider2') {
+        currentIndex = currentIndex2;
+        currentIndex2 = (currentIndex + step + totalSlides) % totalSlides;
+      } else if (sliderId === 'slider3') {
+        currentIndex = currentIndex3;
+        currentIndex3 = (currentIndex + step + totalSlides) % totalSlides;
+      } else if (sliderId === 'slider4') {
+        currentIndex = currentIndex4;
+        currentIndex4 = (currentIndex + step + totalSlides) % totalSlides;
+      }
 
-// Open image in fullscreen mode
-function openFullscreen(image) {
-  const fullscreen = document.createElement('div');
-  fullscreen.classList.add('fullscreen');
-  const img = document.createElement('img');
-  img.src = image.src; // Use the same image (full resolution) when clicked
-  fullscreen.appendChild(img);
-  
-  // Close fullscreen on click
-  fullscreen.addEventListener('click', function() {
-    document.body.removeChild(fullscreen);
-  });
+      sliderContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
 
-  document.body.appendChild(fullscreen);
-}
-</script>
+    function openFullscreen(image) {
+      const fullscreen = document.createElement('div');
+      fullscreen.classList.add('fullscreen');
+      const img = document.createElement('img');
+      img.src = image.src;
+      fullscreen.appendChild(img);
+      
+      fullscreen.addEventListener('click', function() {
+        document.body.removeChild(fullscreen);
+      });
+
+      document.body.appendChild(fullscreen);
+    }
+  </script>
 
 </body>
 </html>

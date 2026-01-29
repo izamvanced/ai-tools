@@ -11,49 +11,49 @@
   --card:#ffffff;
   --accent:#ff8a1f;
 }
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
-  background:var(--bg);
-  color:var(--fg);
+html, body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto;
+  background: var(--bg);
+  color: var(--fg);
+  height: 100%; /* Ensures body takes full height */
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensures the body takes full height */
 }
 
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 28px;
-  background-color:var(--fg);
-  color:white;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 28px;
+  background-color: var(--fg);
+  color: white;
 }
 
-.logo{
-  font-weight:700;
-  font-size:18px;
-  color:var(--accent);
+.logo {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--accent);
 }
 
-.hero{
-  text-align:center;
-  padding:40px 20px;
+.hero {
+  text-align: center;
+  padding: 40px 20px;
 }
 
-.hero h1{
-  font-size:40px;
-  margin:0;
+.hero h1 {
+  font-size: 40px;
+  margin: 0;
 }
 
-.hero span{
-  color:var(--accent);
+.hero span {
+  color: var(--accent);
 }
 
-.hero p{
-  max-width:640px;
-  margin:10px auto;
-  color:#555;
+.hero p {
+  max-width: 640px;
+  margin: 10px auto;
+  color: #555;
 }
 
 .nav-container {
@@ -83,7 +83,8 @@ button {
 }
 
 .slide { 
-  min-width: 100%; 
+  min-width: 90%;  /* Set to 90% of the parent container */
+  margin: 0 5%; /* Add some margin between slides */
   transition: transform 0.5s ease; 
   display: flex; 
   justify-content: center; 
@@ -91,10 +92,10 @@ button {
 }
 
 .slide img { 
-  width: 100%; 
-  max-width: 100%; 
+  width: 100%;
   height: auto; 
-  cursor: pointer; 
+  max-width: 100%; /* Ensure images do not stretch beyond 100% width */
+  cursor: pointer;
 }
 
 .fullscreen { 
@@ -130,17 +131,9 @@ footer a {
   text-decoration: none;
 }
 
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  margin: 0 10px;
-  font-weight: 600;
-}
-
-/* Ensure that the background covers the entire page */
-html, body {
-  height: 100%; /* Ensures full height coverage */
-  background-color: var(--bg); /* Keeps the background color consistent */
+/* Ensure the background is covering the entire page */
+section {
+  flex: 1; /* Ensures section takes the available space and footer stays at the bottom */
 }
 </style>
 </head>
